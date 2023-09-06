@@ -1,0 +1,93 @@
+//=============================================================
+// - Edit Version - 1.1
+// - BY exsoulionzzzz
+//=============================================================
+
+-	script	buff	-1,{
+OnTouch:
+	/*	if( agitcheck() ){ 
+			sc_start SC_CP_WEAPON,1200000,5;
+			sc_start SC_CP_SHIELD,1200000,5;
+			sc_start SC_CP_ARMOR,1200000,5;
+			sc_start SC_CP_HELM,1200000,5;
+		}*/
+
+		//เช็คไอเทมที่เสียหายถ้ามีซ่อมให้ทันที
+	set .@delay, 5;	// ดีเลย์การใช้งาน (วินาที)
+	
+	if ( gettimetick(2)-@delay_heal < .@delay )
+		dispbottom "[Buff] โปรดรออีก "+(.@delay-(gettimetick(2)-@delay_heal))+" วินาที";
+	else
+	{	
+	
+		set @delay_heal, gettimetick(2);
+		// บัฟบากิและเซอวิส
+
+		// บัฟสกิลต่างๆ
+		specialeffect2 EF_INCAGILITY;
+		specialeffect2 EF_BLESSING;
+		//specialeffect2 410;
+		//specialeffect2 14; 
+		//specialeffect2 543;
+		percentheal 100,100;
+		sc_start SC_IMPOSITIO,1200000,5;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+		sc_start SC_EXPBOOST,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+
+	// แก้สถานะต่างๆ
+		sc_end SC_Poison;
+		sc_end SC_Freeze;
+		sc_end SC_Sleep;
+		sc_end SC_Stan;
+		sc_end SC_Stun;
+		sc_end SC_Stone;
+		sc_end SC_Silence;
+		sc_end SC_Blind;
+		sc_end SC_Bleeding;
+		sc_end SC_Confusion;
+		sc_end SC_Curse;
+		sc_end SC_Hallucination;
+		sc_end SC_ORCISH;	
+		percentheal 100,100;
+		//dispbottom "คุณได้อยู่ในสถานะ ( A Poem of Bragi & Service for You ) เป็นเวลา 1 นาที
+		atcommand "@repairall";
+		atcommand "@petfriendly 1000";
+		atcommand "@pethungry 100";
+		npctalk "อยู่รอบๆ ตัวข้าสิ แล้วพลังเจ้าจะฟื้นฟู";
+		emotion e_no, 0;
+		end;
+		}
+}
+poring_c01,101,108,6	duplicate(buff)	Buff#1	677
+mooc,158,97,6	duplicate(buff)	Buff#2	677
+//prontera,154,182,6	duplicate(buff)	Buff#3	677
+//alberta,52,244,6	duplicate(buff)	Buff#4	677
+//aldebaran,137,114,6	duplicate(buff)	Buff#5	677
+//amatsu,201,103,6	duplicate(buff)	Buff#6	677
+//comodo,206,143,6	duplicate(buff)	Buff#7	677
+//geffen,118,59,6	duplicate(buff)	Buff#8	677
+//izlude,127,127,6	duplicate(buff)	Buff#9	677
+//xmas,146,133,6	duplicate(buff)	Buff#10	677
+//morocc,160,93,6	duplicate(buff)	Buff#11	677
+//payon,183,97,6	duplicate(buff)	Buff#12	677
+//yuno,155,83,6	duplicate(buff)	Buff#13	677
+//mooc,237,89,6	duplicate(buff)	Buff#14	677
+mooc,37,141,3	duplicate(buff)	Buff#15	677
+mooc,171,182,3	duplicate(buff)	Buff#16	677
+mooc,243,277,4	duplicate(buff)	Buff#17	677
+mooc,286,220,4	duplicate(buff)	Buff#18	677
+mooc,248,44,3	duplicate(buff)	Buff#19	677
+mooc,73,277,4	duplicate(buff)	Buff#20	677
+mooc,240,141,4	duplicate(buff)	Buff#21	677
+mooc,41,68,6	duplicate(buff)	Buff#22	677

@@ -1,0 +1,432 @@
+mooc,169,184,3	script	Kafra Employee#mooc	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",167,178,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}
+mooc,41,64,6	script	Kafra Employee#mooc7	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",48,71,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}
+mooc,35,143,3	script	Kafra Employee#mooc6	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",35,136,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}
+mooc,70,277,4	script	Kafra Employee#mooc5	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",73,269,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}
+mooc,240,277,4	script	Kafra Employee#mooc4	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",243,270,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}
+mooc,283,220,4	script	Kafra Employee#mooc3	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",286,212,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}
+mooc,237,141,4	script	Kafra Employee#mooc2	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",239,133,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}
+mooc,246,46,3	script	Kafra Employee#mooc1	113,{
+	mes "[Kafra Leilah]";
+	mes "สวัสดีคะ มีอะไรให้รับใช้ค่ะ";
+	next;
+	switch(select("บันทึกจุดเซฟ:เปิดคลัง:ยกเลิก")) {
+	case 1:
+		mes "[Kafra Leilah]";
+		mes "จุดเกิดของคุณ";
+		mes "ถูกบันทึกแล้ว ภายใน";
+		mes "Kafra Corporation";
+		mes "สำนักงานใหญ่ ขอบคุณค่ะ";
+		next;
+		savepoint "mooc",243,36,1,1;
+		mes "[Kafra Leilah]";
+		mes "กรุณาใช้ประโยชน์จาก";
+		mes "Kafra Services";
+		mes "ที่มีให้บริการทุกที่ใน";
+		mes "Midgard. ขอบคุณสำหรับ";
+		mes "การมาเยี่ยม The Kafra สำนักงานใหญ่";
+		close2;
+		break;
+	case 2:
+		if (Zeny < 20) {
+			mes "[Kafra Leilah]";
+			mes "ขออภัย แต่เหมือนว่า";
+			mes "คุณมีเงินไม่เพียงพอ";
+			mes "ต้องจ่าย 20 zeny";
+			mes "ค่าธรรมเนียมเปิดคลัง...";
+			close;
+		}
+		mes "[Kafra Leilah]";
+		mes "แม้ว่าสิ่งอำนวยความสะดวกนี้มีไว้สำหรับการฝึกอบรมพนักงานของ Kafra";
+		mes "และฟังก์ชั่นการบริหาร"; 
+		mes "ฉันจะเข้าถึงที่เก็บข้อมูลของคุณ";
+		next;
+		set Zeny, Zeny-20;
+		set RESRVPTS, RESRVPTS + (20/5);
+		mes "[Kafra Leilah]";
+		mes "ในอนาคตกรุณาถามพนักงาน Kafra ให้ทำหน้าที่หากคุณต้องการใช้บริการ Kafra ใดๆ ";
+		mes "ขอบคุณสำหรับการอุปถัมภ์";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
+		close2;
+		openstorage;
+		break;
+	case 3:
+		mes "[Kafra Leilah]";
+		mes "^666666*ว๊าว...*^000000";
+		mes "เยี่ยมมากเพราะข้าอยู่ในช่วงพักจริงการเลือกยกเลิกเป็นการเคลื่อนไหวที่ดีในส่วนของเจ้า";
+		close2;
+		break;
+	}
+	cutin "",255;
+	end;
+}

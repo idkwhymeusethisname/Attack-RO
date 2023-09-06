@@ -1,0 +1,87 @@
+//===== rAthena Script =======================================
+//= Card Removal NPC
+//===== By: ==================================================
+//= TyrNemesis^
+//===== Current Version: =====================================
+//= 1.2a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Removes cards from equipped items.
+//===== Additional Comments: =================================
+//= 1.0 First version. [TyrNemesis^]
+//= 1.2 Optimized and fixed getequipname menu. [Kisuka]
+//= 1.2a Added 'disable_items' command. [Euphy]
+//============================================================
+izlude_in,130,169,2	script	นักถอดการ์ด	502,{
+	set .zenycost,200000;    // ค่าธรรมเนียม ในการถอดการ์ด
+	set .percardcost,25000;  // ค่าธรรมเนียม ในการถอดการ์ดต่อหนึ่งใบ
+
+	disable_items;
+	mes "[นักถอดการ์ด]";
+	mes "ถอดการ์ดติด 100% ใช้เงินในการถอด.";
+	next;
+	switch(select("ถอดการ์ด.:ถามค่าใช้จ่าย:ออก.")) {
+	case 1:
+		mes "[นักถอดการ์ด]";
+		mes "เลือกของสวมใส่ที่ต้องการถอดการ์ด";
+		next;
+
+		setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+		for( set .@i,1; .@i <= 10; set .@i,.@i+1 ) {
+			if( getequipisequiped(.@indices[.@i]) )
+				set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			set .@menu$, .@menu$ + ":";
+		}
+		set .@part, .@indices[ select(.@menu$) ];
+		if(!getequipisequiped(.@part)) {
+			mes "[นักถอดการ์ด]";
+			mes "ไม่เห็นว่าเจ้าจะใส่อะไรมาเลย.";
+			close;
+		}
+		if(getequipcardcnt(.@part) == 0) {
+			mes "[นักถอดการ์ด]";
+			mes "ของชิ้นนี้ไม่มีการ์ด";
+			close;
+		}
+		set .@cardcount,getequipcardcnt(.@part);
+		
+		if (!checkweight(1202,(.@cardcount+1))) { 
+			mes "[นักถอดการ์ด]";
+			mes "เจ้ามีช่องว่างในกระเป๋าไม่พอ.";
+			close;
+		}
+		mes "[นักถอดการ์ด]";
+		mes "ของชิ้นนี้มีการ์ด " + .@cardcount + " ใบ. เจ้าต้องจ่าย " + (.zenycost+(.@cardcount * .percardcost)) + " zeny สำหรับถอดการ์ด.";
+		next;
+		if(select("จ่ายเงิน.:ไม่มี.") == 2) {
+			mes "[นักถอดการ์ด]";
+			mes "ยากจนจริงๆเชียว.";
+			close;
+		}
+		if(zeny < (.zenycost+(.@cardcount * .percardcost))) {
+			mes "[นักถอดการ์ด]";
+			mes "เจ้ามีเงินไม่พอ.";
+			close;
+		}
+		next;
+		specialeffect2 66;
+		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
+		successremovecards .@part;
+		mes "[นักถอดการ์ด]";
+		mes "เรียบร้อยแล้ว.";
+		close;
+	case 2:
+		mes "[นักถอดการ์ด]";
+		mes "ข้าต้องการค่าธรรมเนียม "+callfunc("F_InsertComma",.zenycost)+" zeny, บวกกับ "+callfunc("F_InsertComma",.percardcost)+" zeny ต่อการ์ดหนึ่งใบ.";
+		close;
+	case 3:
+		mes "[นักถอดการ์ด]";
+		mes "บ๊าย บาย.";
+		close;
+	}
+	
+OnInit:
+	waitingroom "• ถอดการ์ด 100% •",0;
+	end;
+}

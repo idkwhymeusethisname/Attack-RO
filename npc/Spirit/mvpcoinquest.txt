@@ -1,0 +1,55 @@
+izlude_in,58,98,4	script	MVPCOINQUEST	984,{
+
+    mes "เราสามารถเปลี่ยน MVP COIN";
+    mes "เป็น item ต่างๆได้";
+    mes "ระวัง โปรดตรวจสอบช่องเก็บของ";
+    mes "ของท่านให้เพียงพอ";
+    mes "ไม่งั้นของจะหล่นลงพื้น";
+    mes "ทำให้ไอเทมของท่านจะสูญหาย";
+    next;
+    menu
+    "^ff0000•^000000 3 COIN + 100m +1000TCG แลก Sealed Card Album",3coin,
+    "^ff0000•^000000 1 COIN + 100Mm แลก Emblem of the Sun God ",Sungod,
+    "^ff0000•^000000 ยกเลิก",3coin_cancel;
+  
+        3coin: 
+		if(Zeny < 100000000) {	
+		mes "คุณมี Item ที่ต้องใช้แลกไม่เพียงพอหรือ Zeny ไม่เพียงพอ";
+		end;
+		}
+		if (countitem(32038) <= 2) {
+		mes "คุณมี Item ที่ต้องใช้แลกไม่เพียงพอหรือ Zeny ไม่เพียงพอ";
+		end;
+		}
+		if (countitem(7227) <= 999) {
+		mes "คุณมี Item ที่ต้องใช้แลกไม่เพียงพอหรือ Zeny ไม่เพียงพอ";
+		end;
+		}
+	    if (countitem(32038) > 2 && countitem(7227) > 999) {
+			delitem 32038,3;
+			set zeny,zeny-100000000;
+			getitem 22829,1;
+		end;
+		}	
+	    close;
+		
+        Sungod:
+		if(Zeny < 100000000) {	
+		mes "คุณมี Item ที่ต้องใช้แลกไม่เพียงพอหรือ Zeny ไม่เพียงพอ";
+		end;
+		}
+	    if (countitem(32038) > 1) {
+			delitem 32038,1;
+			set zeny,zeny-100000000;
+			getitem 7086,1;
+		end;
+		}		
+	    close;
+		
+		3coin_cancel:
+		end;
+		
+        Oninit:
+        waitingroom "[Quest] MVP COIN",0;
+        end;
+        }

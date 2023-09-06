@@ -1,0 +1,52 @@
+mooc,125,71,5	script	PORING SHOP#1	10262,{
+	mes "สามารถซื้อได้โดยใช้ ^ff0000PORING COIN^000000";
+    mes "^00ff00—————————————————————^000000";
+	mes "^ff0000คำเตือนกรุณาเคลียเก็บของให้เพียงพอไม่งั้นไอเทมจะตกลงพื้นทีมงานจะไม่รับผิดชอบใดๆทั้งสิ้นหากเห็นไอเทมเป็นรูปแอ๊ปเปิ้ลให้เข้าเกมโดยเข้าผ่านตัวโหลดแพท^000000";
+	mes "^00ff00—————————————————————^000000";
+    mes "เลือกได้ตามใจชอบเลยจ้า";
+	callshop "PORING_SHOP#1",1;
+	npcshopattach "PORING_SHOP#1";
+//	dispbottom "[ระบบ] : สกิลDCลดราคาไม่มีผลสำหรับการซื้อไอเทมในนี้";
+	dispbottom "[ระบบ] : คุณมี Poring Coin ทั้งหมด [ "+countitem(.Given_ItemID)+" ชิ้น ]";
+//	mes "คุณมี Poring Coin ทั้งหมด : "+countitem(.Given_ItemID)+"";
+	end;
+
+OnBuyItem:
+	for(set @i,0; @i < getarraysize(@bought_nameid); set @i,@i+1) {
+		for(set @j,0; @j < getarraysize(.Shop_ItemID); set @j,@j+1) {
+			if(.Shop_ItemID[@j] == @bought_nameid[@i]) {
+				set @itemcost,(.Shop_Price[(@j)]*@bought_quantity[@i]);
+				set @totalcost,(@totalcost+@itemcost);
+				break;
+			}
+		}
+	}
+	
+	if(@totalcost > countitem(.Given_ItemID)) {
+		dispbottom "[ระบบ] : คุณมี Poring Coin ไม่พอสำหรับจะซื้อไอเทมนี้";
+	}
+	else {
+		for(set @i,0; @i < getarraysize(@bought_nameid); set @i,@i+1) {
+		getitem @bought_nameid[@i],@bought_quantity[@i];
+	}
+		delitem .Given_ItemID,@totalcost;
+//		dispbottom "[ระบบ] : ขอบคุณครับ โอกาศหน้าเชิญใหม่.";
+		dispbottom "[ระบบ] : คุณเหลือ Poring Coin ทั้งหมด [ "+countitem(.Given_ItemID)+" ชิ้น ]";
+	}
+	set @totalcost,0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+end;
+
+OnInit:
+waitingroom "ร้าน Poring Shop",0;
+npcshopdelitem "PORING_SHOP#1",909;
+set .Given_ItemID,7539; // รหัสไอเทมใช้ซื้อ
+setarray .Shop_ItemID[0],12016,31224,31226,12211,12214,12215,12216,17070,14616,14617,14618,14619,14620,14621,18521,18536,18526,18511,18503,5604,18508,18520,18522,18524,18527,18528,18529,18531,18532,18533,18535,18537,18539,18541,18547,18934; //รหัสไอเทม
+setarray .Shop_Price[0],100,450,20000,300,500,200,200,100,100,100,100,100,100,100,30000,30000,30000,30000,30000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000,10000; //ราคา
+for(set .@i,0; .@i < getarraysize(.Shop_ItemID); set .@i,.@i+1) {
+npcshopadditem "PORING_SHOP#1",.Shop_ItemID[.@i],.Shop_Price[.@i];
+}
+end;
+}
+-	shop	PORING_SHOP#1	-1,909:-1

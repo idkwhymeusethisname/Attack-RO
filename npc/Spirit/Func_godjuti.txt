@@ -1,0 +1,12 @@
+//==============================================
+// - Script By : M-Ro Online
+// - Script City : Thailand 
+// - Script Support Server : Hercules & rAthena
+//==============================================
+
+function	script	godjuti	{
+		atcommand "@stpoint 1400000";
+		set free,free + 391;
+		announce "[ระบบ] : " + strcharinfo(0) + " ได้ทำการใช้ God Juti และได้จุติไปทั้งหมด "+ free +" ครั้ง",0;
+		end;
+}

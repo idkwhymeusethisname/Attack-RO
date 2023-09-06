@@ -1,0 +1,129 @@
+//===== rAthena Script =======================================
+//= Universal Rental NPC
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= One-click automatic mount rentals.
+//============================================================
+
+-	script	breeder	-1,{
+		mes "สวัสดีค่ะยินให้บริการค่ะ";
+		mes "ต้องการเช่าอะไรดีค่ะ";
+		emotion e_heh, 0;
+		menu
+		"^ff0000•^000000 เช่ารถเข็น",B4,
+		"^ff0000•^000000 เช่านก",B3,		
+		"^ff0000•^000000 เช่าเป็ด",B1,
+		"^ff0000•^000000 เช่ามังกร",B6,
+		"^ff0000•^000000 เช่าหุ่นยนต์",B5,
+		"^ff0000•^000000 เช่าเหยี่ยว",B7;
+//		"Magic Gear",B8,
+//		"เช่าหมา",B9;
+		B1:
+			if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("RK_DRAGONTRAINING")>0){
+			goto ES;
+			}
+			if(getskilllv(63) == 0) goto ES;
+			setriding;
+			close2;
+			emotion e_heh, 0;
+			//goto L_EXIT;
+			end;
+		B3:
+			if(getskilllv(127)==0) goto ES;
+			setfalcon;
+			close2;
+			emotion e_heh, 0;
+			//goto L_EXIT;
+			end;
+		B4:
+			if(getskilllv(39)==0) goto ES;
+			setcart;
+			close2;
+			emotion e_heh, 0;
+			//goto L_EXIT;
+			end;
+		B5:
+			if(getskilllv(2255)==0) goto ES;
+			atcommand "@mount";
+			close2;
+			emotion e_heh, 0;
+			//goto L_EXIT;
+			end;
+		B6:
+			if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("RK_DRAGONTRAINING")>0) {
+			atcommand "@mount"; close;
+			}else{
+			mes "ไม่สามารถดำเนินการได้";
+			mes "เนื่องจากคุณได้เช่าอยู่แล้ว";
+			mes "หรือสิ่งที่เช่าไม่ตรง";
+			mes "กับสายอาชีพของคุณค่ะ";
+			close;
+			}
+		B7:
+		if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING")>0 && Class == 4073 || Class == 4066) {
+		setriding;
+		close;
+		}else{
+		mes "ไม่สามารถดำเนินการได้";
+		mes "เนื่องจากคุณได้เช่าอยู่แล้ว";
+		mes "หรือสิ่งที่เช่าไม่ตรง";
+		mes "กับสายอาชีพของคุณค่ะ";
+		close;
+		}
+		B8:
+		if (BaseJob != Job_Merchant && BaseClass == Job_Merchant && checkriding() == 0 && getskilllv("NC_MADOLICENCE")>0 && Class == 4064 || Class == 4058) {
+		atcommand "@mount";
+		close;
+		}else{
+		mes "ไม่สามารถดำเนินการได้";
+		mes "เนื่องจากคุณได้เช่าอยู่แล้ว";
+		mes "หรือสิ่งที่เช่าไม่ตรง";
+		mes "กับสายอาชีพของคุณค่ะ";
+		close;
+		}
+		B9:
+		if (Class == 4056 || Class == 4062 && getskilllv("RA_WUGMASTERY")==1) {
+		setriding;
+		close;
+		}else{
+		mes "ไม่สามารถดำเนินการได้";
+		mes "เนื่องจากคุณได้เช่าอยู่แล้ว";
+		mes "หรือสิ่งที่เช่าไม่ตรง";
+		mes "กับสายอาชีพของคุณค่ะ";
+		close;
+		}
+				ES:
+					mes "ไม่สามารถดำเนินการได้";
+					mes "เนื่องจากคุณได้เช่าอยู่แล้ว";
+					mes "หรือสิ่งที่เช่าไม่ตรง";
+					mes "กับสายอาชีพของคุณค่ะ";
+					close2;
+					goto L_EXIT;
+					end;
+}
+mooc,160,101,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#1	10266
+mooc,44,84,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#2	10266
+mooc,43,140,3	duplicate(breeder)	เช่า นก เป็ด รถเข็น#3	10266
+mooc,84,273,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#4	10266
+mooc,234,277,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#5	10266
+mooc,277,220,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#6	10266
+mooc,231,141,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#7	10266
+mooc,236,42,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#8	10266
+mooc,174,185,4	duplicate(breeder)	เช่า นก เป็ด รถเข็น#9	10266
+//alberta,49,248,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#2	10266
+//prontera,148,187,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#3	10266
+//aldebaran,137,117,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#4	10266
+//amatsu,201,107,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#5	10266
+//comodo,213,148,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#6	10266
+//geffen,121,64,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#7	10266
+//izlude,125,131,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#8	10266
+//xmas,144,137,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#9	10266	
+//morocc,151,93,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#10	10266	
+//payon,180,102,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#11	10266	
+//yuno,152,87,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#12	10266
+//mooc,241,94,6	duplicate(breeder)	เช่า นก เป็ด รถเข็น#13	10266

@@ -1,0 +1,377 @@
+mooc,141,77,5	script	Slot Jackpot#1	563,{
+	goto ITEMJP_main;
+	OnInit:
+		waitingroom "จะจะแจ็คพอตมาแว้วว",0;
+		// Mode Play Slots 0 = Zeny , 1 = Item
+		set $@ITEMJP_mode,1;
+		// Mode 1 = ITEM ID
+		set $@ITEMJP_mode_itemid,32006;
+		// Amount Zeny Or Item Amount 1 , 2 , 3 , 4 , 5 , 6 , 7 [ W. Mode Select ]
+		//setarray $@ITEMJP_mode_amount[1],1000000,100000,100000,100000,100000,100000,100000;
+		setarray $@ITEMJP_mode_amount[1],100,40,40,40,40,40,40;
+
+		// Reward Level 1-7 ( ITEM ID 0 = No Item )
+		setarray $@ITEMJP_reward_1[1],0,32004,32015,23017,617,616,12213,32004,0;
+		setarray $@ITEMJP_reward_2[1],0,12202,12204,12207,12206,12205,12203,0;
+		setarray $@ITEMJP_reward_3[1],0,7619,23016,12214,12221,7620,0;
+		setarray $@ITEMJP_reward_4[1],0,7776,5206,32014,16682,0;
+		setarray $@ITEMJP_reward_5[1],0,32012,5210,12790,0;
+		setarray $@ITEMJP_reward_6[1],0,31134,12103,0;
+		setarray $@ITEMJP_reward_7[1],0,29904,0;
+
+		// Amount Reward Level 1-7 ( ITEM Amount 0 = No Amount )
+		setarray $@ITEMJP_rewardd_1[1],0,1,1,5,5,5,1,10,0;
+		setarray $@ITEMJP_rewardd_2[1],0,10,10,10,10,10,10,0;
+		setarray $@ITEMJP_rewardd_3[1],0,2,5,5,10,2,0;
+		setarray $@ITEMJP_rewardd_4[1],0,1,1,1,1,0;
+		setarray $@ITEMJP_rewardd_5[1],0,2,1,1,0;
+		setarray $@ITEMJP_rewardd_6[1],0,1,1,0;
+		setarray $@ITEMJP_rewardd_7[1],0,1,0;
+
+		// Mode IMG ( 0 = Random IMG , 1 = Random Percent IMG )
+		set $@ITEMJP_mode_image_r,0;
+
+		if ($@ITEMJP_mode_image_r) {
+			// Mode 0
+			setarray $@ITEMJP_mode_image_1[1],40,9,9,9,9,9,9,9,40;
+			setarray $@ITEMJP_mode_image_2[1],40,9,9,9,9,9,9,40;
+			setarray $@ITEMJP_mode_image_3[1],40,9,9,9,9,9,40;
+			setarray $@ITEMJP_mode_image_4[1],40,9,9,9,9,40;
+			setarray $@ITEMJP_mode_image_5[1],40,9,9,9,40;
+			setarray $@ITEMJP_mode_image_6[1],40,9,9,40;
+			setarray $@ITEMJP_mode_image_7[1],40,9,40;
+			set $@ITEMJP_mode_image_per,100; // No Edit
+		} else if (!$@ITEMJP_mode_image_r) {
+			// Mode 1
+			setarray $@ITEMJP_mode_image_1[0],40,90,1,6;
+			setarray $@ITEMJP_mode_image_2[0],35,80,1,12;
+			setarray $@ITEMJP_mode_image_3[0],30,70,1,18;
+			setarray $@ITEMJP_mode_image_4[0],25,60,1,24;
+			setarray $@ITEMJP_mode_image_5[0],20,50,1,30;
+			setarray $@ITEMJP_mode_image_6[0],15,45,1,36;
+			setarray $@ITEMJP_mode_image_7[0],10,30,1,42;
+		}
+		setarray $@ITEMJP_mode_image_rr[0],20,50; //No Edit
+
+		// Mode Show IMG ( 0 = Lower Left , 1 = Horizontal , 2 = Lower Right , 3 = Horizontal Upper Close Bar , 4 = Horizontal No Upper Close Bar )
+		set $@ITEMJP_mode_image,4;
+		// Name IMG
+		setarray $@ITEMJP_image_1$[0],
+		"slot_lv7_00",	// Reward Item Show Catarog
+		"slot_lv7_01",	// Level 1 IMG 1
+		"slot_lv7_02",	// Level 1 IMG 2
+		"slot_lv7_03",	// Level 1 IMG 3
+		"slot_lv7_04",	// Level 1 IMG 4
+		"slot_lv7_05",	// Level 1 IMG 5
+		"slot_lv7_06",	// Level 1 IMG 6
+		"slot_lv7_07",	// Level 1 IMG 7
+		"slot_lv7_08",	// Level 1 IMG 8
+		"slot_lv7_09"	// Level 1 IMG 9
+		;
+		setarray $@ITEMJP_image_2$[1],
+		"slot_lv7_17",	// Level 2 IMG 1
+		"slot_lv7_16",	// Level 2 IMG 2
+		"slot_lv7_15",	// Level 2 IMG 3
+		"slot_lv7_14",	// Level 2 IMG 4
+		"slot_lv7_13",	// Level 2 IMG 5
+		"slot_lv7_12",	// Level 2 IMG 6
+		"slot_lv7_11",	// Level 2 IMG 7
+		"slot_lv7_10"	// Level 2 IMG 8
+		;
+		setarray $@ITEMJP_image_3$[1],
+		"slot_lv7_18",	// Level 3 IMG 1
+		"slot_lv7_19",	// Level 3 IMG 2
+		"slot_lv7_20",	// Level 3 IMG 3
+		"slot_lv7_21",	// Level 3 IMG 4
+		"slot_lv7_22",	// Level 3 IMG 5
+		"slot_lv7_23",	// Level 3 IMG 6
+		"slot_lv7_24"	// Level 3 IMG 7
+		;
+		setarray $@ITEMJP_image_4$[1],
+		"slot_lv7_30",	// Level 4 IMG 1
+		"slot_lv7_29",	// Level 4 IMG 2
+		"slot_lv7_28",	// Level 4 IMG 3
+		"slot_lv7_27",	// Level 4 IMG 4
+		"slot_lv7_26",	// Level 4 IMG 5
+		"slot_lv7_25"	// Level 4 IMG 6
+		;
+		setarray $@ITEMJP_image_5$[1],
+		"slot_lv7_31",	// Level 5 IMG 1
+		"slot_lv7_32",	// Level 5 IMG 2
+		"slot_lv7_33",	// Level 5 IMG 3
+		"slot_lv7_34",	// Level 5 IMG 4
+		"slot_lv7_35"	// Level 5 IMG 5
+		;
+		setarray $@ITEMJP_image_6$[1],
+		"slot_lv7_39",	// Level 6 IMG 1
+		"slot_lv7_38",	// Level 6 IMG 2
+		"slot_lv7_37",	// Level 6 IMG 3
+		"slot_lv7_36"	// Level 6 IMG 4
+		;
+		setarray $@ITEMJP_image_7$[1],
+		"slot_lv7_40",	// Level 7 IMG 1
+		"slot_lv7_41",	// Level 7 IMG 2
+		"slot_lv7_42"	// Level 7 IMG 3
+		;
+
+		end;
+
+	ITEMJP_main:
+	cutin "",255;
+	mes "[ Jackpot ]";
+	mes "สวัสดีคุณ, "+strcharinfo(0)+"";
+	mes "โปรดเลือกรายการด้านล่าง";
+	next;
+	switch(select("~ เริ่มเล่นกิจกรรม","~ รายละเอียด","~ ยกเลิก")){
+		case 1:
+			mes "[ Jackpot ]";
+			if ($@ITEMJP_mode) {
+				mes "คุณต้องเสีย ^FF0000"+getitemname($@ITEMJP_mode_itemid)+" "+$@ITEMJP_mode_amount[1]+" ea.^000000";
+			} else if (!$@ITEMJP_mode) {
+				mes "คุณต้องเสีย ^FF0000"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[1])+" Zeny.^000000";
+			}
+			mes "ในการเล่นระดับ 1";
+			cutin ""+$@ITEMJP_image_1$[0]+"",$@ITEMJP_mode_image;
+			next;
+			if (select("~ เริ่มเล่นเลย ^FF0000[ระดับ 1]^000000","~ ยกเลิก") == 2) {
+				cutin "",255;
+				close;
+			}
+			set .@ITEMJP,1;
+			set .@ITEMJP_level,1;
+			while (.@ITEMJP == 1) {
+				mes "[ Jackpot ]";
+				mes "โปรดรอสักครู่. . .";
+				mes "=================";
+				if ($@ITEMJP_mode) {
+					if (countitem($@ITEMJP_mode_itemid) < $@ITEMJP_mode_amount[.@ITEMJP_level]) {
+						mes "คุณมี "+getitemname($@ITEMJP_mode_itemid)+" ไม่เพียงพอ บ๊ะบาย";
+						close;
+					}
+					delitem $@ITEMJP_mode_itemid,$@ITEMJP_mode_amount[.@ITEMJP_level];
+				} else if (!$@ITEMJP_mode) {
+					if (Zeny < $@ITEMJP_mode_amount[.@ITEMJP_level]) {
+						mes "คุณมี Zeny ไม่เพียงพอ ลาก่อน";
+						close;
+					}
+					set Zeny,Zeny-$@ITEMJP_mode_amount[.@ITEMJP_level];
+				}
+				set .@r,rand($@ITEMJP_mode_image_rr[0],$@ITEMJP_mode_image_rr[1]);
+				set .@ITEMJP_timer,0;
+				set .@ITEMJP_reverse,1;
+				set .@ITEMJP_reward,1;
+				cutin ""+getd("$@ITEMJP_image_"+.@ITEMJP_level+"$["+.@ITEMJP_reward+"]")+"",$@ITEMJP_mode_image;
+				sleep2 1;
+				for (set .@i,0; .@i < .@r; set .@i,.@i+1) {
+					set .@ITEMJP_reward,.@ITEMJP_reward+1;
+					cutin ""+getd("$@ITEMJP_image_"+.@ITEMJP_level+"$["+.@ITEMJP_reward+"]")+"",$@ITEMJP_mode_image;
+					//dispbottom "ITEMJP Auto Add : "+.@ITEMJP_reward+"";
+					sleep2 1;
+					if (.@ITEMJP_reward == getarraysize(getd("$@ITEMJP_reward_"+.@ITEMJP_level+""))) {
+						for (set .@ii,.@ITEMJP_reward; .@ii > 1; set .@ii,.@ii-1) {
+							set .@ITEMJP_reverse,0;
+							set .@ITEMJP_reward,.@ITEMJP_reward-1;
+							cutin ""+getd("$@ITEMJP_image_"+.@ITEMJP_level+"$["+.@ITEMJP_reward+"]")+"",$@ITEMJP_mode_image;
+							sleep2 1;
+							if (.@i >= .@r) {
+								set .@ii,0;
+								set .@ITEMJP_reverse,1;
+							}
+							if (.@i < .@r)
+								set .@i,.@i+1;
+							//dispbottom "ITEMJP Auto Del : "+.@ITEMJP_reward+"";
+						}
+					}
+				}
+				set .@r,0;
+				set .@i,0;
+				set .@ii,0;
+				if ($@ITEMJP_mode_image_r) {
+					set .@ITEMJP_timer,rand(10,100);
+					for (set .@i,0; .@i == 0; set .@iii,0) {
+						if ((.@ITEMJP_reward == getarraysize(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"")) || .@ITEMJP_reverse) && !.@i) {
+							for (set .@ii,.@ITEMJP_reward; .@ii > 1 && !.@i; set .@ii,.@ii-1) {
+								set .@ITEMJP_reward,.@ITEMJP_reward-1;
+								set .@ITEMJP_rand,rand($@ITEMJP_mode_image_per);
+								cutin ""+getd("$@ITEMJP_image_"+.@ITEMJP_level+"$["+.@ITEMJP_reward+"]")+"",$@ITEMJP_mode_image;
+								sleep2 .@ITEMJP_timer;
+								if (getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]") >= .@ITEMJP_rand)
+									set .@i,1;
+								set .@ITEMJP_timer,.@ITEMJP_timer+rand(20,50);
+								//dispbottom "ITEMJP Mode Per Del : "+.@ITEMJP_reward+"";
+							}
+							set .@ITEMJP_reverse,0;
+						}
+						if (!.@i) {
+							set .@ITEMJP_rand,rand(1,$@ITEMJP_mode_image_per);
+							set .@ITEMJP_timer,.@ITEMJP_timer+rand(20,50);
+							set .@ITEMJP_reward,.@ITEMJP_reward+1;
+							cutin ""+getd("$@ITEMJP_image_"+.@ITEMJP_level+"$["+.@ITEMJP_reward+"]")+"",$@ITEMJP_mode_image;
+							sleep2 .@ITEMJP_timer;
+							if (getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]") >= .@ITEMJP_rand)
+								set .@i,1;
+							//dispbottom "ITEMJP Mode Per Add : "+.@ITEMJP_reward+"";
+						}
+					}
+				} else if (!$@ITEMJP_mode_image_r) {
+					set .@ITEMJP_timer,1;
+					set .@r,rand(getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"[0]"),getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"[1]"));
+					for (set .@i,0; .@i < .@r; set .@i,.@i+1) {
+						if (.@ITEMJP_reward == getarraysize(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"")) || .@ITEMJP_reverse) {
+							for (set .@ii,.@ITEMJP_reward; .@ii > 1; set .@ii,.@ii-1) {
+								set .@ITEMJP_reward,.@ITEMJP_reward-1;
+								cutin ""+getd("$@ITEMJP_image_"+.@ITEMJP_level+"$["+.@ITEMJP_reward+"]")+"",$@ITEMJP_mode_image;
+								//dispbottom "ITEMJP Mode Ran Del : "+.@ITEMJP_reward+"";
+								sleep2 .@ITEMJP_timer;
+								if (.@i >= .@r)
+									set .@ii,0;
+								if (.@i < .@r)
+									set .@i,.@i+1;
+								set .@ITEMJP_timer,.@ITEMJP_timer+rand(getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"[2]"),getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"[3]"));
+							}
+							set .@ITEMJP_reverse,0;
+						}
+						if (.@i < .@r) {
+							set .@ITEMJP_reward,.@ITEMJP_reward+1;
+							set .@ITEMJP_timer,.@ITEMJP_timer+rand(getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"[2]"),getd("$@ITEMJP_mode_image_"+.@ITEMJP_level+"[3]"));
+							//dispbottom "ITEMJP Mode Ran Add : "+.@ITEMJP_reward+"";
+							cutin ""+getd("$@ITEMJP_image_"+.@ITEMJP_level+"$["+.@ITEMJP_reward+"]")+"",$@ITEMJP_mode_image;
+							sleep2 .@ITEMJP_timer;
+						}
+					}
+				}
+				if (.@ITEMJP_reward == 1 || !.@ITEMJP_reward || .@ITEMJP_reward == getarraysize(getd("$@ITEMJP_reward_"+.@ITEMJP_level+""))) {
+					mes "แย่จัง,อดรับของรางวัลเลย";
+					mes "ขอบคุณที่ร่วมสนุก";
+					mes "คุณต้องการเล่นต่อหรือไม่ ?";
+					set .@ITEMJP_level,0;
+					set .@ITEMJP_reward,1;
+				} else if (.@ITEMJP_reward > 1) {
+					if (!getitemslots(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))) mes "คุณได้รับ "+getitemname(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+"";
+					else if (getitemslots(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))) mes "คุณได้รับ "+getitemname(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+"["+getitemslots(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+"]";
+				}
+				next;
+				mes "[ Jackpot ]";
+				if ($@ITEMJP_mode && .@ITEMJP_level <= 7) {
+					mes "คุณต้องเสีย "+getitemname($@ITEMJP_mode_itemid)+" "+$@ITEMJP_mode_amount[.@ITEMJP_level+1]+" ea.";
+				} else if (!$@ITEMJP_mode && .@ITEMJP_level <= 7) {
+					mes "คุณต้องเสีย "+callfunc("F_InsertComma",$@ITEMJP_mode_amount[.@ITEMJP_level+1])+" Zeny.";
+				}
+				mes "ในการเล่นระดับ "+(.@ITEMJP_level+1)+"";
+				mes " ";
+				mes " ";
+				mes " ";
+				mes "^FF0000*โปรดตรวจสอบแคสก่อนเริ่มเล่น^000000";
+				next;
+				set .@ITEMJP,select("~ เริ่มเล่นเลย [ระดับ "+(.@ITEMJP_level+1)+"]",""+((.@ITEMJP_reward > 1)?"~ รับไอเทม ^FF0000"+((!getitemslots(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]")))?""+getitemname(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+"":""+getitemname(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+"["+getitemslots(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+"]")+"^000000":"")+"","~ ยกเลิก");
+				set .@ITEMJP_level,.@ITEMJP_level+1;
+				if (.@ITEMJP_level >= 8) {
+					mes "[ Jackpot ]";
+					mes "คุณเล่นมาระดับสูงสุดแล้ว";
+					mes "ไม่สามารถเล่นต่อได้ โปรดเริ่มใหม่";
+					set .@ITEMJP,2;
+				}
+			}
+			if (.@ITEMJP == 2 || .@ITEMJP == 3) {
+				set .@ITEMJP_level,.@ITEMJP_level-1;
+				mes "[ Jackpot ]";
+				if (!getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]")) {
+					mes "คุณไม่ได้รับรางวัล";
+					mes "เสียใจด้วย แล้วกลับมาเล่นใหม่นะ";
+					next;
+					goto ITEMJP_main;
+				}
+				mes "คุณได้รับรางวัลเรียบร้อยแล้ว";
+				mes "ขอบคุณที่ร่วมสนุก";
+				if (!getitemslots(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))) announce "[ Jackpot (Cash Coin) : คุณ "+strcharinfo(0)+" ได้รับไอเท็ม "+getitemname(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+" จำนวน "+getd("$@ITEMJP_rewardd_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]")+" ea. ]",bc_all,0xFFE1FF;
+				else if (getitemslots(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))) announce "[ Jackpot (Cash Coin) : คุณ "+strcharinfo(0)+" ได้รับไอเท็ม "+getitemname(getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"))+" จำนวน "+getd("$@ITEMJP_rewardd_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]")+" ea. ]",bc_all,0xFFE1FF;
+				getitem getd("$@ITEMJP_reward_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]"),getd("$@ITEMJP_rewardd_"+.@ITEMJP_level+"["+.@ITEMJP_reward+"]");
+				next;
+				goto ITEMJP_main;
+			}
+			break;
+
+		case 2:
+			if (!$@ITEMJP_mode) {
+				mes "ใช้ Zeny ในการเล่น";
+				mes "ระดับ 1 : ^FF0000"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[1])+"^000000 Zeny.";
+				mes "ระดับ 2 : ^0000FF"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[2])+"^000000 Zeny.";
+				mes "ระดับ 3 : ^0000FF"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[3])+"^000000 Zeny.";
+				mes "ระดับ 4 : ^0000FF"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[4])+"^000000 Zeny.";
+				mes "ระดับ 5 : ^0000FF"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[5])+"^000000 Zeny.";
+				mes "ระดับ 6 : ^0000FF"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[6])+"^000000 Zeny.";
+				mes "ระดับ 7 : ^0000FF"+callfunc("F_InsertComma",$@ITEMJP_mode_amount[7])+"^000000 Zeny.";
+			} else if ($@ITEMJP_mode) {
+				mes "ใช้ Item "+getitemname($@ITEMJP_mode_itemid)+" ในการเล่น";
+				mes "ระดับ 1 : ^FF0000"+$@ITEMJP_mode_amount[1]+"^000000 ea.";
+				mes "ระดับ 2 : ^0000FF"+$@ITEMJP_mode_amount[2]+"^000000 ea.";
+				mes "ระดับ 3 : ^0000FF"+$@ITEMJP_mode_amount[3]+"^000000 ea.";
+				mes "ระดับ 4 : ^0000FF"+$@ITEMJP_mode_amount[4]+"^000000 ea.";
+				mes "ระดับ 5 : ^0000FF"+$@ITEMJP_mode_amount[5]+"^000000 ea.";
+				mes "ระดับ 6 : ^0000FF"+$@ITEMJP_mode_amount[6]+"^000000 ea.";
+				mes "ระดับ 7 : ^0000FF"+$@ITEMJP_mode_amount[7]+"^000000 ea.";
+			}
+			next;
+			mes "ถ้าลงตัวแรกสุด หรือ ตัวท้ายสุด";
+			mes "ต้องเริ่มใหม่และไม่ได้รับของรางวัล";
+			mes "ถ้ากดระดับต่อไปจะไม่ได้รับไอเท็ม";
+			mes "ถ้ากดรับไอเท็มคุณจะได้รับไอเท็มและ";
+			mes "เริ่มเล่นใหม่ตั้งแต่ต้น..หวังเข้าใจ";
+			next;
+			cutin $@ITEMJP_image_1$[0],$@ITEMJP_mode_image;
+			mes "นี่คือของรางวัลทั้งหมด";
+			mes "^FF0000[ ระดับ 1 ]^000000";
+			mes "- "+((getitemslots($@ITEMJP_reward_1[2]))?""+getitemname($@ITEMJP_reward_1[2])+"["+getitemslots($@ITEMJP_reward_1[2])+"]":""+getitemname($@ITEMJP_reward_1[2])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_1[3]))?""+getitemname($@ITEMJP_reward_1[3])+"["+getitemslots($@ITEMJP_reward_1[3])+"]":""+getitemname($@ITEMJP_reward_1[3])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_1[4]))?""+getitemname($@ITEMJP_reward_1[4])+"["+getitemslots($@ITEMJP_reward_1[4])+"]":""+getitemname($@ITEMJP_reward_1[4])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_1[5]))?""+getitemname($@ITEMJP_reward_1[5])+"["+getitemslots($@ITEMJP_reward_1[5])+"]":""+getitemname($@ITEMJP_reward_1[5])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_1[6]))?""+getitemname($@ITEMJP_reward_1[6])+"["+getitemslots($@ITEMJP_reward_1[6])+"]":""+getitemname($@ITEMJP_reward_1[6])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_1[7]))?""+getitemname($@ITEMJP_reward_1[7])+"["+getitemslots($@ITEMJP_reward_1[7])+"]":""+getitemname($@ITEMJP_reward_1[7])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_1[8]))?""+getitemname($@ITEMJP_reward_1[8])+"["+getitemslots($@ITEMJP_reward_1[8])+"]":""+getitemname($@ITEMJP_reward_1[8])+"")+"";
+			next;
+			mes "^FF0000[ ระดับ 2 ]^000000";
+			mes "- "+((getitemslots($@ITEMJP_reward_2[2]))?""+getitemname($@ITEMJP_reward_2[2])+"["+getitemslots($@ITEMJP_reward_2[2])+"]":""+getitemname($@ITEMJP_reward_2[2])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_2[3]))?""+getitemname($@ITEMJP_reward_2[3])+"["+getitemslots($@ITEMJP_reward_2[3])+"]":""+getitemname($@ITEMJP_reward_2[3])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_2[4]))?""+getitemname($@ITEMJP_reward_2[4])+"["+getitemslots($@ITEMJP_reward_2[4])+"]":""+getitemname($@ITEMJP_reward_2[4])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_2[5]))?""+getitemname($@ITEMJP_reward_2[5])+"["+getitemslots($@ITEMJP_reward_2[5])+"]":""+getitemname($@ITEMJP_reward_2[5])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_2[6]))?""+getitemname($@ITEMJP_reward_2[6])+"["+getitemslots($@ITEMJP_reward_2[6])+"]":""+getitemname($@ITEMJP_reward_2[6])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_2[7]))?""+getitemname($@ITEMJP_reward_2[7])+"["+getitemslots($@ITEMJP_reward_2[7])+"]":""+getitemname($@ITEMJP_reward_2[7])+"")+"";
+			next;
+			mes "^FF0000[ ระดับ 3 ]^000000";
+			mes "- "+((getitemslots($@ITEMJP_reward_3[2]))?""+getitemname($@ITEMJP_reward_3[2])+"["+getitemslots($@ITEMJP_reward_3[2])+"]":""+getitemname($@ITEMJP_reward_3[2])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_3[3]))?""+getitemname($@ITEMJP_reward_3[3])+"["+getitemslots($@ITEMJP_reward_3[3])+"]":""+getitemname($@ITEMJP_reward_3[3])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_3[4]))?""+getitemname($@ITEMJP_reward_3[4])+"["+getitemslots($@ITEMJP_reward_3[4])+"]":""+getitemname($@ITEMJP_reward_3[4])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_3[5]))?""+getitemname($@ITEMJP_reward_3[5])+"["+getitemslots($@ITEMJP_reward_3[5])+"]":""+getitemname($@ITEMJP_reward_3[5])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_3[6]))?""+getitemname($@ITEMJP_reward_3[6])+"["+getitemslots($@ITEMJP_reward_3[6])+"]":""+getitemname($@ITEMJP_reward_3[6])+"")+"";
+			next;
+			mes "^FF0000[ ระดับ 4 ]^000000";
+			mes "- "+((getitemslots($@ITEMJP_reward_4[2]))?""+getitemname($@ITEMJP_reward_4[2])+"["+getitemslots($@ITEMJP_reward_4[2])+"]":""+getitemname($@ITEMJP_reward_4[2])+"")+"";
+			mes "- <ITEM>"+((getitemslots($@ITEMJP_reward_4[3]))?""+getitemname($@ITEMJP_reward_4[3])+"["+getitemslots($@ITEMJP_reward_4[3])+"]":""+getitemname($@ITEMJP_reward_4[3])+"")+"<INFO>5206</INFO></ITEM>";
+			mes "- "+((getitemslots($@ITEMJP_reward_4[4]))?""+getitemname($@ITEMJP_reward_4[4])+"["+getitemslots($@ITEMJP_reward_4[4])+"]":""+getitemname($@ITEMJP_reward_4[4])+"")+"";
+			mes "- "+((getitemslots($@ITEMJP_reward_4[5]))?""+getitemname($@ITEMJP_reward_4[5])+"["+getitemslots($@ITEMJP_reward_4[5])+"]":""+getitemname($@ITEMJP_reward_4[5])+"")+"";
+			next;
+			mes "^FF0000[ ระดับ 5 ]^000000";
+			mes "- "+((getitemslots($@ITEMJP_reward_5[2]))?""+getitemname($@ITEMJP_reward_5[2])+"["+getitemslots($@ITEMJP_reward_5[2])+"]":""+getitemname($@ITEMJP_reward_5[2])+"")+"";
+			mes "- <ITEM>"+((getitemslots($@ITEMJP_reward_5[3]))?""+getitemname($@ITEMJP_reward_5[3])+"["+getitemslots($@ITEMJP_reward_5[3])+"]":""+getitemname($@ITEMJP_reward_5[3])+"")+"<INFO>5210</INFO></ITEM>";
+			mes "- "+((getitemslots($@ITEMJP_reward_5[4]))?""+getitemname($@ITEMJP_reward_5[4])+"["+getitemslots($@ITEMJP_reward_5[4])+"]":""+getitemname($@ITEMJP_reward_5[4])+"")+"";
+			next;
+			mes "^FF0000[ ระดับ 6 ]^000000";
+			mes "- <ITEM>"+((getitemslots($@ITEMJP_reward_6[2]))?""+getitemname($@ITEMJP_reward_6[2])+"["+getitemslots($@ITEMJP_reward_6[2])+"]":""+getitemname($@ITEMJP_reward_6[2])+"")+"<INFO>31134</INFO></ITEM>";
+			mes "- "+((getitemslots($@ITEMJP_reward_6[3]))?""+getitemname($@ITEMJP_reward_6[3])+"["+getitemslots($@ITEMJP_reward_6[3])+"]":""+getitemname($@ITEMJP_reward_6[3])+"")+"";
+			next;
+			mes "^FF0000[ ระดับ 7 ]^000000";
+			mes "- "+((getitemslots($@ITEMJP_reward_7[2]))?""+getitemname($@ITEMJP_reward_7[2])+" ["+getitemslots($@ITEMJP_reward_7[2])+"]":""+getitemname($@ITEMJP_reward_7[2])+"")+"";
+			next;
+			cutin "",255;
+			mes "[ Jackpot ]";
+			mes "การอธิบายรายละเอียดจบลงแล้ว";
+			mes "ถ้าไม่เข้าใจโปรดอ่านอีกครั้ง";
+			mes "หรือสอบถามทีมงาน";
+			close;
+
+		case 3:
+			close;
+	}
+	next;
+	goto ITEMJP_main;
+}

@@ -1,0 +1,48 @@
+//===== rAthena Script =============================================
+//= Punching Bag NPC
+//===== By: ========================================================
+//= Secretdataz
+//===== Current Version: ===========================================
+//= 0.1
+//===== Changelog: =================================================
+//= 0.1 Initial commit
+//===== Compatible With: ===========================================
+//= rAthena Project
+//===== Additional Comments: =======================================
+//= When duplicating this NPC. Only use NUMBER after the # [secret]
+//==================================================================
+mooc,227,66,0	script	Emperium#2	844,{
+	end;
+	
+OnMyMobDead:
+OnInit:
+	getunitdata(getnpcid(0), .@d);
+	monster strnpcinfo(4),.@d[UNPC_X],.@d[UNPC_Y],"Emperium",3998,1,strnpcinfo(0)+"::OnMyMobDead";
+	.@dupid = atoi(strnpcinfo(2));
+	.gid[.@dupid] = $@mobid[0];
+	.mhp[.@dupid] = strmobinfo(4,3998);
+	setunitdata .gid[.@dupid],UMOB_MODE,.@d[UMOB_MODE]|0x6370000|0x0200000; // Set MD_STATUS_IMMUNE (0x6370000) because EDP/burn/%MHP based status can skew the DPS counter so much.
+	initnpctimer;
+	end;
+	
+OnTimer5000:
+	.@dupid = atoi(strnpcinfo(2));
+	if(unitexists(.gid[.@dupid])){
+		getunitdata(.gid[.@dupid],.@d);
+		.@diff = (.mhp[.@dupid] - .@d[UMOB_HP]);
+		if(.@diff > 0){
+//			npctalk "ทดสอบดาเมจ : ฉันได้รับ " + (.@diff/5) + " ดาเมจ เมื่อ 5 วินาทีที่แล้ว.";
+//			setunitdata .gid[.@dupid],UMOB_HP,.mhp[.@dupid];
+//			specialeffect EF_HEAL;
+		}
+	}
+	initnpctimer;
+}
+
+//mooc,98,86,0	duplicate(ทดสอบดาเมจ#0)	ทดสอบดาเมจ#2	844
+//mooc,106,86,0	duplicate(ทดสอบดาเมจ#0)	ทดสอบดาเมจ#3	844
+//mooc,106,94,0	duplicate(ทดสอบดาเมจ#0)	ทดสอบดาเมจ#4	844
+//turbo_room,124,96,0	duplicate(PunchingBag#0)	PunchingBag#1	844
+//turbo_room,129,96,0	duplicate(PunchingBag#0)	PunchingBag#2	844
+//turbo_room,134,96,0	duplicate(PunchingBag#0)	PunchingBag#3	844
+//turbo_room,134,90,0	duplicate(PunchingBag#0)	PunchingBag#4	844

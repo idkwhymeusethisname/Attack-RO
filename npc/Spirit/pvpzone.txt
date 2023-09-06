@@ -1,0 +1,64 @@
+mooc,150,80,5	script	PvP Zone	10254,{
+
+if ( Delay_PvP > gettimetick(2) ) goto deley;
+	mes "[ PvP Zone ]";
+	mes "กรุณาเลือกเมนูค่ะ";
+	next;
+	menu "เข้าสนามปะลอง",L1;
+
+
+deley:
+	dispbottom "กรุณาออกเกมเข้าใหม่";
+	end;
+	
+L1:
+set Delay_PvP,gettimetick(2)+3600;
+//announce "[ ลานประลอง ]: คุณ [ "+strcharinfo(0)+" ] เข้าสู่ลานประลองกลางเมืองแล้วใครแน่ใครเจ๋งก็มาลองฆ่าเขาซิ!!",bc_red|bc_all;
+
+	switch( rand(12) ){
+
+		default: warp "mooc",150,75; break;
+		
+		case 1: warp "mooc",162,70; break;
+		
+		case 2: warp "mooc",172,65; break;
+
+		case 3: warp "mooc",177,71; break;
+
+		case 4: warp "mooc",182,60; break;
+
+		case 5: warp "mooc",183,51; break;
+
+		case 6: warp "mooc",185,48; break;
+
+		case 7: warp "mooc",174,50; break;
+
+		case 8: warp "mooc",165,55; break;
+
+		case 9: warp "mooc",160,59; break;
+
+		case 10: warp "mooc",155,52; break;
+
+		case 11: warp "mooc",152,59; break;
+
+		case 12: warp "mooc",150,48; break;
+		}	
+	close2;
+OnInit:		
+	waitingroom "- PvP Zone -",0;
+end;
+}
+
+-	script	login_logout	-1,{
+
+	OnPCLogoutEvent:
+		set Delay_PvP,gettimetick(2)-5000;
+end;
+}
+
+-	script	dieinpvp	-1,{
+
+	OnPCDieEvent:
+		set Delay_PvP,gettimetick(2)-5000;
+end;
+}

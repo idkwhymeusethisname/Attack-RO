@@ -1,0 +1,36 @@
+	-	script	delwallpeco	FAKE_NPC,{
+	
+OnPCLogin:
+	delwall "wallanti#1";
+	delwall "wallanti#2";
+	delwall "wallanti#3";
+	delwall "wallanti#4";
+	delwall "wallanti#5";
+	delwall "wallanti#6";
+	delwall "wallanti#7";
+	delwall "wallanti#8";
+	delwall "wallanti#9";
+	delwall "wallanti#10";
+	delwall "wallanti#11";
+	delwall "wallanti#12";
+	delwall "wallanti#13";
+	delwall "wallanti#14";
+	delwall "wallanti#15";
+	delwall "wallanti#16";
+	delwall "wallanti#17"; 
+	delwall "wallanti#18";
+	delwall "wallanti#19";
+	delwall "wallanti#20";
+	delwall "wallanti#21";
+	delwall "wallanti#22";
+	delwall "wallanti#23";
+	delwall "wallanti#24";
+	delwall "wallanti#25";
+	delwall "wallanti#26";
+	delwall "wallanti#27";
+	delwall "wallanti#28";
+	delwall "wallanti#30";
+	delwall "wallanti#31";
+	delwall "wallanti#32";
+	delwall "wallanti#33";
+}

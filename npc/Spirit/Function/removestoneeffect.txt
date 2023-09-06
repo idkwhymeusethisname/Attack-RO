@@ -1,0 +1,137 @@
+mooc,96,96,5	script	ถอดหินออฟคอสตูม	952,{
+
+disable_items;
+
+if (checkweight(1201,1) == 0) {
+		mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+		mes "คุณมีไอเทมมากเกินไป เอาไปเก็บก่อน!";
+		close;
+	}
+if (MaxWeight - Weight < 10000) {
+		mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+		mes "คุณมีน้ำหนักมากเกินไป!";
+		close;
+	}
+	mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+	mes "สวมใส่คอสตูมที่มีหินเอฟเฟคไว้แล้วไว้";
+	menu
+	"^FF0000•^000000 ถอดหินออฟคอสตูม ( อาวุธ )",HEADTOP,
+	"^FF0000•^000000 ยกเลิก",ex;
+
+HEADTOP:
+	setarray .@part,EQI_SHADOW_WEAPON;
+	.@item = getequipid(.@part);
+	.@card0 = getequipcardid(.@part,0);
+	.@card1 = getequipcardid(.@part,1);
+	.@card2 = getequipcardid(.@part,2);
+	.@card3 = getequipcardid(.@part,3);
+	next;
+	mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+	mes "สวมใส่คอสตูมที่หินเอฟเฟคไว้แล้วไว้";
+	menu
+	"^FF0000•^000000 หินออฟช่อง 1 ( ค่าบริการ ฟรี )",topcard0,
+	"^FF0000•^000000 หินออฟเอฟเฟค ( ค่าบริการ 1,000 Cash )",topcard3,
+	"^FF0000•^000000 ยกเลิก",ex;
+	
+
+topcard0:
+	next;
+	if(!getequipisequiped(.@part)) {
+		mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+		mes "ท่านไม่ได้สวมใส่อุปกรณ์";
+		close;	
+	}
+	
+	if(.@card0 < 1) {
+		mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+		mes "อุปกรณ์ของท่านไม่มีหินเอฟเฟค";
+		close;	
+	}
+	
+	switch( .@card0 ) {
+		case 4807:
+				.@reward = 6908;
+		break;
+	}
+
+	mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+	mes "ท่านต้องการถอดหินออฟคอสตูมจาก";
+	mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+	mes "หินเอฟเฟคคือ";
+	mes "<ITEM>"+getitemname(.@card0)+"<INFO>"+.@card0+"</INFO></ITEM>";
+	mes "ใช่หรือไม";
+	menu 
+	
+	"^FF0000•^000000 ตกลง",topcard0yes,
+	"^FF0000•^000000 ยกเลิก",ex;
+	
+topcard0yes:
+	delequip .@part;
+	getitem2 .@item,1,1,0,0,0,.@card1,.@card2,.@card3;
+//	getitem .@reward,1;
+	end;
+	
+topcard3:
+	next;	
+	if(!getequipisequiped(.@part)) {
+		mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+		mes "ท่านไม่ได้สวมใส่อุปกรณ์";
+		close;	
+	}
+	
+	if(.@card3 < 1) {
+		mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+		mes "อุปกรณ์ของท่านไม่มีหินเอฟเฟค";
+		close;	
+	}
+	
+	switch( .@card3 ) {
+		case 29041:
+				.@reward = 25058;
+		break;
+		case 29142:
+				.@reward = 25206;
+		break;
+		case 3500007:
+				.@reward = 3510007;
+		break;
+		case 3500008:
+				.@reward = 3510008;
+		break;
+	}
+
+	mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+	mes "ท่านต้องการถอดหินออฟคอสตูมจาก";
+	mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+	mes "หินเอฟเฟคคือ";
+	mes "<ITEM>"+getitemname(.@card3)+"<INFO>"+.@card3+"</INFO></ITEM>";
+	mes "ใช่หรือไม";
+	menu 
+	
+	"^FF0000•^000000 ตกลง",topcard3yes,
+	"^FF0000•^000000 ยกเลิก",ex;
+	
+topcard3yes:
+	next;
+	mes "[รีเซ็ตออฟคอสตูมอาวุธ]";
+	if(#CASHPOINTS < 1000) {
+	mes "มีค่าบริการ 1,000 Cash";
+	close;
+	}
+	#CASHPOINTS -= 1000;
+	delequip .@part;
+	getitem2 .@item,1,1,0,0,.@card0,.@card1,.@card2,0;
+	getitem .@reward,1;
+	end;
+
+
+ex:
+end;
+
+
+Oninit:
+	waitingroom "รีเซ็ตออฟคอสตูมอาวุธ",0;
+end;
+
+
+}

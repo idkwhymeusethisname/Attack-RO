@@ -1,0 +1,45 @@
+function	script	2kbox	{
+
+setarray .OTH_ITEMLIST[0],32036,32035,32030,32041;
+setarray .COSN_ITEMLIST[0],32036,32035,32030,32041;
+setarray .RARE_ITEMLIST[0],32036,32035,32030,32041;
+setarray .min_amount,1;
+setarray .max_amount,1;
+ 
+    set .rand, rand(0,100);
+    switch(.rand){
+        case 54:
+			specialeffect2 90;
+			progressbar "ffff00",1;
+            set .Random, rand( getarraysize( .RARE_ITEMLIST ) );
+            getitem .RARE_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] เปิด 2k Promotion Box ได้รับ "+getitemname(.RARE_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+        break;
+       
+       
+        case 19: case 71: case 24:
+			specialeffect2 90;
+			progressbar "ffff00",1;
+            set .Random, rand( getarraysize( .COSN_ITEMLIST ) );
+            getitem .COSN_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] เปิด 2k Promotion Box ได้รับ "+getitemname(.COSN_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+        break;
+       
+        default:
+            set .@amount,rand( .min_amount[.@random],.max_amount[.@random] );
+            set .Random, rand( getarraysize( .OTH_ITEMLIST ) );
+        if ( .OTH_ITEMLIST[ .Random ] == 32036 || .OTH_ITEMLIST[ .Random ] == 32036 ) {
+			specialeffect2 90;
+			progressbar "ffff00",1;
+            getitem .OTH_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] เปิด 2k Promotion Box ได้รับ "+getitemname(.OTH_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+            } else {
+			specialeffect2 90;
+			progressbar "ffff00",1;
+            getitem .OTH_ITEMLIST[ .Random ], .@amount;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] เปิด 2k Promotion Box ได้รับ "+getitemname(.OTH_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+        }
+        break;
+    }
+ 
+}

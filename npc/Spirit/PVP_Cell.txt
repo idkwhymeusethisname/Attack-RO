@@ -1,0 +1,12 @@
+-	script	Cell PVP Test	-1,{
+	end;
+	OnInit:
+		if (strnpcinfo(0) == "Cell PVP Test")
+			setcell "mooc",	150,	75,	185,	48,	CELL_PVP,	1;
+		end;
+}
+// Deathmatch Script
+-	script	deathmatch_core	-1,{
+	sc_start 30,300000,10;
+	sc_start 32,300000,10;
+}

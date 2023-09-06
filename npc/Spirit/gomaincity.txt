@@ -1,0 +1,46 @@
+//=-=-=-=-=-=-=-= Script by ColoExpress =-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-= 2010 - 2011 Develop present =-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-= Powered By www.coloexpress.in.th =-=-=-=-=-=-=-=
+-	script	gomaincity	-1,{
+	callfunc	"gomaincity1";
+OnInit:
+    waitingroom "[•] ไปเมืองหลัก",0;    
+end;
+}
+
+function	script	gomaincity1	{
+	mes "เมื่อเจ้าเข้าสู่เมืองหลัก";
+	mes "เจ้าจะต้องแข็งแกร่งเพื่ออยู่รอด";
+    mes "โลกนี้ไม่มีที่ยืนสำหรับคนอ่อนแอ";
+	next;
+	switch (select(
+		"เข้าสู่เมืองหลัก  [ "+getmapusers("mooc")+" ] คน."))
+	{
+	case 1:
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_POEMBRAGI;
+		sc_end SC_APPLEIDUN;
+		sc_end SC_ASSNCROS;
+		sc_end SC_SKE;
+		sc_end SC_KAITE;
+		sc_end SC_SWOO;
+		sc_end SC_SKA;
+		sc_end SC_BATTLEORDERS;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+			warp "mooc",160,93;
+            savepoint "mooc",160,93,1,1;
+			break;
+	}
+	end;
+}

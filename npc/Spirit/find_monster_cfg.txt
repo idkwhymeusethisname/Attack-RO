@@ -1,0 +1,25 @@
+//==============================================
+// - Script By : TheLordofdirTB teerawutdir@hotmail.com
+// - Script City : Thailand 
+// - Script Support Server : rAthena & eAthena
+//==============================================
+-	script	CfgFindMonster	-1,{
+	end;
+	
+OnInit:
+	// Database
+	set $@FINMB_db$,"rospirit_sql";
+	
+	setarray $@FINMB_az_db$[0],
+		"A","B","C","D","E","F","G","H","I","J","K","L","M",
+		"N","O","P","Q","R","S","T","U","V","W","X","Y","Z";
+	
+	
+	//=======================================================================================================
+	set .@size,getarraysize($@FINMB_az_db$);
+	for (set .@i,0; .@i < .@size; set .@i,.@i+1)
+	{
+		set $@FINMB_az_menu$,$@FINMB_az_menu$+"- "+$@FINMB_az_db$[.@i]+":";
+	}
+	end;
+}

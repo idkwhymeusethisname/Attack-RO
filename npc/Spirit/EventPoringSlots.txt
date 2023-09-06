@@ -1,0 +1,275 @@
+-	script	PoringSlotsCh	-1,{end;}
+mooc,116,112,3	duplicate(PoringSlotsCh)	#001	3993
+mooc,116,110,3	duplicate(PoringSlotsCh)	#002	3993
+mooc,116,108,3	duplicate(PoringSlotsCh)	#003	3995
+mooc,116,106,3	duplicate(PoringSlotsCh)	#004	3994
+mooc,116,104,3	duplicate(PoringSlotsCh)	#005	3993
+
+mooc,118,104,3	duplicate(PoringSlotsCh)	#006	1120
+mooc,120,104,3	duplicate(PoringSlotsCh)	#007	3993
+mooc,122,104,3	duplicate(PoringSlotsCh)	#008	3996
+mooc,124,104,3	duplicate(PoringSlotsCh)	#009	3993
+mooc,126,104,3	duplicate(PoringSlotsCh)	#010	3994
+mooc,128,104,3	duplicate(PoringSlotsCh)	#011	3995
+mooc,130,104,3	duplicate(PoringSlotsCh)	#012	3993
+mooc,132,104,3	duplicate(PoringSlotsCh)	#013	3993
+mooc,134,104,3	duplicate(PoringSlotsCh)	#014	3994
+mooc,136,104,3	duplicate(PoringSlotsCh)	#015	3993
+
+mooc,136,106,3	duplicate(PoringSlotsCh)	#016	3995
+mooc,136,108,3	duplicate(PoringSlotsCh)	#017	3993
+mooc,136,110,3	duplicate(PoringSlotsCh)	#018	3994
+mooc,136,112,3	duplicate(PoringSlotsCh)	#019	3993
+mooc,134,112,3	duplicate(PoringSlotsCh)	#020	1120
+
+mooc,132,112,3	duplicate(PoringSlotsCh)	#021	3993
+mooc,130,112,3	duplicate(PoringSlotsCh)	#022	3995
+mooc,128,112,3	duplicate(PoringSlotsCh)	#023	3994
+mooc,126,112,3	duplicate(PoringSlotsCh)	#024	3993
+mooc,124,112,3	duplicate(PoringSlotsCh)	#025	3997
+mooc,122,112,3	duplicate(PoringSlotsCh)	#026	3994
+mooc,120,112,3	duplicate(PoringSlotsCh)	#027	3993
+mooc,118,112,3	duplicate(PoringSlotsCh)	#028	3996
+
+mooc,116,112,0	script	PoringSlotsPoint	45,1,1,{}
+
+-	script	PoringSlotsSetter	-1,{
+OnInit:
+setarray	$PoringSlotsX,116,116,116,116,116,118,120,122,124,126,128,130,132,134,136,136,136,136,136,134,132,130,128,126,124,122,120,118;
+setarray	$PoringSlotsY,112,110,108,106,104,102,102,102,102,102,102,102,102,102,102,104,106,108,110,112,112,112,112,112,112,112,112,112;
+
+set $@PoringSlotsPlaying,0;
+set $@PoringSlotsRunning,0;
+donpcevent "PoringSlotsChoose#01::OnResetRoom";
+donpcevent "PoringSlotsChoose#02::OnResetRoom";
+donpcevent "PoringSlotsChoose#03::OnResetRoom";
+donpcevent "PoringSlotsChoose#04::OnResetRoom";
+donpcevent "PoringSlotsChoose#05::OnResetRoom";
+end;
+}
+
+
+mooc,123,108,4	script	PoringSlotsPlay	563,{
+//mooc,93,145,4	script	PoringSlotsPlay	563,{
+goto PLZ_Main;
+
+PLZ_Main:
+	mes "^FF0000[ PoringSlots ]^000000";
+	mes "- ยินดีต้อนรับเซียนทุกๆท่าน";
+	mes "- ท่านจะให้ข้าหมุนแล้วหรือยัง";
+	mes "- ท่านต้องเสีย ^00AA55"+getitemname(7539)+"^000000";
+	mes "- จำนวน [ ^9900FF5^000000 ]  เหรียญ ให้แก่ข้า";
+	next;
+	if(select("- หมุนเลย","- ยังก่อน")==2)
+		close;
+	if($@PoringSlotsPlaying==1){
+		mes "^FF0000[ PoringSlots ]^000000";
+		mes "ตอนนี้ข้าหมุนให้แล้วกรุณารอสักหน่อย";
+		close;
+	}
+	if(countitem(7539)<5){
+		mes "^FF0000[ PoringSlots ]^000000";
+		mes "ท่านมีเหรียญไม่พอ";
+		close;
+	}
+	delitem 7539,5;
+	announce "[ PoringSlots ] : ขณะนี้มีผู้เปิด PoringSlots แล้ว อีก 1 นาทีจะทำการหมุนวงล้อแล้ว",8;
+	mes "^FF0000[ PoringSlots ]^000000";
+	mes "ตอนนี้ข้าเริ่มกิจกรรให้ท่านแล้วหล่ะ";
+	donpcevent "PoringSlotsPlay::OnPoringSlotsAnnounce";
+	close;
+end;
+
+OnPoringSlotsAnnounce:
+	set $@PoringSlotsPlaying,1;
+	sleep 10000;
+	npctalk "ท่านใดแทงเอาไว้ได้ถูกต้อง รีบไปรับรางวัลด้วยหล่ะ";
+	sleep 10000;
+	npctalk "ท่านใดยังไม่ได้แทงรีบแทงเข้าหล่ะ มีเวลาอีก 40 วินาที";
+	sleep 10000;
+	npctalk "ตอนนี้เหลือเวลาอีกเพียง 30 วินาทีแล้ว";
+	sleep 10000;
+	npctalk "เหลือเวลาอีก 20 วินาทีสุดท้าย";
+	sleep 10000;
+	npctalk "ข้าจะนับถอยหลัง 10 วินาที";	
+	sleep 1000;npctalk "9";
+	sleep 1000;npctalk "8";
+	sleep 1000;npctalk "7";
+	sleep 1000;npctalk "6";
+	sleep 1000;npctalk "5";
+	sleep 1000;npctalk "4";
+	sleep 1000;npctalk "3";
+	sleep 1000;npctalk "2";
+	sleep 1000;npctalk "1";
+	sleep 1000;npctalk "เริ่มหมุนได้แล้ว ณ บัดนี้";	
+	donpcevent "PoringSlotsPlay::OnPoringSlotsPlaying";
+end;
+
+OnPoringSlotsPlaying:
+	set $@PoringSlotsRunning,1;
+	set $PoringSlotsRound,$PoringSlotsRound+1;
+	set $@PoringSlotsSpeed,10;
+	for(set $@PoringSlotsRound,0;$@PoringSlotsRound<8;set $@PoringSlotsRound,$@PoringSlotsRound+1){
+		set $@PoringSlotsTemp,rand(20,40);
+		for(set $@i,0;$@i<$@PoringSlotsTemp;set $@i,$@i+1){
+			movenpc "PoringSlotsPoint",$PoringSlotsX[$@PoringSlotsPoint],$PoringSlotsY[$@PoringSlotsPoint];
+			set $@PoringSlotsPoint,$@PoringSlotsPoint+1;
+			if($@PoringSlotsPoint>=28)
+				set $@PoringSlotsPoint,0;
+			sleep $@PoringSlotsSpeed;
+		}
+		set $@PoringSlotsSpeed,$@PoringSlotsSpeed+10;
+	}
+	set $@PoringSlotsTemp,rand(5,10);
+	for(set $@i,0;$@i<$@PoringSlotsTemp;set $@i,$@i+1){
+		movenpc "PoringSlotsPoint",$PoringSlotsX[$@PoringSlotsPoint],$PoringSlotsY[$@PoringSlotsPoint];
+		set $@PoringSlotsPoint,$@PoringSlotsPoint+1;
+		if($@PoringSlotsPoint>=28)
+			set $@PoringSlotsPoint,0;
+		set $@PoringSlotsSpeed,$@PoringSlotsSpeed+100;
+		sleep $@PoringSlotsSpeed;
+	}
+	set $@PoringSlotsTemp,rand(8,15);
+	for(set $@i,0;$@i<$@PoringSlotsTemp;set $@i,$@i+1){
+		movenpc "PoringSlotsPoint",$PoringSlotsX[$@PoringSlotsPoint],$PoringSlotsY[$@PoringSlotsPoint];
+		set $@PoringSlotsPoint,$@PoringSlotsPoint+1;
+		if($@PoringSlotsPoint>=28)
+			set $@PoringSlotsPoint,0;
+		set $@PoringSlotsSpeed,$@PoringSlotsSpeed+500;
+		sleep $@PoringSlotsSpeed;
+	}
+	switch($@PoringSlotsPoint){
+		case 6:case 20:
+			set $FSC_Win,0;break;
+		case 1:case 2:case 5:case 7:case 9:case 12:case 13:case 15:case 17:case 19:case 21:case 24:case 27:
+			set $FSC_Win,1;break;
+		case 4:case 10:case 14:case 18:case 23:case 26:
+			set $FSC_Win,2;break;
+		case 3:case 11:case 16:case 22:
+			set $FSC_Win,3;break;
+		case 8:case 0:
+			set $FSC_Win,4;break;
+		case 25:
+			set $FSC_Win,5;break;
+	}
+	specialeffect 68;
+	donpcevent "PoringSlotsChoose#01::OnResetRoom";
+	donpcevent "PoringSlotsChoose#02::OnResetRoom";
+	donpcevent "PoringSlotsChoose#03::OnResetRoom";
+	donpcevent "PoringSlotsChoose#04::OnResetRoom";
+	donpcevent "PoringSlotsChoose#05::OnResetRoom";
+	donpcevent "PoringSlotsChoose#0"+$FSC_Win+"::OnEffect";
+	set $@PoringSlotsPlaying,0;
+	set $@PoringSlotsRunning,0;
+end;
+
+}
+
+function	script	FuncPoringSlotsChoose	{
+
+	if($@PoringSlotsRunning==1){
+		mes "^FF0000[ PoringSlots ]^000000";
+		mes "- ตอนนี้กำลังดำเนินการหมุน";
+		mes "- กรุณารอสักหน่อยนะ";
+		close;
+		end;
+	}
+
+	set .@FSC_Poring,getarg(0);
+	set .@FSC_GetPoint,getarg(1);
+
+	if(getd("FSC_Coin"+.@FSC_Poring)>0){
+		if(getd("PoringSlotsRound"+.@FSC_Poring)==$PoringSlotsRound-1&&.@FSC_Poring==$FSC_Win){
+			set .@FSC_Temp,getd("FSC_Coin"+.@FSC_Poring)*.@FSC_GetPoint;
+			getitem 7539,.@FSC_Temp;
+			setd "FSC_Coin"+.@FSC_Poring,0;
+			mes "^FF0000[ PoringSlots ]^000000";
+			mes "- ยินดีด้วยท่านได้รับ ^00AA55"+getitemname(7539)+"^000000";
+			mes "- เป็นจำนวน [ ^AA3366"+.@FSC_Temp+"^000000 ]";
+			next;
+		}
+	}
+	mes "^FF0000[ PoringSlots ]^000000";
+	mes "- แทง 1 ได้คืน ^0000FF"+.@FSC_GetPoint+"^000000";
+	mes "- ต้องใช้ ^00AA55"+getitemname(7539)+"^000000 ในการแทง";
+	if(getd("FSC_Coin"+.@FSC_Poring)!=0&&getd("PoringSlotsRound"+.@FSC_Poring)==$PoringSlotsRound){
+		mes "- ท่านแทงตัวนี้ไว้แล้ว [ ^AA3333"+getd("FSC_Coin"+.@FSC_Poring)+"^000000 ]";
+		mes "- ท่านไม่สามารถแทงได้อีก";
+		close;
+	}
+	mes "- ท่านยัง^FF0000ไม่ได้^000000แทงตัวนี้";
+	mes "- ท่านต้องการจะแทงเท่าไหร่";
+	mes "^FF0000*คำเตือน เหรียญจะมีในตัวได้ไม่เกิน 30,000อัน^000000";
+	next;
+	input .@FSC_Input;
+	mes "^FF0000[ PoringSlots ]^000000";
+	mes "- ท่านยืนยันจะแทงจำนวน [ ^2244BB"+.@FSC_Input+"^000000 ] ใช่มั้ย";
+	next;
+	if(select("- ถูกต้อง","- ช้าก่อนข้าขอคิดใหม่")==2)
+		close;
+	if(countitem(7539)<.@FSC_Input){
+		mes "^FF0000[ PoringSlots ]^000000";
+		mes "- เจ้ามี  [ ^2244BB"+getitemname(7539)+"^000000 ] ไม่พอ";
+		mes "- เจ้าไปหาซื้อให้พอก่อน";
+		close;
+		return;
+	}
+	if(.@FSC_Input==0){
+		mes "^FF0000[ PoringSlots ]^000000";
+		mes "- กรุณาแทงอย่างต่ำที่สุด ^0000FF1^000000 ชิ้น";
+		close;
+		return;
+	}
+	delitem 7539,.@FSC_Input;
+	setd "FSC_Coin"+.@FSC_Poring,.@FSC_Input;
+	delwaitingroom "PoringSlotsChoose#0"+.@FSC_Poring;
+	setd "$FSC_Coin"+.@FSC_Poring,getd("$FSC_Coin"+.@FSC_Poring)+.@FSC_Input;
+	setd "$FSC_Player"+.@FSC_Poring,getd("$FSC_Player"+.@FSC_Poring)+1;
+	waitingroom "คนแทง [ "+getd("$FSC_Player"+.@FSC_Poring)+" ] รวม [ "+getd("$FSC_Coin"+.@FSC_Poring)+" ]",0;
+	setd "PoringSlotsRound"+.@FSC_Poring,$PoringSlotsRound;
+	
+	mes "^FF0000[ PoringSlots ]^000000";
+	mes "- ข้ารับแทงไว้เรียบร้อยแล้ว";
+	mes "- หากท่านแทงได้ถูกต้อง";
+	mes "- ให้มารับก่อนจะเริ่มหมุนรอบต่อไป";
+	close;
+return;
+
+}
+
+mooc,104,111,3	script	PoringSlotsChoose#01	3993,{
+callfunc("FuncPoringSlotsChoose",1,2);
+end;
+OnEffect:for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){specialeffect 68;sleep 500;}end;
+OnResetRoom:delwaitingroom "PoringSlotsChoose#01";set $FSC_Coin1,0;set $FSC_Player1,0;waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+OnInit:waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+}
+mooc,104,107,3	script	PoringSlotsChoose#02	3994,{
+callfunc("FuncPoringSlotsChoose",2,5);
+end;
+OnEffect:for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){specialeffect 68;sleep 500;}end;
+OnResetRoom:delwaitingroom "PoringSlotsChoose#02";set $FSC_Coin2,0;set $FSC_Player2,0;waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+OnInit:waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+}
+mooc,104,103,3	script	PoringSlotsChoose#03	3995,{
+callfunc("FuncPoringSlotsChoose",3,7);
+end;
+OnEffect:for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){specialeffect 68;sleep 500;}end;
+OnResetRoom:delwaitingroom "PoringSlotsChoose#03";set $FSC_Coin3,0;set $FSC_Player3,0;waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+OnInit:waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+}
+mooc,110,109,3	script	PoringSlotsChoose#04	3996,{
+callfunc("FuncPoringSlotsChoose",4,13);
+end;
+OnEffect:for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){specialeffect 68;sleep 500;}end;
+OnResetRoom:delwaitingroom "PoringSlotsChoose#04";set $FSC_Coin4,0;set $FSC_Player4,0;waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+OnInit:waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+}
+mooc,110,105,3	script	PoringSlotsChoose#05	3997,{
+callfunc("FuncPoringSlotsChoose",5,25);
+end;
+OnEffect:for(set $@FSC_i,1;$@FSC_i<15;set $@FSC_i,$@FSC_i+1){specialeffect 68;sleep 500;}end;
+OnResetRoom:delwaitingroom "PoringSlotsChoose#05";set $FSC_Coin5,0;set $FSC_Player5,0;waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+OnInit:waitingroom"คนแทง [ 0 ] รวม [ 0 ]",0;end;
+}
+

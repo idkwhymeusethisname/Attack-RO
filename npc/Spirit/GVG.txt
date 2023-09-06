@@ -1,0 +1,136 @@
+-	script	gvg01	-1,{
+	callfunc	"wgvg";
+end;
+}
+
+function	script	wgvg	{
+
+	mes "The War OF Emperium!";
+	mes "เจ้าจะต้องแข็งแกร่งขึ้นเพื่ออยู่รอด";
+	mes "โลกนี้ไม่มีที่ยืนสำหรับคนอ่อนแอ";
+	next;
+	menu 
+	//"^FF0000[ "+getmapusers("aldeg_cas04.gat")+" ]^000000 - ตะลุมบอน ( เปิดทุกวอ )",map1,
+//	"^FF0000[ "+getmapusers("payg_cas04.gat")+" ]^000000 - Sacred Altar",map2,
+//	"^FF0000[ "+getmapusers("prtg_cas03.gat")+" ]^000000 Fadhgridh บ้าน Status ไม่เกิน 400",map3,
+//	"^FF0000[ "+getmapusers("gefg_cas04.gat")+" ]^000000 - Bergel",map4,
+//	"^FF0000[ "+getmapusers("payg_cas01.gat")+" ]^000000 - Bright Arbor",map5,
+	"Repherion บ้าน Status ไม่เกิน 400",map6,
+//	"^FF0000[ "+getmapusers("payg_cas03.gat")+" ]^000000 - Holy Shadow",map7,
+//	"^FF0000[ "+getmapusers("gefg_cas02.gat")+" ]^000000 - Eeyolbriggar",map8,
+//	"^FF0000[ "+getmapusers("aldeg_cas05.gat")+" ]^000000 - Rothenburg",map9,
+//	"^FF0000[ "+getmapusers("aldeg_cas03.gat")+" ]^000000 - Nuenburg",map10,
+	"Skoegul ไม่จำกัด Status",map11,
+	"เรียกลูกกิลด์",recall_guild,
+	"เรียก Party",recall_party;
+	//"^FF0000[ "+getmapusers("prtg_cas01.gat")+" ]^000000 - สำหรับ BaBy",map12
+
+recall_party:
+atcommand "@partyrecall "+strcharinfo(1);
+close;
+
+recall_guild:
+
+	if( getgdskilllv( getcharid(2), 10013 ) < 1 ) {
+		mes "เฉพาะหัวกิลด์ & ต้องมี Skill ด้วย";
+		close;
+	}
+	set .@GID, getcharid(2);
+
+	if ( strcharinfo(0) == getguildmaster( .@GID ) ) {
+
+		mes "ยินดีให้บริการค่ะ";
+		mes "Guild "+ getguildname(.@GID) +"";
+		mes "คุณต้องการเรียกรวมกิลด์";
+		next;
+
+		menu "^ff0000•^000000 แน่นอน",-,"^ff0000•^000000 ไม่ละ",cancel;
+
+		atcommand "@guildrecall "+ getcharid(2);
+		close;
+
+	}else{
+		mes "คุณไม่ใช่หัวหน้ากิลด์";
+	}
+close;
+
+cancel:
+		mes "ยินดีให้บริการค่ะ";
+	close;
+
+map1:
+	warp "alde_gld.gat",235,243;
+	close;
+map2:
+	warp "pay_gld.gat",140,165;
+	close;
+map3:
+	warp "prt_gld.gat",153,134;
+	close;
+map4:
+	warp "gef_fild13.gat",191,276;
+	close;
+map5:
+	warp "pay_gld.gat",121,233;
+	close;
+map6:
+	warp "gef_fild13.gat",156,48;
+	close;
+map7:
+	warp "pay_gld.gat",312,294;
+	close;
+map8:
+	warp "gef_fild13.gat",308,237;
+	close;
+map9:
+	warp "alde_gld.gat",270,90;
+	close;
+map10:
+	warp "alde_gld.gat",141,89;
+	close;
+map11:
+	warp "prt_gld.gat",118,239;
+	close;
+map12:
+	warp "prt_gld.gat",142,65;
+	close;
+}
+
+mooc,167,97,4	duplicate(gvg01)	สงครามชิงปราสาท#1	966
+mooc,41,80,6	duplicate(gvg01)	สงครามชิงปราสาท#2	966
+mooc,43,135,3	duplicate(gvg01)	สงครามชิงปราสาท#3	966
+mooc,82,277,4	duplicate(gvg01)	สงครามชิงปราสาท#4	966
+mooc,252,277,4	duplicate(gvg01)	สงครามชิงปราสาท#5	966
+mooc,295,220,4	duplicate(gvg01)	สงครามชิงปราสาท#6	966
+mooc,249,141,4	duplicate(gvg01)	สงครามชิงปราสาท#7	966
+mooc,254,38,3	duplicate(gvg01)	สงครามชิงปราสาท#8	966
+mooc,177,176,3	duplicate(gvg01)	สงครามชิงปราสาท#9	966
+//prontera,164,182,4	duplicate(gvg01)	สงครามชิงปราสาท#2	10269
+//alberta,63,244,4	duplicate(gvg01)	สงครามชิงปราสาท#3	10269
+//aldebaran,146,114,4	duplicate(gvg01)	สงครามชิงปราสาท#4	10269
+//amatsu,212,103,4	duplicate(gvg01)	สงครามชิงปราสาท#5	10269
+//comodo,217,143,4	duplicate(gvg01)	สงครามชิงปราสาท#6	10269
+//geffen,129,59,4	duplicate(gvg01)	สงครามชิงปราสาท#7	10269
+//izlude,138,127,4	duplicate(gvg01)	สงครามชิงปราสาท#8	10269
+//xmas,157,133,4	duplicate(gvg01)	สงครามชิงปราสาท#9	10269	
+//morocc,168,93,4	duplicate(gvg01)	สงครามชิงปราสาท#10	10269	
+//payon,194,97,4	duplicate(gvg01)	สงครามชิงปราสาท#11	10269	
+//yuno,166,83,4	duplicate(gvg01)	สงครามชิงปราสาท#12	10269	
+//mooc,247,89,4	duplicate(gvg01)	สงครามชิงปราสาท#13	10269	
+
+gefg_cas01	mapflag	loadevent
+
+-	script	antistats_gvg	-1,{
+OnPCLoadMapEvent:
+getmapxy ( .@map$,.@x,.@y,0 );
+if( .@map$ == "gefg_cas01" && (readparam(bStr)>401 || readparam(bAgi)>401 || readparam(bVit)>401 || readparam(bInt)>401 || readparam(bDex)>401 || readparam(bLuk)>401)) goto needjob11;
+end;
+needjob11:
+mes "เจ้ามีสเตตัสมากไป";
+mes "ต้องการสเตตัสไม่เกิน ^FF00001 ~ 400^000000";
+mes "เราจะส่งท่านกลับจุดเกิดของท่าน";
+next;
+warp "mooc",161,94;
+end;
+//////////////////////////////////////////////////////////////
+}

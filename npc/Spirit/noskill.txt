@@ -1,0 +1,7 @@
+-	script	NoSkill	-1,{
+
+OnInit:
+	setcell "mooc",89,144,251,79,cell_landprotector,1;
+	end;
+
+}

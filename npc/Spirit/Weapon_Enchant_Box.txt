@@ -1,0 +1,37 @@
+function	script	SKILL_SCROLL	{
+
+setarray .OTH_ITEMLIST[0],40556,40583,40588,40600,40601,40602,40603,40604,40605,40606,40607,40608,40609,40610,40611,40612,40613,40614,40715,40716,40717,40718,40719,40720,40721,40722,40723,40724,40725,40726,40727,40729,40731;
+setarray .COSN_ITEMLIST[0],40552,40555,40558,40560,40561,40562,40563,40566,40569,40570,40572,40574,40575,40576,40577,40578,40580,40587,40589,40590,40594,40595,40599;
+setarray .RARE_ITEMLIST[0],40553,40554,40557,40559,40564,40565,40567,40568,40571,40573,40579,40581,40582,40584,40585,40586,40591,40592,40593,40596,40597,40598,40728,40730;
+setarray .min_amount,1;
+setarray .max_amount,1;
+ 
+    set .rand, rand(0,100);
+    switch(.rand){
+        case 54:
+            set .Random, rand( getarraysize( .RARE_ITEMLIST ) );
+            getitem .RARE_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] ได้ทำการเปิด Weapon Enchant Box ได้รับ "+getitemname(.RARE_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+        break;
+       
+       
+        case 19: case 71: case 24:
+            set .Random, rand( getarraysize( .COSN_ITEMLIST ) );
+            getitem .COSN_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] ได้ทำการเปิด Weapon Enchant Box ได้รับ "+getitemname(.COSN_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+        break;
+       
+        default:
+            set .@amount,rand( .min_amount[.@random],.max_amount[.@random] );
+            set .Random, rand( getarraysize( .OTH_ITEMLIST ) );
+        if ( .OTH_ITEMLIST[ .Random ] == 12913 || .OTH_ITEMLIST[ .Random ] == 12914 ) {
+            getitem .OTH_ITEMLIST[ .Random ], 1;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] ได้ทำการเปิด Weapon Enchant Box ได้รับ "+getitemname(.OTH_ITEMLIST[ .Random ])+" ",bc_all,0xFF0000;
+            } else {
+            getitem .OTH_ITEMLIST[ .Random ], .@amount;
+            announce "ผู้เล่น ["+strcharinfo(0)+"] ได้ทำการเปิด Weapon Enchant Box ได้รับ "+getitemname(.OTH_ITEMLIST[ .Random ])+" จำนวน "+.@amount+" ea. ",bc_all,0x00FF00;
+        }
+        break;
+    }
+ 
+}

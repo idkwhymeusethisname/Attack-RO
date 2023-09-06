@@ -1,0 +1,484 @@
+/*f_islava	mapflag	nobranch
+f_islava	mapflag	noicewall
+f_islava	mapflag	nomemo
+f_islava	mapflag	noreturn
+f_islava	mapflag	noteleport
+f_islava	mapflag	nowarpto
+f_islava	mapflag	nowarp
+f_islava	mapflag	pvp	off
+f_islava	mapflag	nosave
+f_islava	mapflag	noexppenalty;
+f_islava	mapflag	noskill;*/
+
+prontera,155,170,4	script	Floor is Lava#entrace	4_M_NINJA_RED,{
+    cutin "aca_ninja_h",2;
+	if(getgroupid() == 99 && !$@fil_access){
+		mes .name$;
+		mes "Hello boss, do you want to start Floor is Lava??";
+		if(select("No:Yes")==2){
+			mes "I will start Floor is Lava now!";
+			donpcevent "Floor is Lava#control::OnStart";
+		}else
+			mes "It's ok.";
+		next;
+	}
+
+	if( $@fil_access != 1 ) {
+		mes .name$;
+		mes "Floor is Lava event is over.";
+		mes "Floor is Lava event starts manually by a GM.";
+        mes "Stay tuned for when the next one starts!";
+	    close2;
+        cutin "",255;
+        end;
+	}
+	mes .name$;
+	mes "Do you want to participate in Floor is Lava event?";
+	if(select("Yes:No") == 2){;
+        mes " ";
+        mes "See you next time!";
+        close2;
+        cutin "",255;
+        end;
+    }
+	close2;
+    cutin "",255;
+	warp "f_islava",82,82;
+    set $@fil_bidders[getarraysize($@fil_bidders)],getcharid(3);
+    if(checkriding())
+        setriding 0;
+    if(ismounting())
+        setmounting;
+    sc_end SC_INCREASEAGI;
+    sc_end SC_BERSERK;
+    sc_end SC_WINDWALK;
+    sc_end SC_CARTBOOST;
+	end;
+
+OnInit:
+    .name$ = "[ ^0000FF"+strnpcinfo(1)+"^000000 ]";
+    end;
+}
+
+-	script	Floor is Lava#control	-1,{
+OnInit:
+    // Reward item ID
+    .fil_itemID = 7539;
+
+    .fil_winner$ = "";
+    $@fil_bidders = 0;
+    $@fil_access = 0;
+    end;
+    
+OnStart:
+    $@fil_access = 1;
+    announce "[Floor is Lava] The event will start in 5 minutes.",bc_all,0xFF7C54;
+    sleep 6000;
+	//sleep 60000;
+    announce "[Floor is Lava] The event will start in 4 minutes, the entrance is already open in Prontera!",bc_all,0xFF7C54;
+    sleep 6000;
+	//sleep 60000;
+    announce "[Floor is Lava] The event will start in 3 minutes.",bc_all,0xFF7C54;
+    sleep 6000;
+	//sleep 60000;
+    announce "[Floor is Lava] The event will start in 2 minutes, the entrance is already open in Prontera!",bc_all,0xFF7C54;
+    sleep 6000;
+	//sleep 60000;
+    announce "[Floor is Lava] The event will start in 1 minutes.",bc_all,0xFF7C54;
+    sleep 3000;
+	//sleep 30000;
+    announce "[Floor is Lava] The event will start soon.",bc_all,0xFF7C54;
+    sleep 3000;
+	//sleep 30000;
+	initnpctimer;
+	end;
+
+OnTimer500:
+	$@fil_access = 2;
+	mapannounce "f_islava","[Floor is Lava] The event is about to start. Avoid the red squares on the floor!",bc_map,0xFF7C54;
+    end;
+
+OnTimer3000:
+	mapannounce "f_islava","[Floor is Lava] Get ready...",bc_map,0xFF7C54;
+    end;
+ 
+OnTimer4000:
+	mapannounce "f_islava","[Floor is Lava] Get set...",bc_map,0xFF7C54;
+    end;
+
+OnTimer5000:
+	mapannounce "f_islava","[Floor is Lava] Go!",bc_map,0xFF7C54;
+    end;
+
+OnTimer6000:
+	stopnpctimer;
+    if(!getarraysize($@fil_bidders)){
+        mapannounce "f_islava","[Floor is Lava] The event did not start due to lack of players.",bc_map,0xFF7C54;
+        $@fil_access = 0;
+        end;
+    }
+    // Round 1
+    mapannounce "f_islava","[Floor is Lava] 1st Wave !",bc_map,0xFF7C54;
+    for(.@i = 1; .@i <= 18; .@i ++){
+        donpcevent "lava_eff#1-"+.@i+"::OnEnable";
+    }
+    sleep 18000;
+    if(getarraysize($@fil_bidders) > 0){
+        mapannounce "f_islava","[Floor is Lava] There are "+getarraysize($@fil_bidders)+" players remaining !",bc_map,0xFF7C54;
+        for(set .@i,0; .@i<(getarraysize($@fil_bidders)); .@i++) {
+            getitem .fil_itemID,1,$@fil_bidders[.@i];
+        }
+    }else end;
+    sleep 5000;
+    // Round 2
+    mapannounce "f_islava","[Floor is Lava] 2nd Wave !",bc_map,0xFF7C54;
+    for(.@i = 1; .@i <= 12; .@i ++){
+        donpcevent "lava_eff#2-"+.@i+"::OnEnable";
+    }
+    sleep 11000;
+    for(.@i = 1; .@i <= 12; .@i ++){
+        donpcevent "lava_eff#2-"+.@i+"::OnEnable";
+    }
+    sleep 13000;
+    if(getarraysize($@fil_bidders) > 0){
+        mapannounce "f_islava","[Floor is Lava] There are "+getarraysize($@fil_bidders)+" players remaining !",bc_map,0xFF7C54;
+        for(set .@i,0; .@i<(getarraysize($@fil_bidders)); .@i++) {
+            getitem .fil_itemID,1,$@fil_bidders[.@i];
+        }
+    }else end;
+    sleep 5000;
+    // Round 3
+    mapannounce "f_islava","[Floor is Lava] 3rd Wave !",bc_map,0xFF7C54;
+    for(.@i = 1; .@i <= 12; .@i ++){
+        donpcevent "lava_eff#3-"+.@i+"::OnEnable";
+    }
+    sleep 11000;
+    for(.@i = 1; .@i <= 12; .@i ++){
+        donpcevent "lava_eff#3-"+.@i+"::OnEnable";
+    }
+    sleep 13000;
+    if(getarraysize($@fil_bidders) > 0){
+        mapannounce "f_islava","[Floor is Lava] There are "+getarraysize($@fil_bidders)+" players remaining !",bc_map,0xFF7C54;
+        for(set .@i,0; .@i<(getarraysize($@fil_bidders)); .@i++) {
+            getitem .fil_itemID,2,$@fil_bidders[.@i];
+        }
+    }else end;
+    sleep 5000;
+    // Round 4
+    mapannounce "f_islava","[Floor is Lava] 4th Wave !",bc_map,0xFF7C54;
+    donpcevent "lava_eff#4-0::OnEnable";
+    sleep 22000;
+    if(getarraysize($@fil_bidders) > 0){
+        mapannounce "f_islava","[Floor is Lava] There are "+getarraysize($@fil_bidders)+" players remaining !",bc_map,0xFF7C54;
+        for(set .@i,0; .@i<(getarraysize($@fil_bidders)); .@i++) {
+            getitem .fil_itemID,2,$@fil_bidders[.@i];
+        }
+    }else end;
+    sleep 5000;
+    .@round = 5;
+    while(getarraysize($@fil_bidders) > 1){
+        // Round 5+
+        mapannounce "f_islava","[Floor is Lava] "+.@round+"th Wave !",bc_map,0xFF7C54;
+        donpcevent "lava_eff#5-0::OnEnable";
+        sleep 27000;
+        if(getarraysize($@fil_bidders) > 0){
+            mapannounce "f_islava","[Floor is Lava] There are "+getarraysize($@fil_bidders)+" players remaining !",bc_map,0xFF7C54;
+            for(set .@i,0; .@i<(getarraysize($@fil_bidders)); .@i++) {
+                getitem .fil_itemID,3,$@fil_bidders[.@i];
+            }
+        }else end;
+        sleep 5000;
+        .@round++;
+    }
+    end;
+
+OnDie:
+    attachrid $@fil_die;
+    dispbottom "[Floor is Lava] What a pity, you lost.";
+    for(set .@i,0;.@i<(getarraysize($@fil_bidders));set .@i,.@i+1) {
+        if($@fil_bidders[.@i] == getcharid(3)){
+            deletearray $@fil_bidders[.@i],1;
+        }
+    }
+    //sleep2 2000;
+    //warp "prontera",156,165;
+    if(getarraysize($@fil_bidders) == 1){
+        .fil_winner$ = rid2name($@fil_bidders[0]);
+        attachrid($@fil_bidders[0]);
+        callsub OnWin;
+    }
+    end;
+
+OnPCLogoutEvent:
+    if(strcharinfo(3) == "f_islava" && $@fil_access){
+        $@fil_die = getcharid(3);
+        donpcevent "Floor is Lava#control::OnDie";
+    }
+    end;
+
+OnWin:
+	mapannounce "f_islava","[Floor is Lava] Congratulations, "+.fil_winner$+" won!",bc_map,0xFF7C54;
+	callsub OnReward;
+	sleep 5000;
+	mapwarp "f_islava","prontera",156,165;
+	announce "[Floor is Lava] The event is over, thanks to everyone who participated!",bc_all,0xFF7C54;
+    $@fil_access = 0;
+    $@fil_bidders = 0;
+	end;
+
+OnReward:
+    if( strcharinfo(0) == .fil_winner$) {  
+        dispbottom "[Floor is Lava] Congratulation, you won!";
+        getitem .fil_itemID,20;
+        emotion 21;
+    }
+    return;
+}
+
+/*
+function	script	FiL_Check	{
+    .@qtd = getareaunits(BL_PC,getarg(0),getarg(1)-2,getarg(2)-2,getarg(1)+2,getarg(2)+2,.@array[0]);
+    freeloop(1);
+    for(.@i=0;.@i<getarraysize(.@array);.@i++){
+        attachrid(.@array[.@i]);
+        if(Hp){
+            specialeffect2 721;
+            unitkill .@array[.@i];
+            $@fil_die = .@array[.@i];
+            donpcevent "Floor is Lava#control::OnDie";
+        }
+    }
+    freeloop(0);
+    return;
+}
+*/
+f_islava,68,70,0	script	lava_eff#1-1	139,{
+    end;
+
+OnEnable:
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+    if(.@mapy%10 == 0){
+        .@aux = 5;
+    }else{
+        .@aux = -5;
+    }
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    sleep 2500;
+    callfunc("FiL_Check", .@mapname$, .@mapx, .@mapy);
+    movenpc strnpcinfo(0),.@mapx + .@aux,.@mapy;
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    sleep 2500;
+    callfunc("FiL_Check", .@mapname$, .@mapx + .@aux, .@mapy);
+    movenpc strnpcinfo(0),.@mapx,.@mapy;
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    sleep 2500;
+    callfunc("FiL_Check", .@mapname$, .@mapx, .@mapy);
+    movenpc strnpcinfo(0),.@mapx + .@aux,.@mapy;
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    sleep 2500;
+    callfunc("FiL_Check", .@mapname$, .@mapx + .@aux, .@mapy);
+    movenpc strnpcinfo(0),.@mapx,.@mapy;
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    sleep 2500;
+    callfunc("FiL_Check", .@mapname$, .@mapx, .@mapy);
+    movenpc strnpcinfo(0),.@mapx + .@aux,.@mapy;
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    sleep 2500;
+    callfunc("FiL_Check", .@mapname$, .@mapx + .@aux, .@mapy);
+    movenpc strnpcinfo(0),.@mapx,.@mapy;
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1;
+    end;
+}
+
+f_islava,78,70,0	duplicate(lava_eff#1-1)	lava_eff#1-2	139
+f_islava,88,70,0	duplicate(lava_eff#1-1)	lava_eff#1-3	139
+f_islava,73,75,0	duplicate(lava_eff#1-1)	lava_eff#1-4	139
+f_islava,83,75,0	duplicate(lava_eff#1-1)	lava_eff#1-5	139
+f_islava,93,75,0	duplicate(lava_eff#1-1)	lava_eff#1-6	139
+f_islava,68,80,0	duplicate(lava_eff#1-1)	lava_eff#1-7	139
+f_islava,78,80,0	duplicate(lava_eff#1-1)	lava_eff#1-8	139
+f_islava,88,80,0	duplicate(lava_eff#1-1)	lava_eff#1-9	139
+f_islava,73,85,0	duplicate(lava_eff#1-1)	lava_eff#1-10	139
+f_islava,83,85,0	duplicate(lava_eff#1-1)	lava_eff#1-11	139
+f_islava,93,85,0	duplicate(lava_eff#1-1)	lava_eff#1-12	139
+f_islava,68,90,0	duplicate(lava_eff#1-1)	lava_eff#1-13	139
+f_islava,78,90,0	duplicate(lava_eff#1-1)	lava_eff#1-14	139
+f_islava,88,90,0	duplicate(lava_eff#1-1)	lava_eff#1-15	139
+f_islava,73,95,0	duplicate(lava_eff#1-1)	lava_eff#1-16	139
+f_islava,83,95,0	duplicate(lava_eff#1-1)	lava_eff#1-17	139
+f_islava,93,95,0	duplicate(lava_eff#1-1)	lava_eff#1-18	139
+
+f_islava,68,70,0	script	lava_eff#2-1	139,{
+    end;
+
+OnEnable:
+    sleep rand(200,6000);
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+    if(.@mapy == 70){
+        .@aux = 97;
+        .@j = 1;
+    }else if(.@mapy == 97){
+        .@aux = 70;
+        .@j = -1;
+    }
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1,getnpcid(0),-2;
+    sleep 200;
+    callfunc("FiL_Check", .@mapname$, .@mapx, .@mapy);
+    for(.@i = .@j; .@mapy + .@i != .@aux + .@j; .@i += .@j){
+        movenpc strnpcinfo(0),.@mapx,.@mapy + .@i;
+        unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1,getnpcid(0),-2;
+        sleep 200;
+        callfunc("FiL_Check", .@mapname$, .@mapx, .@mapy + .@i);
+    }
+    movenpc strnpcinfo(0),.@mapx,.@mapy;
+    end;
+}
+
+f_islava,73,70,0	duplicate(lava_eff#2-1)	lava_eff#2-2	139
+f_islava,78,70,0	duplicate(lava_eff#2-1)	lava_eff#2-3	139
+f_islava,83,70,0	duplicate(lava_eff#2-1)	lava_eff#2-4	139
+f_islava,88,70,0	duplicate(lava_eff#2-1)	lava_eff#2-5	139
+f_islava,93,70,0	duplicate(lava_eff#2-1)	lava_eff#2-6	139
+f_islava,68,97,0	duplicate(lava_eff#2-1)	lava_eff#2-7	139
+f_islava,73,97,0	duplicate(lava_eff#2-1)	lava_eff#2-8	139
+f_islava,78,97,0	duplicate(lava_eff#2-1)	lava_eff#2-9	139
+f_islava,83,97,0	duplicate(lava_eff#2-1)	lava_eff#2-10	139
+f_islava,88,97,0	duplicate(lava_eff#2-1)	lava_eff#2-11	139
+f_islava,93,97,0	duplicate(lava_eff#2-1)	lava_eff#2-12	139
+
+f_islava,68,70,0	script	lava_eff#3-1	139,{
+    end;
+
+OnEnable:
+    sleep rand(200,6000);
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+    if(.@mapx == 68){
+        .@aux = 95;
+        .@j = 1;
+    }else if(.@mapx == 95){
+        .@aux = 68;
+        .@j = -1;
+    }
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1,getnpcid(0),-2;
+    sleep 200;
+    callfunc("FiL_Check", .@mapname$, .@mapx, .@mapy);
+    for(.@i = .@j; .@mapx + .@i != .@aux + .@j; .@i += .@j){
+        movenpc strnpcinfo(0),.@mapx + .@i,.@mapy;
+        unitskilluseid getnpcid(0),"NPC_LAVAEVENT",1,getnpcid(0),-2;
+        sleep 200;
+        callfunc("FiL_Check", .@mapname$, .@mapx + .@i, .@mapy);
+    }
+    movenpc strnpcinfo(0),.@mapx,.@mapy;
+    end;
+}
+
+f_islava,68,75,0	duplicate(lava_eff#3-1)	lava_eff#3-2	139
+f_islava,68,80,0	duplicate(lava_eff#3-1)	lava_eff#3-3	139
+f_islava,68,85,0	duplicate(lava_eff#3-1)	lava_eff#3-4	139
+f_islava,68,90,0	duplicate(lava_eff#3-1)	lava_eff#3-5	139
+f_islava,68,95,0	duplicate(lava_eff#3-1)	lava_eff#3-6	139
+
+f_islava,95,70,0	duplicate(lava_eff#3-1)	lava_eff#3-7	139
+f_islava,95,75,0	duplicate(lava_eff#3-1)	lava_eff#3-8	139
+f_islava,95,80,0	duplicate(lava_eff#3-1)	lava_eff#3-9	139
+f_islava,95,85,0	duplicate(lava_eff#3-1)	lava_eff#3-10	139
+f_islava,95,90,0	duplicate(lava_eff#3-1)	lava_eff#3-11	139
+f_islava,95,95,0	duplicate(lava_eff#3-1)	lava_eff#3-12	139
+
+f_islava,0,0,0	script	lava_eff#4-0	139,{
+    end;
+
+OnEnable:
+    for(.@i = 1; .@i <= 40; .@i ++){
+        donpcevent "lava_eff#4-"+.@i+"::OnEnable";
+    }
+    sleep 10000;
+    for(.@i = 1; .@i <= 40; .@i ++){
+        donpcevent "lava_eff#4-"+.@i+"::OnEnable";
+    }
+    end;
+}
+
+f_islava,0,0,0	script	lava_eff#4-1	139,{
+    end;
+
+OnEnable:
+    sleep rand(200,8000);
+    movenpc strnpcinfo(0),rand(68,95),rand(70,97);
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+    unitskilluseid getnpcid(0),"NPC_LAVAEVENT",2;
+    sleep 2500;
+    callfunc("FiL_Check", .@mapname$, .@mapx, .@mapy);
+    end;
+
+OnInit:
+    end;
+}
+
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-2	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-3	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-4	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-5	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-6	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-7	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-8	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-9	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-10	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-11	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-12	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-13	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-14	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-15	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-16	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-17	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-18	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-19	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-20	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-21	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-22	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-23	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-24	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-25	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-26	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-27	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-28	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-29	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-30	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-31	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-32	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-33	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-34	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-35	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-36	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-37	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-38	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-39	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-40	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-41	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-42	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-43	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-44	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-45	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-46	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-47	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-48	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-49	139
+f_islava,0,0,0	duplicate(lava_eff#4-1)	lava_eff#4-50	139
+
+f_islava,0,0,0	script	lava_eff#5-0	139,{
+    end;
+
+OnEnable:
+    for(.@i = 1; .@i <= 50; .@i ++){
+        donpcevent "lava_eff#4-"+.@i+"::OnEnable";
+    }
+    sleep 8000;
+    for(.@i = 1; .@i <= 50; .@i ++){
+        donpcevent "lava_eff#4-"+.@i+"::OnEnable";
+    }
+    sleep 8000;
+    for(.@i = 1; .@i <= 50; .@i ++){
+        donpcevent "lava_eff#4-"+.@i+"::OnEnable";
+    }
+    end;
+}

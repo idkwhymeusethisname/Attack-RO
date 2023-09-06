@@ -1,0 +1,201 @@
+//CREDIT:PJEX
+//Edit:Mk
+-	shop	CardJuti	90,40001:100,40002:100,40003:100,40004:100,40005:100,40006:100,40007:100,40008:100,40009:100,40010:100,40011:100,40012:100,40013:100,40014:100,40015:100,40016:100,40017:100,40018:100,40019:100,40020:100,40021:100,40022:100,40023:100,40024:100,40025:100,40026:100,40027:100,40028:100,40029:100,40030:100
+
+izlude_in,72,109,2	script	อัพเกรดการ์ด#mallae	4_M_JP_JESTER,{
+disable_items;
+
+
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "[^0000FFระบบอัพเกรดการ์ด^000000]";
+		mes "^FF0000มีไอเท็มมากเกินไป^000000";
+		end;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "[^0000FFระบบอัพเกรดการ์ด^000000]";
+		mes "^FF0000น้ำหนักของท่านไม่เพียงพอ^000000";
+		end;
+	}
+
+mes "[^0000FFระบบอัพเกรดการ์ด^000000]";
+mes "เลือกการ์ดที่ต้องการอัพเกรดได้เลย";
+mes "^FF0000คำเตือน หากทำไม่สำเร็จ ไอเท็มทั้งหมดจะหายไป^000000";
+mes "^FF0000โปรดคิดให้ดีก่อนทำการอัพเกรด!^000000";
+
+menu 
+"^FF0000•^000000 อัพเกรดการ์ดฺ Boss ",C_UP01,
+"^FF0000•^000000 Cancle",ex;
+
+C_UP01:
+close2;
+callshop "CardJuti",1;    
+npcshopattach "CardJuti";
+end;
+
+ex:
+end;
+
+OnBuyItem:
+
+	switch( @bought_nameid ) {
+	//rare
+	case 40001:
+		.@requirement = 4147;
+		break;
+	case 40002:
+		.@requirement = 4168;
+		break;
+	case 40003:
+		.@requirement = 4330;
+		break;
+	case 40004:
+		.@requirement = 4142;
+		break;
+	case 40005:
+		.@requirement = 4134;
+		break;
+	case 40006:
+		.@requirement = 4137;
+		break;
+	case 40007:
+		.@requirement = 4123;
+		break;
+	case 40008:
+		.@requirement = 4324;
+		break;
+	case 40009:
+		.@requirement = 4128;
+		break;
+	case 40010:
+		.@requirement = 4263;
+		break;
+	case 40011:
+		.@requirement = 4276;
+		break;
+	case 40012:
+		.@requirement = 4146;
+		break;
+	case 40013:
+		.@requirement = 4132;
+		break;
+	case 40014:
+		.@requirement = 4131;
+		break;
+	case 40015:
+		.@requirement = 4143;
+		break;
+	case 40016:
+		.@requirement = 4135;
+		break;
+	case 40017:
+		.@requirement = 4144;
+		break;
+	case 40018:
+		.@requirement = 4148;
+		break;
+	case 40019:
+		.@requirement = 4121;
+		break;
+	case 40020:
+		.@requirement = 4374;
+		break;
+	case 40021:
+		.@requirement = 4372;
+		break;
+	case 40022:
+		.@requirement = 4352;
+		break;
+	case 40023:
+		.@requirement = 4430;
+		break;
+	case 40024:
+		.@requirement = 4408;
+		break;
+	case 40025:
+		.@requirement = 4342;
+		break;
+	case 40026:
+		.@requirement = 4376;
+		break;
+	case 40027:
+		.@requirement = 4419;
+		break;
+	case 40028:
+		.@requirement = 4386;
+		break;
+	case 40029:
+		.@requirement = 4425;
+		break;
+	case 40030:
+		.@requirement = 4399;
+		break;
+
+	}
+if( (@bought_nameid) > 40000 ) goto JUTICARD;
+end;
+
+JUTICARD:
+	disable_items;
+if(chanceupup > 0){
+	.@rate = 100;
+}else{
+	.@rate = 50;	//volRare20-30-50-70-100
+}
+	.@amount = 5;
+	.@amount2 = 1000;
+	.@requirement2 = 7227;
+	.@zeny = 100000000;
+	
+	if(zeny < .@zeny || countitem(.@requirement) < .@amount || countitem(.@requirement2) < .@amount2 ){
+	mes "[^0000FFระบบอัพเกรดการ์ด^000000]";
+	mes "ต้องการ";
+	mes "<ITEM>"+getitemname(.@requirement)+"<INFO>"+(.@requirement)+"</INFO></ITEM>จำนวน "+(.@amount)+" ea";
+	mes "<ITEM>"+getitemname(.@requirement2)+"<INFO>"+(.@requirement2)+"</INFO></ITEM>จำนวน "+(.@amount2)+" ea";
+	mes ""+ callfunc("F_InsertComma",.@zeny) +" Zeny";
+	end;
+	}
+	
+	
+	//delitem 4999999,.@amount;
+	mes "[^0000FFระบบอัพเกรดการ์ด^000000]";
+	mes "โอกาสทำสำเร็จ "+(.@rate)+"%";
+	mes "ต้องการ";
+	mes "<ITEM>"+getitemname(.@requirement)+"<INFO>"+(.@requirement)+"</INFO></ITEM>จำนวน "+(.@amount)+" ea";
+	mes "<ITEM>"+getitemname(.@requirement2)+"<INFO>"+(.@requirement2)+"</INFO></ITEM>จำนวน "+(.@amount2)+" ea";
+	mes ""+ callfunc("F_InsertComma",.@zeny) +" Zeny";
+	next;
+	switch(select("^ff3333•^000000 เอาเลย","^ff3333•^000000 ยกเลิก")) 
+	{
+	
+			case 1:
+			next;
+			delitem .@requirement,.@amount;
+			delitem .@requirement2,.@amount2;
+			set Zeny, Zeny - .@zeny;
+			
+			if (rand(100) < .@rate) {
+			mes "[^0000FFระบบอัพเกรดการ์ด^000000]";
+			mes "สำเร็จ !!";
+			specialeffect2 83;
+			getitem @bought_nameid,1; 
+			announce "[ ระบบอัพเกรดการ์ดบอสขยะ ]  :  ดีใจด้วย ท่าน ["+strcharinfo(0)+"] ได้ทำการอัพเกรด [ "+getitemname(@bought_nameid)+" ] สำเร็จ !! ",bc_all,0x00FF00;
+			end;
+			}
+			
+			mes "[^0000FFระบบอัพเกรดการ์ด^000000]";
+			mes "ขอโทษด้วยมันล้มเหลว";
+			announce "[ ระบบอัพเกรดการ์ดบอสขยะ ]  : เสียใจด้วย ท่าน ["+strcharinfo(0)+"] ได้ทำการอัพเกรด [ "+getitemname(@bought_nameid)+" ] ล้มเหลว !! ",bc_all,0xCC3300;
+			specialeffect2 183;
+			end;
+			
+			case 2:
+			end;
+	}
+end;
+
+OnInit:
+waitingroom "[Quest]อัพเกรดการ์ดฺบอสขยะ",0; 
+//setunitdata getnpcid(0),UNPC_GROUP_ID,9;
+end;
+}

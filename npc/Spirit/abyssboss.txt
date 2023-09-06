@@ -1,0 +1,38 @@
+mooc,163,82,4	script	World Boss	123,{
+mes "[ World Boss ]";
+mes "Status :" +($world_boss_active == 1?"^00FF00Active^000000":"^FF0000Inactive^000000");
+mes "Kill Remaining - [ ^0000FF"+.@kill_count+"^000000 ]";
+mes "=============================";
+mes "Reward:";
+mes "<ITEM>World Boss Reward<INFO>501</INFO></ITEM>";
+end;
+
+OnNPCKillEvent:
+	.wbKilledMob++;
+	if(.wbKilledMob >= .killPopBoss)
+	{
+		.@map$ = .townMap$[rand(getarraysize(.townMap$) - 1)];
+		areamonster .@map$, 0, 0, 250, 250, "--ja--", .wbBossId, 1, strnpcinfo(3) + "::OnWBossDied";
+	}
+	end;
+	
+OnWBossDied:
+	announce "[World Boss]Titan: You,you're strong " + strcharinfo(0) + " , but this is not the end i will come back stronger to avenge my dead warriors, HA!!HA!!HA!!HA!!", bc_all, 0xFF0000;
+	.wbKilledMob = 0;
+	.killPopBoss = 10;
+	end;
+	
+OnInit:
+	.killPopBoss = 10;
+	setarray .townMap$[0],"abyss_04"; //to fill
+	.wbBossId = 3663;
+	freeloop(1);
+	while(1){
+		.@kill_count = (.killPopBoss - .wbKilledMob);
+		waitingroom "Kill Left : ["+.@kill_count+"]",0;
+		sleep 1000; //= 1 Second Refresh
+		delwaitingroom;
+	}
+	freeloop(0);
+	end;
+}

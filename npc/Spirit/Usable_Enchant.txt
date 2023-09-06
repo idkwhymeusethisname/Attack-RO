@@ -1,0 +1,28 @@
+function	script	powersphere	{
+mes "^ff0000===========!WARNING!===========^000000";
+mes "Attatching a Power Sphere in an Aura is an irreversible process. It cannot be undone in any way. Do you want to proceed?";
+mes "^ff0000===============================^000000";
+switch(select("Cancel:Proceed")) {
+
+	case 1:
+	close;
+	
+	case 2:
+	close2;
+	if(getequipid(EQI_SHADOW_WEAPON) == -1) {
+		dispbottom "FAILED! You're not equipping any Aura!"; end; }
+	if(getequipcardid(EQI_SHADOW_WEAPON,0) > 0) {
+		dispbottom "FAILED! Your Aura is already enchanted!"; end; }
+	if(countitem(getequipid(EQI_SHADOW_WEAPON)) > 1) {
+		dispbottom "FAILED! You have more than 1 of the same Aura in your inventory! Please store the other ones first!"; end; }
+	specialeffect2 58;
+	progressbar "green",2;
+	set powaura,getequipid(EQI_SHADOW_WEAPON);
+	unequip EQI_SHADOW_WEAPON; //unequips your shadow weapon
+	delitem 32100+powsphere,1; //deletes the "pretend card"
+	delitem powaura,1; //deletes your shadow weapon
+	getitem2 powaura,1,1,0,0,31100+powsphere,0,0,0; //generates the same shadow weapon but with the "card" already in it
+	end;
+	
+	}
+}

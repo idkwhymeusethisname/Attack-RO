@@ -1,0 +1,34 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable warping.
+//===== Description: ========================================= 
+//= Disables warping from a map.
+//= Script commands 'warpparty' and 'warpguild' will not warp
+//=   players.
+//= Atcommands @warp, @go, @load, @jump, @partyrecall,
+//=   @guildrecall, and @recallall will not warp players.
+//= GD_EMERGENCYCALL and UNT_CALLFAMILY will not warp players.
+//===== Changelogs: ==========================================
+//= 1.0 Added WoE TE maps. [Capuche]
+//============================================================
+
+// WOE:TE Maps ===================
+te_prtcas01	mapflag	nowarp
+te_prtcas02	mapflag	nowarp
+te_prtcas03	mapflag	nowarp
+te_prtcas04	mapflag	nowarp
+te_prtcas05	mapflag	nowarp
+te_aldecas1	mapflag	nowarp
+te_aldecas2	mapflag	nowarp
+te_aldecas3	mapflag	nowarp
+te_aldecas4	mapflag	nowarp
+te_aldecas5	mapflag	nowarp
+boss11	mapflag	nowarp
+boss12	mapflag	nowarp
+boss13	mapflag	nowarp
+boss14	mapflag	nowarp
+boss15	mapflag	nowarp
+boss16	mapflag	nowarp
+boss17	mapflag	nowarp
+boss18	mapflag	nowarp
+boss19	mapflag	nowarp
+boss20	mapflag	nowarp

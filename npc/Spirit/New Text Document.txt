@@ -1,0 +1,49 @@
+poring_c01,106,108,4	duplicate(gomaincity)	ไปเมืองหลัก#1	679
+
+-	script	goabyss	-1,{
+	callfunc	"Abyss";
+OnInit:
+    waitingroom "[•] มุ่งสู่ Abyss",0;    
+end;
+}
+
+function	script	Abyss	{
+	mes "เจ้าจะต้องแข็งแกร่งเพื่ออยู่รอด";
+    mes "โลกนี้ไม่มีที่ยืนสำหรับคนอ่อนแอ";
+	next;
+	switch (select(
+		"เข้าสู่ Abyss  [ "+getmapusers("abyss_04")+" ] คน."))
+	{
+	case 1:
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_POEMBRAGI;
+		sc_end SC_APPLEIDUN;
+		sc_end SC_ASSNCROS;
+		sc_end SC_SKE;
+		sc_end SC_KAITE;
+		sc_end SC_SWOO;
+		sc_end SC_SKA;
+		sc_end SC_BATTLEORDERS;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+			warp "abyss_04",160,93;
+			break;
+	}
+	end;
+}
+
+mooc,155,90,4	duplicate(goabyss)	วาร์ปสู่ Abyss#1	10237
+
+abyss_04,0,0,0,0	monster	Gioia	3926,100,0,0,0
+abyss_04,0,0,0,0	monster	Dielgo	3927,100,0,0,0
+abyss_04,0,0,0,0	monster	James	3928,100,0,0,0

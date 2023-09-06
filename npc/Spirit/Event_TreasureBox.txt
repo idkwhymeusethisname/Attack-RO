@@ -1,0 +1,96 @@
+//===============================
+// Script : Event Treasure Box
+// Designe By : ParadoX
+//===============================
+
+mooc.gat,0,0,0	script	::TreasureEvent	111,{
+	close;
+trevstart:
+	set $@trevent,rand(30,40);
+	set $@ftrevent,0;
+	announce "Treasure Event : กล่องสมบัติ Treasure Box ได้ปรากฏตัว ณ เมืองหลัก จำนวน "+$@trevent+" กล่อง มีเวลาในการล่าสมบัติ 5 นาที",0,0xFF1493;
+
+	monster "mooc.gat",0,0,"Treasure Box",3963,$@trevent,"TreasureEvent::OnTreasureDie";
+	end;
+OnTreasureDie:
+	set $@ftrevent,$@ftrevent+1;
+	if($@ftrevent>=$@trevent)
+	announce "ผู้เล่น " + strcharinfo(0) + " ได้ค้นพบ Treasure Box กล่องสุดท้าย",0,FF1493;
+	if($@ftrevent!=$@trevent)
+	announce "ผู้เล่น " + strcharinfo(0) + " ได้ค้นพบ Treasure Box กล่องที่ "+$@ftrevent+"/"+$@trevent+"",0,0xFF1493;
+	getitem 7539,1;
+	end;
+trevend:
+	if($@ftrevent!=$@trevent)
+	announce "หมดเวลาในการล่าสมบัติ Treasure Box ทุกกล่องถูกทำลาย",0,0xFF1493;
+	killmonster "mooc.gat","TreasureEvent::OnTreasureDie";
+	end;
+OnTimeout:
+	end;
+
+OnClock0600:
+	goto trevstart;
+	end;
+OnClock0615:
+	goto trevend;
+	end;
+
+OnClock0900:
+	goto trevstart;
+	end;
+OnClock0915:
+	goto trevend;
+	end;
+OnClock1200:
+	goto trevstart;
+	end;
+OnClock1215:
+	goto trevend;
+	end;	
+OnClock1500:
+	goto trevstart;
+	end;
+OnClock1515:
+	goto trevend;
+	end;
+OnClock1800:
+	goto trevstart;
+	end;
+OnClock1815:
+	goto trevend;
+	end;	
+OnClock2100:
+	goto trevstart;
+	end;
+OnClock2115:
+	goto trevend;
+	end;
+OnClock0000:
+	goto trevstart;
+	end;
+OnClock0015:
+	goto trevend;
+	end;
+OnClock0300:
+	goto trevstart;
+	end;
+OnClock0315:
+	goto trevend;
+	end;	
+}
+
+//oasis.gat,177,40,4	script	ล่ากล่องสมบัติ	1641,{
+//mes "[ ^FF0000TreasureBox^000000 ]";
+//mes "ในเมือง Oasis จะมีกล่องสมบัติ";
+//mes "มันจะสุ่มเกิดในเมือง Oasis นี่แหล่ะ";
+//mes "[ ^FF0000เวลาเกิดของมัน^000000 ]";
+//mes "เกิดเวลา 5 - 10 นาทีแรกในทุกๆชั่วโมง";
+//mes "ไอเท็มที่ได้จากกล่องสมบัติก็คือ!!";
+//mes "Cash Coin 1 ea./TCG 1 ea./Poring Coin 1 ea. /1กล่อง";
+//mes "[ ^FF0000เจ้าคอยเฝ้าดูให้ดีก็แล้วกัน 555 !!!^000000 ]";
+//close;
+//
+//Oninit:
+//waitingroom "ล่ากล่องสมบัติ",0;
+//end;
+//} 

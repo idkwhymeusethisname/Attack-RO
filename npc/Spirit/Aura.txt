@@ -1,0 +1,229 @@
+//===== rAthena Script =======================================
+//= Costume Enchanter
+//===== By ===================================================
+//= llchrisll
+//===== Version ==============================================
+//= 1.0 - Initial Version
+//= 1.1 - Added support for all costume slots
+//      - Added forgotten "Reset Enchantment" menu option
+//= 1.2 - Added support to use an price to enchant
+//      - Removed the unecessary variable for Reset Enchantment
+//      - Modified the menu creation
+//= 1.3 - Added requested features by Meneso on Discord:
+//        Enchantment Chance
+//        Selectable or Random Enchantment
+//      - Added Cost Multiplier for higher Enchantment Levels
+//      - Revamped Enchantment Config for better overview
+//===== Tested With ==========================================
+//= rAthena 03/29/2021 Revision
+//= GIT Hash: 47c471e3d0e7997ae605ebf45760349f3b25d365
+//===== Description ==========================================
+//= This NPC allows players to enchant Costumes.
+//= Selectable Enchants and reseting the Enchantments.
+//===== Request =============================================
+//= by Vegas (https://rathena.org/board/profile/53497-vegas/)
+//= Topic: https://rathena.org/board/topic/115174-runen-enchanter-npc-for-custom-upper-middle-lower/
+//============================================================
+function	script	Aura_wind	{
+
+	mes .n$;
+	mes "สวัสดีคูณ, "+strcharinfo(0)+"!";
+	mes "คุณต้องการเสริมพลังคอสตูม ปีก/มัพ ใช่มั้ย";
+	mes "ใช้หินออร่าในการเสริมพลังและใช้บัตรลบพลังเสริมในการลบพลังเสริม";
+	next;
+	switch(select("เสริมพลังปีก:ลบพลังเสริม:ยกเลิก")) {
+		
+		case 1:
+		mes .n$;
+		mes "กรุณาเลือก:";
+		for ( set .@s,0; .@s < getarraysize(.equip_slot); set .@s,.@s + 1) {
+			switch(.equip_slot[.@s]) {
+				case EQI_COSTUME_HEAD_TOP: set .@c_slot$,"Top Headgear"; break;
+				case EQI_COSTUME_HEAD_MID: set .@c_slot$,"Mid Headgear"; break;
+				case EQI_COSTUME_HEAD_LOW: set .@c_slot$,"Low Headgear"; break;
+				case EQI_COSTUME_GARMENT: set .@c_slot$,"Garment"; break;
+				case EQI_SHADOW_ARMOR: set .@c_slot$,"Armor"; break;
+				case EQI_SHADOW_WEAPON: set .@c_slot$,"Weapon"; break;
+				case EQI_SHADOW_SHIELD: set .@c_slot$,"Shield"; break;
+				case EQI_SHADOW_SHOES: set .@c_slot$,"Shoes"; break;
+				case EQI_SHADOW_ACC_R: set .@c_slot$,"Accessory Right"; break;
+				case EQI_SHADOW_ACC_L: set .@c_slot$,"Accessory Left"; break;
+			}
+			set .@c_m$,.@c_m$ + ((getequipid(.equip_slot[.@s]) != -1)?.@c_slot$ + " - "+getitemname(getequipid(.equip_slot[.@s])):"") + ( (.equip_slot[.@s+1] != 0)?":":"");
+		}
+		set .@c_m$,.@c_m$ + ":ยกเลิก";
+		set .@c,select(.@c_m$);
+		if(.@c > getarraysize(.equip_slot)) close;
+		set .@part,.equip_slot[.@c-1];
+		next;
+		mes .n$;
+		if(getequipid(.@part) == -1) {
+			mes "It looks like you don't have any costume equipped on there.";
+			close;
+		}
+		set .@hg,getequipid(.@part); // Saving Item ID
+		set .@ref,getequiprefinerycnt(.@part); 	// Saving Refine Level, if there is one
+		set .@card1,getequipcardid(.@part,0); // Save Item ID of Card Slot 1
+		mes "คุณเลือก: "+getitemname(getequipid(.@part));
+		if(getequipcardid(.@part,3) != 0) {
+			mes "ไม่สามารถเสริมพลังได้หรือคุณมีอุปกรณ์ไม่ครบ";
+			close;
+		}
+		if(.enchant_type == 1) { // Selectable Enchantment
+			mes "Now please select the Enchantment:";
+			next;
+			for ( set .@e,0; .@e < getarraysize(.enchant_id); set .@e,.@e + 3)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.enchant_id[.@e])+ ( (.enchant_id[.@e+3] != 0)?":":"");
+			set .@rune,select(.@e_m$)*3-3;
+			mes .n$;
+			mes "Selected Enchantment: "+getitemname(.enchant_id[.@rune]);
+			mes "Proceed?";
+			if(select("- Yes:- No") - 1) close;
+			
+		} else // Random Enchantment
+			set .@rune,rand(getarraysize(.enchant_id)/3)*3-3;
+			
+		next;
+		mes .n$;
+		mes "Selected Enchantment: "+getitemname(.enchant_id[.@rune]);
+		if(.enchant_cost[0] > 0) {
+			mes "Price for Enchanting:";
+			if(.enchant_cost_m == 1)
+				mes (.enchant_cost[1]*.enchant_id[.@rune+2])+"x "+getitemname(.enchant_cost[0]);
+			else
+				mes .enchant_cost[1]+"x "+getitemname(.enchant_cost[0]);
+		}
+		if(.enchant_ch == 1)
+			mes "Enchantment Chance: "+.enchant_id[.@rune+1];
+		mes "Proceed?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		mes .n$;
+		if(.enchant_cost[0] > 0)
+			if( (.enchant_cost_m == 1 && countitem(.enchant_cost[0]) < (.enchant_cost[1]*.enchant_id[.@rune+2]) ) || (.enchant_cost_m == 0 && countitem(.enchant_cost[0]) < .enchant_cost[1]) ) {
+				mes "It looks like you don't have enough "+getitemname(.enchant_cost[0])+"!";
+				mes "You need at least "+( (.enchant_cost_m == 1)?(.enchant_cost[1]*.enchant_id[.@rune+2]):.enchant_cost[1]);
+				close;
+			}
+		if(.enchant_cost[0] > 0) {
+			if(.enchant_cost_m == 1) 
+				delitem .enchant_cost[0],(.enchant_cost[1]*.enchant_id[.@rune+2]);
+			else if(.enchant_cost_m == 0)
+				delitem .enchant_cost[0],.enchant_cost[1];
+		}
+		delequip .@part;
+		if(.enchant_ch == 1) { // Enabled Enchantment Chance
+			set .@r,100-.enchant_id[.@rune+1];
+			if(rand(100) < .@r) {
+				getitem2 .@hg,1,1,.@ref,0,.@card1,0,0,0;
+				mes "ฉันขอโทษมันเกิดข้อผิดพลาด";
+				close;
+			}
+		}
+		getitem2 .@hg,1,1,.@ref,0,.@card1,0,0,.enchant_id[.@rune];
+		mes "ทำการเสริมพลังสำเร็จ.";
+		mes "เจอกันโอกาศหน้าพ่อหนุ่ม";
+		enable_items;
+		break;
+	
+		case 2:
+		mes .n$;
+		mes "กรุณาเลือกคอสตูมของคุณ";
+		for ( set .@s,0; .@s < getarraysize(.equip_slot); set .@s,.@s + 1) {
+			switch(.equip_slot[.@s]) {
+				case EQI_COSTUME_HEAD_TOP: set .@c_slot$,"Top Headgear"; break;
+				case EQI_COSTUME_HEAD_MID: set .@c_slot$,"Mid Headgear"; break;
+				case EQI_COSTUME_HEAD_LOW: set .@c_slot$,"Low Headgear"; break;
+				case EQI_COSTUME_GARMENT: set .@c_slot$,"Garment"; break;
+				case EQI_SHADOW_ARMOR: set .@c_slot$,"Armor"; break;
+				case EQI_SHADOW_WEAPON: set .@c_slot$,"Weapon"; break;
+				case EQI_SHADOW_SHIELD: set .@c_slot$,"Shield"; break;
+				case EQI_SHADOW_SHOES: set .@c_slot$,"Shoes"; break;
+				case EQI_SHADOW_ACC_R: set .@c_slot$,"Accessory Right"; break;
+				case EQI_SHADOW_ACC_L: set .@c_slot$,"Accessory Left"; break;
+			}
+			set .@c_m$,.@c_m$ + ((getequipid(.equip_slot[.@s]) != -1)?.@c_slot$ + " - "+getitemname(getequipid(.equip_slot[.@s])):"") + ( (.equip_slot[.@s+1] != 0)?":":"");
+		}
+		set .@c_m$,.@c_m$ + ":ยกเลิก";
+		set .@c,select(.@c_m$);
+		if(.@c > getarraysize(.equip_slot)) close;
+		set .@part,.equip_slot[.@c-1];
+		next;
+		mes .n$;
+		if(getequipcardid(.@part,3) == 0) {
+			mes "คอสตูมของคุณไม่มีพลังเสริม";
+			close;
+		}
+		set .@hg,getequipid(.@part); // Saving Item ID
+		set .@ref,getequiprefinerycnt(.@part); 	// Saving Refine Level, if there is one
+		set .@card1,getequipcardid(.@part,0); // Save Item ID of Card Slot 1
+		mes "Selected Costume: "+getitemname(getequipid(.@part));
+		if(.enchant_reset[0] > 0 && countitem(.enchant_reset[0]) < .enchant_reset[1]) {
+			mes "คุณมีอุปกรณ์ไม่ครบ";
+			close;
+		}
+		mes "แน่ใจ?";
+		if(select("ตกลง:ยกเลิก") - 1) close;
+		next;
+		if(.enchant_reset[0]) 
+			delitem .enchant_reset[0],.enchant_reset[1];
+		delequip .@part;
+		getitem2 .@hg,1,1,.@ref,0,.@card1,0,0,0;
+		equip .@hg;
+		mes .n$;
+		mes "เราจัดการให้คุณแล้ว";
+		mes "เจอกันโอกาศหน้า";
+		break;
+		
+		case 3: break;
+	}
+	end;
+	
+	OnInit:
+	waitingroom "[•] เสริมพลังคอสตูมปีก",0;
+	set .n$,"[เสริมพลังคอสตูมปีก]";
+	// Enter here every Costume Slot, which you want to be enchantable
+	// Valid Entries:
+	// - EQI_COSTUME_HEAD_TOP
+	// - EQI_COSTUME_HEAD_MID
+	// - EQI_COSTUME_HEAD_LOW
+	// - EQI_COSTUME_GARMENT
+	// - EQI_SHADOW_ARMOR
+	// - EQI_SHADOW_WEAPON
+	// - EQI_SHADOW_SHIELD
+	// - EQI_SHADOW_SHOES
+	// - EQI_SHADOW_ACC_R
+	// - EQI_SHADOW_ACC_L
+	setarray .equip_slot[0],EQI_COSTUME_GARMENT;
+	// Enchantment Type
+	// 0 = Random
+	// 1 = Selectable
+	set .enchant_type,1;
+	// Enchantment Chance
+	// 1 = Enable
+	// 0 = Disable
+	set .enchant_ch,0;
+	// Price for enchanting:
+	// To disable the price, put 0 as values
+	setarray .enchant_cost[0],31308,1; // Item ID,Amount
+	// Price Multiplier depending on Enchantment Level
+	// 1 = Enable
+	// 0 = Disable
+	set .enchant_cost_m,0;
+	// Enchantment Database:
+	// [0] = Item ID of Enchantment
+	// [1] = Enchantment Chance (if enabled)
+	// [2] = Price Multiplier (if enabled)
+	setarray .enchant_id[0],
+	// Array Index:			0	1	2
+							31308,100,1;
+							//4719,90,2,
+							//4729,80,3,
+							//4739,70,4,
+							//4749,60,5,
+							//4759,50,6;
+	// Price for reseting:
+	// To disable the price, put 0 as values
+	setarray .enchant_reset[0],501,10; // Item ID,Amount
+	end;
+	}

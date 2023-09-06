@@ -1,0 +1,33 @@
+mooc,96,92,5	script	รวมแร่พิเศษ	559,{
+    for( .@i = 0; .@i < .item_id_size; .@i++ ){
+        mes "ต้องการ";
+        mes .item_amount[.@i]+" x "+getitemname( .item_id[.@i] );
+        mes "สามารถหาได้จาก Lucky Box จะเกิดขึ้นในเมืองทุก ^ff72002 ขั่วโมง^000000";
+        if( countitem( .item_id[.@i] ) < .item_amount[.@i] ) .@failed = 1;
+    }
+    if( !.@failed ){
+        mes "กรุณารอ...";
+        progressbar "FFFFFF",1;
+        for( .@i = 0; .@i < .item_id_size; .@i++ )
+            delitem .item_id[.@i],.item_amount[.@i];
+        if( rand( 100 ) < .craft_rate ){
+            mes "ได้รับ Enchant Stone 1 ชิ้น.";
+            getnameditem( .craft_gain,strcharinfo(0) );
+        }else{
+            mes "^ff0000ผิดพลาด !!^000000";
+        }
+    }
+    close;
+    
+    OnInit:
+    waitingroom "- รวมแร่พิเศษ -",0;
+    // craft settings
+    .craft_rate = 100;
+    setarray .item_id,40709;
+    setarray .item_amount,10;
+    .item_id_size = getarraysize( .item_id );
+    
+    // item gain
+    .craft_gain = 40708;
+    end;
+    }

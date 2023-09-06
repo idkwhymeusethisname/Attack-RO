@@ -1,0 +1,9 @@
+-	script	NOVENDING	-1,{
+OnInit:
+setcell "mooc",98,113,136,98,cell_novending,1; //PC
+setcell "mooc",119,88,146,45,cell_novending,1; //CC
+setcell "mooc",137,114,190,79,cell_novending,1; //CENTER
+setcell "mooc",177,114,223,94,cell_novending,1; //EVENT
+setcell "mooc",150,75,185,48,cell_novending,1; //EVENT
+end;
+}

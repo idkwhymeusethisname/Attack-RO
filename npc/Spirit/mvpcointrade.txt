@@ -1,0 +1,409 @@
+
+izlude_in,58,101,4	script	MVPCOINTRADE	986,{
+
+    mes "‡√“ “¡“√∂‡ª≈’Ë¬π °“√Ï¥∫Õ ¢¬–‡ªÁπ";
+    mes "MVP COIN ‰¥È";
+    mes "·≈– 1 °“√Ï¥∫Õ  = 1 MVP COIN";
+    mes "√–«—ß ‚ª√¥µ√«® Õ∫™ËÕß‡°Á∫¢Õß";
+    mes "¢Õß∑Ë“„ÀÈ‡æ’¬ßæÕ";
+    mes "‰¡Ëß—Èπ¢Õß®–À≈Ëπ≈ßæ◊Èπ";
+    mes "∑”„ÀÈ‰Õ‡∑¡¢Õß∑Ë“π®– Ÿ≠À“¬";
+    mes "‡≈◊Õ°°“√Ï¥ MVP ∑’ËµÈÕß°“√·≈°";
+    next;
+    menu
+    "^ff0000ï^000000 Tao Gunka Card",mvp43,
+    "^ff0000ï^000000 Ktullanux Card",mvp1,
+    "^ff0000ï^000000 Queen Scaraba Card",mvp2,
+    "^ff0000ï^000000 Leak Card",mvp3,
+    "^ff0000ï^000000 Gloom Under Night Card",mvp4,
+    "^ff0000ï^000000 Ifrit Card",mvp5,
+    "^ff0000ï^000000 Atroce Card",mvp6,
+    "^ff0000ï^000000 Vesper Card",mvp7,
+    "^ff0000ï^000000 Lady Tanee Card",mvp8,
+    "^ff0000ï^000000 White Lady Card",mvp9,
+    "^ff0000ï^000000 Phreeoni Card",mvp10,
+    "^ff0000ï^000000 Eddga Card",mvp11,
+    "^ff0000ï^000000 Golden Thief Bug Card",mvp12,
+    "^ff0000ï^000000 Moolight Card",mvp13,
+    "^ff0000ï^000000 Mistress Card",mvp14,
+    "^ff0000ï^000000 Dracula Card",mvp15,
+    "^ff0000ï^000000 Orc Lord Card",mvp16,
+    "^ff0000ï^000000 Drake Card",mvp17,
+    "^ff0000ï^000000 Doppelganger Card",mvp18,
+    "^ff0000ï^000000 Orc Hero Card",mvp19,
+    "^ff0000ï^000000 Osiri Card",mvp20,
+    "^ff0000ï^000000 Berzebub Card",mvp21,
+    "^ff0000ï^000000 Maya Card",mvp22,
+    "^ff0000ï^000000 Baphomet Card",mvp23,
+    "^ff0000ï^000000 Pharaoh Card",mvp24,
+    "^ff0000ï^000000 Dark Lord Card",mvp25,
+    "^ff0000ï^000000 Amon Ra Card",mvp26,
+    "^ff0000ï^000000 Samurai Spector Card",mvp27,
+    "^ff0000ï^000000 Lord of The Dead Card",mvp28,
+    "^ff0000ï^000000 Tao Gunka Card",mvp29,
+    "^ff0000ï^000000 Turtle General Card",mvp30,
+    "^ff0000ï^000000 Stormy Knight Card",mvp31,
+    "^ff0000ï^000000 Garm Card",mvp32,
+    "^ff0000ï^000000 Evil Snake Card",mvp33,
+    "^ff0000ï^000000 RSX-0806 Card",mvp34,
+    "^ff0000ï^000000 Lord Knight Card",mvp35,
+    "^ff0000ï^000000 Assassin Cross Card",mvp36,
+    "^ff0000ï^000000 MasterSmith Card",mvp37,
+    "^ff0000ï^000000 High Priest Card",mvp38,
+    "^ff0000ï^000000 High Wizard Card",mvp39,
+    "^ff0000ï^000000 Memory of Thanatos Card",mvp40,
+    "^ff0000ï^000000 Kiel-D-01 Card",mvp41,
+    "^ff0000ï^000000 Randgris Card",mvp42,
+    "^ff0000ï^000000 ¬°‡≈‘°",mvp_cancel;
+ 
+        mvp43: 
+	    if (countitem(4302)) {
+			delitem 4302,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp1: 
+	    if (countitem(4419)) {
+			delitem 4419,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+
+        mvp2: 
+	    if (countitem(4507)) {
+			delitem 4507,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+
+        mvp3: 
+	    if (countitem(4520)) {
+			delitem 4520,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+
+        mvp4: 
+	    if (countitem(4408)) {
+			delitem 4408,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+
+        mvp5: 
+	    if (countitem(4430)) {
+			delitem 4430,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp6: 
+	    if (countitem(4425)) {
+			delitem 4425,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp7: 
+	    if (countitem(4374)) {
+			delitem 4374,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp8: 
+	    if (countitem(4376)) {
+			delitem 4376,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp9: 
+	    if (countitem(4372)) {
+			delitem 4372,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp10: 
+	    if (countitem(4121)) {
+			delitem 4121,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp11: 
+	    if (countitem(4123)) {
+			delitem 4123,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp12: 
+	    if (countitem(4128)) {
+			delitem 4128,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp13: 
+	    if (countitem(4131)) {
+			delitem 4131,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp14: 
+	    if (countitem(4132)) {
+			delitem 4132,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp15: 
+	    if (countitem(4134)) {
+			delitem 4134,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp16: 
+	    if (countitem(4135)) {
+			delitem 4135,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp17: 
+	    if (countitem(4137)) {
+			delitem 4137,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp18: 
+	    if (countitem(4142)) {
+			delitem 4142,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp19: 
+	    if (countitem(4143)) {
+			delitem 4143,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp20: 
+	    if (countitem(4144)) {
+			delitem 4144,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp21: 
+	    if (countitem(4145)) {
+			delitem 4145,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp22: 
+	    if (countitem(4146)) {
+			delitem 4146,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp23: 
+	    if (countitem(4147)) {
+			delitem 4147,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp24: 
+	    if (countitem(4148)) {
+			delitem 4148,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp25: 
+	    if (countitem(4168)) {
+			delitem 4168,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp26: 
+	    if (countitem(4236)) {
+			delitem 4236,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp27: 
+	    if (countitem(4263)) {
+			delitem 4263,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp28: 
+	    if (countitem(4276)) {
+			delitem 4276,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp29: 
+	    if (countitem(4302)) {
+			delitem 4302,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp30: 
+	    if (countitem(4305)) {
+			delitem 4305,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp31: 
+	    if (countitem(4318)) {
+			delitem 4318,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp32: 
+	    if (countitem(4324)) {
+			delitem 4324,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp33: 
+	    if (countitem(4330)) {
+			delitem 4330,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp34: 
+	    if (countitem(4342)) {
+			delitem 4342,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp35: 
+	    if (countitem(4357)) {
+			delitem 4357,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp36: 
+	    if (countitem(4359)) {
+			delitem 4359,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp37: 
+	    if (countitem(4361)) {
+			delitem 4361,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp38: 
+	    if (countitem(4363)) {
+			delitem 4363,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp39: 
+	    if (countitem(4365)) {
+			delitem 4365,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp40: 
+	    if (countitem(4399)) {
+			delitem 4399,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp41: 
+	    if (countitem(4403)) {
+			delitem 4403,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+        mvp42: 
+	    if (countitem(4407)) {
+			delitem 4407,1;
+			getitem 32038,1;
+		end;
+		}	
+	    close;
+		
+		mvp_cancel:
+		end;
+		
+        Oninit:
+        waitingroom "[ MVP COIN ]",0;
+        end;
+        }

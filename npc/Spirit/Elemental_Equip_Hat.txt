@@ -1,0 +1,166 @@
+//===== *Athena Script =======================================
+//= Elemental Disguise Race Script
+//===== By: ==================================================
+//= KamiShi
+//===== Current Version: =====================================
+//= 2
+//===== Compatible With: =====================================
+//= *Athena SVN
+//===== Description: =========================================
+//= Elemental script
+//============================================================
+//Variable race_id :
+//------------------------------------------------------------
+//11 // Earth Element
+//12 // Wind Element
+//13 // Water Element
+//14 // Fire Element
+//15 // Electric Element
+//16 // Shadow Element
+//17 // Ghost Element
+//18 // Poison Element
+//19 // Holy Element
+//20 // Undead Element
+//============================================================
+// ITEM EQUIP SCRIPT :
+//------------------------------------------------------------
+// callfunc "TransformToRaceElemental", <race_id>;
+//============================================================
+// ITEM UNEQUIP SCRIPT :
+//------------------------------------------------------------
+// callfunc "TransformFromElementalToHuman";
+//============================================================
+
+
+
+function	script	TransformToRaceElemental	{		
+	set race_id, getarg(0);	// Race ID 
+	setlook(6, $RacePalsElemental[race_id*4+2]);	// Number of the first race hair dye
+	setlook(7, $RacePalsElemental[race_id*4]);	// Number of the first race clothes dye
+	specialeffect2 248;	// Some fancy effect
+	return;
+	
+}
+
+function	script	TransformFromElementalToHuman	{		
+	set race_id, 0;	// Race ID 
+	setlook(6, 1);	
+	setlook(7, 1);
+	specialeffect2 248;	// Some fancy effect
+	return;
+}
+
+
+function	script	RaceDyeElemental	{	
+
+	set .@offsetElementalC, $RacePalsElemental[(race_id)*4];
+	set .@offsetElementalH, $RacePalsElemental[race_id*4+2];
+
+	mes "[^FF8000Elemental^000000]";
+	mes "You are currently wearing:";
+	mes "^000000Cloth color: ^0000FF"+(getlook(7)-.@offsetElementalC);
+	mes "^000000Hair color: ^0000FF"+(getlook(6)-.@offsetElementalH);
+	next;
+	mes "[^FF8000Elemental^000000]";
+	mes "What would you like to change?";
+	next;
+	switch(select("Clothes color:Hair color"))
+	{
+		case 1:
+			mes "[^FF8000Elemental^000000]";
+			
+			mes "Choose a clothes color from ^0000FF"+(getarg(2)-.@offsetElementalC)+" to "+(getarg(3)-1-.@offsetElementalC)+"^000000.";
+
+			chose1:
+			input (.@style, getarg(2)-.@offsetElementalC, getarg(3)-.@offsetElementalC);
+			if((.@style+.@offsetElementalC) < getarg(2) || (.@style+.@offsetElementalC) >= getarg(3))
+			{
+				mes "The color chosen is out of range.";
+				goto chose1;
+			}
+			
+			browse1:
+			setlook(7, .@style+.@offsetElementalC);
+			dispbottom "This is the color number "+(.@style)+".";
+			switch(select("Next:Previous:I Like It!")){
+				
+				case 1:
+					set .@style, .@style+1;
+					if (.@style >= (getarg(3)-.@offsetElementalC)) set .@style, (getarg(2)-.@offsetElementalC);
+					goto browse1;
+					
+				case 2:
+					set .@style, .@style-1;
+					if (.@style <= (getarg(2)-.@offsetElementalC)) set .@style, (getarg(3)-1-.@offsetElementalC);
+					goto browse1;
+				
+				case 3:
+					next;
+					mes "[^FF8000Elemental^000000]";
+					mes "Perfect ! I am glad you found a color that fits you!";
+					close;
+					
+			}
+			
+			close;
+
+		case 2:
+			mes "[^FF8000Elemental^000000]";
+			mes "Choose a hair color from ^0000FF"+(getarg(0)-.@offsetElementalH)+" to "+(getarg(1)-1-.@offsetElementalH)+"^000000.";
+			chose2:
+			input (.@style, (getarg(0)-.@offsetElementalH), (getarg(1)-.@offsetElementalH));
+			if((.@style+.@offsetElementalH) < getarg(0) || (.@style+.@offsetElementalH) >= getarg(1))
+			{
+				mes "The chosen color is out of range.";
+				goto chose2;
+			}
+			
+			browse2:
+			setlook(6,.@style+.@offsetElementalH);
+			dispbottom "This is the color number "+(.@style)+".";
+			
+			switch(select("Next:Previous:I Like It!")){
+				
+				case 1:
+					set .@style, .@style+1;
+					if (.@style >= (getarg(1)-.@offsetElementalH)) set .@style, (getarg(0)-.@offsetElementalH);
+					goto browse2;
+					
+				case 2:
+					set .@style, .@style-1;
+					if (.@style <= (getarg(0)-.@offsetElementalH)) set .@style, (getarg(1)-1-.@offsetElementalH);
+					goto browse2;
+				
+				case 3:
+					next;
+					mes "[^FF8000Elemental^000000]";
+					mes "Perfect ! I am glad you found a color that fits you!";
+					close;
+			
+			}
+			
+			close;
+	}
+}
+
+-	script	PalOffsetsElemental	-1,{
+OnInit:
+	set .@offsetElementalC, 0;
+	set .@offsetElementalH, 0;
+	
+	setarray $RacePalsElemental[11*4], 1020+.@offsetElementalC,1052+.@offsetElementalC,1020+.@offsetElementalH,1052+.@offsetElementalH;	// Earth
+	setarray $RacePalsElemental[12*4], 1052+.@offsetElementalC,1084+.@offsetElementalC,1052+.@offsetElementalH,1084+.@offsetElementalH;	// Wind
+	setarray $RacePalsElemental[13*4], 1084+.@offsetElementalC,1116+.@offsetElementalC,1084+.@offsetElementalH,1116+.@offsetElementalH;	// Water
+	setarray $RacePalsElemental[14*4], 1116+.@offsetElementalC,1148+.@offsetElementalC,1116+.@offsetElementalH,1148+.@offsetElementalH;	// Fire
+	setarray $RacePalsElemental[15*4], 1148+.@offsetElementalC,1180+.@offsetElementalC,1148+.@offsetElementalH,1180+.@offsetElementalH;	// Electric
+	setarray $RacePalsElemental[16*4], 1180+.@offsetElementalC,1212+.@offsetElementalC,1180+.@offsetElementalH,1212+.@offsetElementalH;	// Shadow
+	setarray $RacePalsElemental[17*4], 1212+.@offsetElementalC,1244+.@offsetElementalC,1212+.@offsetElementalH,1244+.@offsetElementalH;	// Ghost
+	setarray $RacePalsElemental[18*4], 1244+.@offsetElementalC,1276+.@offsetElementalC,1244+.@offsetElementalH,1276+.@offsetElementalH;	// Poison
+	setarray $RacePalsElemental[19*4], 1276+.@offsetElementalC,1308+.@offsetElementalC,1276+.@offsetElementalH,1308+.@offsetElementalH;	// Holy
+	setarray $RacePalsElemental[20*4], 1308+.@offsetElementalC,1340+.@offsetElementalC,1308+.@offsetElementalH,1340+.@offsetElementalH;  // Undead
+			
+	/* Define Races Names */
+	setarray $RaceNamesElemental$[0], "Earth Element", "Wind Element", "Fire Element", "Water Element", "Electric Element", "Element Shadow", "Element Ghost", "Element Holy", "Element Poison", "Element Undead", "Brown Skin";
+	end;
+
+}

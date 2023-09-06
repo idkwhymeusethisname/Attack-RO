@@ -1,0 +1,20 @@
+-	script	#MonSter_Item_Drop	-1,{
+
+    OnInit:
+        setarray .item,31272;            //ตั้งค่าไอเทมที่จะให้มอนเตอร์ดรอปไอเทมที่ต้องการ
+        setarray .num,1;            //ตั้งค่าจำนวนไอเทมต้องการที่จะดรอป
+        set .item_size,getarraysize( .item );
+    end;
+    
+    OnNPCKillEvent:
+    getmapxy( .@map$,.@x,.@y, 0 );
+    if (getmonsterinfo( killedrid, MOB_MVPEXP )){
+            if (rand(100) < 100)    //ตั้ง % จากการ Drop ใส่ 100 คือ ตก 100% แก้เลข 100 ด้านหลัง จากเครื่องหมาย <
+                //getitem 7227,1;    //กรณี ใส่ไอเทมให้บอส Drop ของพิเศษที่ต้องการ
+            end;
+        } else {
+            if (rand(100) < 20)    //ตั้ง % จากการ Drop ใส่ 100 คือ ตก 100% แก้เลข 100 ด้านหลัง จากเครื่องหมาย <
+                makeitem .item[ rand( .item_size ) ],.num,.@map$,.@x,.@y;
+            end;
+        }
+    }

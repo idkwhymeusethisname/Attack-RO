@@ -1,0 +1,70 @@
+// Skill Damage Adjustment Database
+//
+// Structure of Database:
+// SkillName,Caster,Map,Damage against Players{,Damage against Mobs{,Damage against Bosses{,Damage against Other}}}
+//
+// Caster: The groups for which the adjustment takes effect. (bitmask)
+//		 1 = Player
+//		 2 = Monster
+//		 4 = Pet
+//		 8 = Homunculus
+//		16 = Mercenary
+//		32 = Elemental
+//
+// Map:
+// 		1    - Normal (the maps that aren't classified as these maps below)
+// 		2    - PVP
+// 		4    - GVG
+// 		8    - Battlegrounds
+// 		16   - 'skill_damage' mapflag
+// Restricted zones - they're configured by 'restricted <number>' mapflag
+// 		32   - Zone 1
+// 		64   - Zone 2
+// 		128  - Zone 3
+// 		256  - Zone 4
+// 		512  - Zone 5
+// 		1024 - Zone 6
+// 		2048 - Zone 7
+//
+// Notes:
+//  	Damage is a percentage between -100 and 100000.
+//  	Negative values decrease damage and positive values increase it (0 = no change).
+//
+// Examples:
+// MC_MAMMONITE,1,1,50 // In normal maps, players deal +50% damage to other players with Mammonite.
+// MO_EXTREMITYFIST,1,6,-50 // In PVP and GVG, players deal -50% (half) damage to other players with Asura Strike.
+// AB_ADORAMUS,1,6,50,0,10,15 // In PVP and GVG, players deal +50% damage to other players, +0% to mobs, +10% to bosses, and +15% to other with Adoramus.
+
+//Warlock
+WL_SOULEXPANSION,1,31,500
+WL_JACKFROST,1,31,500
+WL_TETRAVORTEX,1,31,200
+WL_TETRAVORTEX_FIRE,1,31,200
+WL_TETRAVORTEX_WATER,1,31,200
+WL_TETRAVORTEX_WIND,1,31,200
+WL_TETRAVORTEX_GROUND,1,31,200
+WL_EARTHSTRAIN,1,31,500
+WL_CRIMSONROCK,1,31,700
+WL_COMET,1,31,500
+WL_CHAINLIGHTNING,1,31,150
+//Genetic
+GN_CARTCANNON,1,31,100
+//Ranger
+RA_WUGSTRIKE,1,31,500
+//Bard
+WM_SEVERE_RAINSTORM,1,31,500
+//Ass
+GC_CROSSIMPACT,1,31,250
+//Sor
+SO_PSYCHIC_WAVE,1,31,400
+SO_DIAMONDDUST,1,31,350
+SO_EARTHGRAVE,1,31,250
+SO_CLOUD_KILL,1,31,250
+//Knight
+RK_DRAGONBREATH,1,31,250
+RK_DRAGONBREATH_WATER,1,31,250
+RK_STORMBLAST,1,31,500
+//Royal
+LG_MOONSLASHER,1,31,800
+LG_CANNONSPEAR,1,31,100
+LG_OVERBRAND,1,31,100

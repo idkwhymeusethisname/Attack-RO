@@ -1,0 +1,131 @@
+//===== rAthena Script =======================================
+//= Guild Prize Giveaway
+//===== By: ==================================================
+//= AnnieRuru / Mysterious / Joseph
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena SVN
+//= Toasty WoE Controller
+//= Euphy WoE Controller
+//===== Description: =========================================
+//= Rewards guild masters of castle owners after each
+//= War of Emperium session.
+//===== Additional Comments: =================================
+//= v1.0 - Intitial Re-release [Mysterious]
+//= v1.1 - Language structures [Mysterious]
+//= v1.2 - Added divisions [Mysterious]
+//= v1.3 - Added proper information [Mysterious]
+//= v1.4 - Optimized! [Euphy]
+//= v1.5 - Little bit of cleaning [Mysterious]
+//= v1.6 - Fixed Agit on/off corruption. [Joseph]
+//= v1.7 - Fixed overweight issues [Joseph]
+//= v1.8 - Added the compability with Toasty's WoE Controller. [Joseph]
+//============================================================
+ 
+mooc,217,62,4	script	Castle Rewards	871,{
+    function    GetCastle;  
+    function    GetNPCVar;  
+    set .@n$,"["+strnpcinfo(0)+"]";
+    mes "กิลของคุณคือ [^0000FF"+getguildname(getcharid(2))+"^000000] เป็นเจ้าของปราสาท:";
+    for(set .@i,0;.@i<getarraysize(.Castles$);set .@i,.@i+1)
+    if (getcastledata(.Castles$[.@i],1) == getcharid(2)) { 
+        mes " > "+getcastlename(.Castles$[.@i])+""; set .@c,1;
+        setarray .@uh$[getarraysize(.@uh$)],.Castles$[.@i],.@i;
+    }
+    if (!.@c) { mes "ไม่มีได้ครอบครองปราสาท."; close; }
+    next;
+    if (select(((getguildmasterid(getcharid(2))==getcharid(0))?((agitcheck()||agitcheck2())?"":"รับของรางวัล"):"")+":ยกเลิก")==2) close;
+    mes .@n$;
+    mes "กรุณาเลือกปราสาทที่จะรับของรางวัล";
+    for(set .@i,0;.@i<getarraysize(.@uh$);set .@i,.@i+2) set .@m$,.@m$+($castle_reward&(1<<atoi(.@uh$[.@i+1]))?"^0000FF":"^FF0000")+getcastlename(.@uh$[.@i])+"^000000:";
+    next;
+    set .@m,select(.@m$)-1;
+    if ($castle_reward&(1<<atoi(.@uh$[.@m*2+1]))) {
+        mes .@n$;
+        mes "นี้คือรางวัลของคุณ ^0000FF"+getcastlename(.@uh$[.@m*2])+"^000000.";
+        mes "คุณควรแบ่งสิ่งเหล่านี้ในหมู่สมาชิกกิลด์ของคุณ";
+        for (set .@i,0; .@i<getarraysize(.reward); set .@i,.@i+2) {
+            set .@weight,getiteminfo(.reward[.@i],6);
+            set .@add_weight,.@add_weight+.@weight;
+            if (.@add_weight+Weight>MaxWeight) { mes " "; mes "^FF0000น้ำหนักคุณมากเกินไป!^000000"; close; }
+        }
+        for(set .@i,0;.@i<getarraysize(.reward);set .@i,.@i+2) getitem .reward[.@i],.reward[.@i+1];
+        set $castle_reward,$castle_reward^(1<<atoi(.@uh$[.@m*2+1]));
+        close;
+    }
+    mes .@n$;
+    mes "ดูเหมือนคุณจะได้รับรางวัลไปแล้วหรือปราสาทที่คุณครอบครองไม่สามารถรับรางวัลได้";
+    close;
+    
+    function    GetCastle   {
+        for(set .@j,0;.@j<getarraysize(.Castles$);set .@j,.@j+1) {
+            set .@c1,.@c2|(1<<.@j);
+            if (getarg(0)==.@c1) return .@j;
+        }
+        return -1;
+    }
+    function    GetNPCVar   {
+        set .@var_1$,getarg(0);
+        set .@var_2$,getarg(1);
+        freeloop(1);
+        for (set .@i,0; .@i<128; set .@i,.@i+1)
+            setd .@var_2$+"["+.@i+"]",getelementofarray(getvariableofnpc(getd(.@var_1$),getarg(2)),.@i);
+        freeloop(0);
+        return;
+    }
+    
+OnAgitEnd:
+OnAgitEnd2:
+    if (.controller) {
+        set .@tick,gettimetick(1);
+        freeloop(1);
+        for (set .@i,0; .@i<getarraysize(.woe_day); set .@i,.@i+1)
+            for (set .@j,0; .@j<getarraysize(.woe_state); set .@j,.@j+1)
+                for (set .@c,0; .@c<(getarraysize(.regions$)); set .@c,.@c+1)
+                    if (.woe_day[.@i]==gettime(4) && .woe_1[.@i]==.@tick && getd(".woe_state_"+.woe_state[.@i]+"["+.@j+"]") > 0 && getd(".woe_state_"+.woe_state[.@i]+"["+.@j+"]")&(1<<.@c) > 0) {
+                        set .@position,.@j*5+.@c;
+                        if ($castle_reward&(1<<.@position) == 0) set $castle_reward,$castle_reward|(1<<.@position);
+                    }
+        freeloop(0);
+    }
+    else {
+        for(set .@i,0;.@i<getarraysize($WOE_CONTROL);set .@i,.@i+4)
+            if (gettime(4)==$WOE_CONTROL[.@i] && gettime(3)==$WOE_CONTROL[.@i+2] && $castle_reward&(1<<GetCastle($WOE_CONTROL[.@i+3])) == 0)
+                set $castle_reward,$castle_reward|(1<<GetCastle($WOE_CONTROL[.@i+3]));
+    }
+    end;
+ 
+OnInit:
+    // === [Config] =============================================
+    set .controller,0;      // WoE Controller - Euphy|Toasty:0|1
+    setarray .reward,671,1; // Reward - <Item_ID>,<Amount>{,...}
+    // ==========================================================
+    sleep 10;
+    if (!.controller)
+        GetNPCVar(".Castles$",".Castles$","WOE_CONTROL");
+    else {
+        // Transfer NPC Variable
+        setarray .@var$,".woe_day",".woe_1",".woe_state",".regions$",".castles_novi$";
+        for (set .@i,0; .@i<getarraysize(.@var$); set .@i,.@i+1)
+            GetNPCVar(.@var$[.@i],.@var$[.@i],"WoEInfoBase");
+        
+        // Generate States
+        for  (set .@i,0; .@i<getarraysize(.woe_state); set .@i,.@i+1)
+            GetNPCVar(".woe_state_"+.@i,".woe_state_"+.@i,"WoEInfoBase");
+            
+        // Generate Castles
+        for (set .@i,0; .@i<getarraysize(.regions$); set .@i,.@i+1) {
+            set .@j,1;
+            while (.@j<=5) {
+                if (.regions$[.@i]=="novi") {
+                    copyarray .Castles$[getarraysize(.Castles$)],.castles_novi$[0],getarraysize(.castles_novi$);
+                    break;
+                }
+                set .Castles$[getarraysize(.Castles$)],.regions$[.@i]+"_cas0"+.@j;
+                set .@j,.@j+1;
+            }
+        }
+    }
+    end;
+}

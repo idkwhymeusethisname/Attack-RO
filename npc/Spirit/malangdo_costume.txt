@@ -1,0 +1,200 @@
+// Costume enchant (garment)
+mooc,100,96,5	script	นักวิจัยแร่	982,{
+
+	disable_items;
+	mes "[Enchant Weapon Costume]";
+	mes "ยินดีต้อนรับผู้เล่นสุดแกร่ง!!";
+	mes "ฉันสามารถเสริมพลังคอสตูมอาวุธให้คุณ.";
+	next;
+	mes "[Enchant Weapon Costume]";
+	mes "คุณต้องสวมใส่คอสตูมอาวุธและเตรียมอัญมณีเสริมพลังไว้ในกระเป๋าของคุณ!";
+	mes "ฉันมีค้นพบวิธีการที่จะทำให้คุณแข็งแกร่งขึ้น คุณสนใจไหม?";
+	next;
+	if (select( "ฉันต้องการเสริมพลัง.", "ยกเลิก." ) == 2) {
+		mes "[Enchant Weapon Costume]";
+		mes "เยี่ยม? คุณต้องการดูนี้หน่อยไหม?";
+		close;
+	}
+	if (checkweight(1119,3) == 0) {
+		mes "[Enchant Weapon Costume]";
+		mes "เกือบจะดีแล้ว... น้ำหนักของคุณมากเกินไปมันไม่มากพอที่จะรับพลังสุดแข็งแกร่งนี้หรอก...!";
+		mes "อย่ารีบร้อนนักไปเตรียมมาให้พร้อม!";
+		close;
+	}
+	.@part = EQI_SHADOW_WEAPON;
+	.@equip_id = getequipid(.@part);
+	if (.@equip_id == -1) {
+		mes "[Enchant Weapon Costume]";
+		mes "คุณต้องสวมใส่คอสตูมอาวุธซะก่อน";
+		mes "แล้วฉันจะรู้ได้ยังไงว่าคุณจะเสริมพลังให้กับอุปกรณ์ใดได้โปรดเตรียมสมองมาด้วยก็ดี..";
+		close;
+	}
+
+	// costume garment list allowed (incomplete)
+	switch(.@equip_id) {
+	case 32124:
+	case 32125:
+	case 32126:
+	case 32127:
+	case 32128:
+	case 32129:
+	case 32130:
+	case 32131:
+	case 32132:
+	case 32133:
+	case 32134:
+	case 32135:
+	case 32136:
+	case 32137:
+	case 32138:
+		break;
+	default:
+		mes "[Enchant Weapon Costume]";
+		mes "I need to have a look at it to check for upgrading posibility..";// custom
+		close;
+	}
+
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
+
+	mes "[Enchant Weapon Costume]";
+	mes "ว้าวว ^0000FF" + getitemname(.@equip_id) + "^000000!!! อุปกรณ์ของคุณนั้นสุดยอดไปเลย";
+	mes "เยี่ยม!! ฉันรอไม่ไหวแล้วที่จะเสริมพลังให้กับมัน!!";
+	mes "เลือกอัญมณีของคุณแล้วเรามาเริ่มกันเลย";
+	next;
+	setarray .@data$[0],
+		40552, 40489, "เพิ่มความแรงสกิล Sonic Wave",	
+		40553, 40490, "เพิ่มความแรงสกิล Dragon Breath",	
+		40554, 40491,"เพิ่มความแรงสกิล Dragon Breath Water",
+		40555, 40492,"เพิ่มความแรงสกิล Ignition Break",	
+		40556, 40493,"เพิ่มความแรงสกิล Hundred Spear ",	
+		40557, 40494,"เพิ่มความแรงสกิล Cross Impact",
+		40558, 40495,"เพิ่มความแรงสกิล Cross Ripper Slasher",
+		40559, 40496,"เพิ่มความแรงสกิล Arrow Storm",	
+		40560, 40497,"เพิ่มความแรงสกิล Warg Strike",	
+		40561, 40498,"เพิ่มความแรงสกิล Firing Trap",	
+		40562, 40499,"เพิ่มความแรงสกิล Icebound Trap",	
+		40563, 40500,"เพิ่มความแรงสกิล Aimed Bolt",	
+		40564, 40501,"เพิ่มความแรงสกิล Adoramus",
+		40565, 40502,"เพิ่มความแรงสกิล Judex",	
+		40566, 40503,"เพิ่มความแรงสกิล Crimson Rock",
+		40567, 40504,"เพิ่มความแรงสกิล Jack Frost",	
+		40568, 40505,"เพิ่มความแรงสกิล Soul Expansion",
+		40569, 40506,"เพิ่มความแรงสกิล Earth Strain",
+		40570, 40507,"เพิ่มความแรงสกิล Tetra Vortex",
+		40571, 40508,"เพิ่มความแรงสกิล Comet",	
+		40572, 40509,"เพิ่มความแรงสกิล Chain Lightning",
+		40573, 40510,"เพิ่มความแรงสกิล Knuckle Boost",
+		40574, 40511,"เพิ่มความแรงสกิล Arm Cannon",	
+		40575, 40512,"เพิ่มความแรงสกิล Power Swing",	
+		40576, 40513,"เพิ่มความแรงสกิล Axe Boomerang",
+		40577, 40514,"เพิ่มความแรงสกิล Axe Tornado",	
+		40578, 40515,"เพิ่มความแรงสกิล Over Brand",	
+		40579, 40516,"เพิ่มความแรงสกิล Cannon Spear",	
+		40580, 40517,"เพิ่มความแรงสกิล Pinpoint Attack",
+		40581, 40518,"เพิ่มความแรงสกิล Triangle Shot",
+		40582, 40519,"เพิ่มความแรงสกิล Feint Bomb",	
+		40583, 40520,"เพิ่มความแรงสกิล Fatal Menace",	
+		40584, 40521,"เพิ่มความแรงสกิล Metallic Sound",	
+		40585, 40522,"เพิ่มความแรงสกิล Severe Rainstorm",
+		40586, 40523,"เพิ่มความแรงสกิล Tiger Cannon",	
+		40587, 40524,"เพิ่มความแรงสกิล Gate of Hell",	
+		40588, 40525,"เพิ่มความแรงสกิล Rampage Blaster",	
+		40589, 40526,"เพิ่มความแรงสกิล Asura Strike",	
+		40590, 40527,"เพิ่มความแรงสกิล Flash Combo",	
+		40591, 40528,"เพิ่มความแรงสกิล Psychic Wave",
+		40592, 40529,"เพิ่มความแรงสกิลDiamond Dust",
+		40593, 40530,"เพิ่มความแรงสกิล Earth Grave",	
+		40594, 40531,"เพิ่มความแรงสกิล Varetyr Spear",
+		40595, 40532,"เพิ่มความแรงสกิล Killing Cloud",
+		40596, 40533,"เพิ่มความแรงสกิล Acid Demonstration",
+		40597, 40534,"เพิ่มความแรงสกิล Cart Cannon",
+		40598, 40535,"เพิ่มความแรงสกิล Fire Expansion",	
+		40599, 40536,"เพิ่มความแรงสกิล Crazy Weed",
+		40600, 40537,"เพิ่มความแรงสกิล Illusion Doping",
+		40601, 40538,"เพิ่มความแรงสกิล Rapid Throw",
+		40602, 40539,"เพิ่มความแรงสกิล Cross Slash",	
+		40603, 40540,"เพิ่มความแรงสกิล Kunai Splash",	
+		40604, 40541,"เพิ่มความแรงสกิล Kunai Explosion",	
+		40605, 40542,"เพิ่มความแรงสกิล Swirling Petal",	
+		40606, 40543,"เพิ่มความแรงสกิล Lightning Jolt",	
+		40607, 40544,"เพิ่มความแรงสกิล Wind Blade",
+		40608, 40545,"เพิ่มความแรงสกิล Snow Flake Draft",
+		40609, 40546,"เพิ่มความแรงสกิล First Wind",
+		40610, 40547,"เพิ่มความแรงสกิล Killing Strike",
+		40611, 40548,"เพิ่มความแรงสกิล Freezing Spear",
+		40612, 40549,"เพิ่มความแรงสกิล Exploding Dragon",
+		40613, 40550,"เพิ่มความแรงสกิล Blaze Shield",
+		40614, 40551,"เพิ่มความแรงสกิล Flaming Petals",
+		40715, 40732,"เพิ่มความแรงสกิล Round Trip",
+		40716, 40733,"เพิ่มความแรงสกิล Slug Shot",
+		40717, 40734,"เพิ่มความแรงสกิล Dragon Tail",
+		40718, 40735,"เพิ่มความแรงสกิล Shatter Storm",
+		40719, 40736,"เพิ่มความแรงสกิล Banishing Buster",
+		40720, 40737,"เพิ่มความแรงสกิล Hammer of God",
+		40721, 40738,"เพิ่มความแรงสกิล Anti-Material Blast",
+		40722, 40739,"เพิ่มความแรงสกิล Mass Spiral",
+		40723, 40740,"เพิ่มความแรงสกิล Quick Draw Shot",
+		40724, 40741,"เพิ่มความแรงสกิล Desperado",
+		40725, 40742,"เพิ่มความแรงสกิล Rapid Shower",
+		40726, 40743,"เพิ่มความแรงสกิล Full Buster",
+		40727, 40744,"เพิ่มความแรงสกิล Ground Drift",
+		40728, 40745,"เพิ่มความแรงสกิล Picky Peck",
+		40729, 40746,"เพิ่มความแรงสกิล Scar of Tarou",
+		40730, 40747,"เพิ่มความแรงสกิล Silvervine Stem Spear",
+		40731, 40748,"เพิ่มความแรงสกิล Catnip Meteor";
+	.@size = getarraysize(.@data$);
+	for ( .@i = 0; .@i < .@size; .@i += 3 ) {
+		.@id = atoi(.@data$[.@i]);
+		.@menu$ += sprintf( "%d. %s (%d) left:", (.@j+1), getitemname(.@id), countitem(.@id) );
+		.@j++;
+	}
+	.@menu$ += "End Conversation.";
+	.@s = (select(.@menu$) - 1) * 3;
+	if (.@s == .@size) {
+		mes "[Enchant Weapon Costume]";
+		mes "Yes? Do you want to keep looking?";
+		close;
+	}
+	.@id = atoi(.@data$[.@s]);
+	.@enchant = atoi(.@data$[.@s+1]);
+	if (getequipid(.@part) < 0 || countitem(.@id) < 1) {
+		mes "[Enchant Weapon Costume]";
+		mes "คุณต้องมีทั้งคอสตูมอาวุธและอัญมณีสำหรับเสริมพลัง.";
+		close;
+	}
+	mes "^FF0000   !!! คำเตือน !!!^000000";
+	mes "^ff0000การเสริมพลังมีโอกาสล้มเหลวได้แต่มันจะไม่หายไปและคุณยังสามารถรีเซ็ตมันได้เสมอ^000000";
+	mes "^ff0000หากไอเท็มมีมนต์เสน่ห์อยู่แล้ว มันจะถูกรีเซ็ตและสิ่งที่คุณเลือกจะทำให้ " + .@data$[.@s+2] + " !!!^000000";
+	mes "^ff0000คุณแน่ใจหรือว่าจะเสริมพลังคอสตูมอาวุธชิ้นนี้?^000000";
+	next;
+	if (select( "ใช่.", "ไม่." ) == 2) {
+		mes "[Enchant Weapon Costume]";
+		mes "Yes? Do you want to keep looking?";
+		close;
+	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
+	delitem .@id, 1;
+	delequip .@part;
+	if (rand(100) < 50) {
+		mes "[Enchant Weapon Costume]";
+		mes "ว้าววว นี้มันสุดยอดไปเลย!!";
+		mes "ฉันทำมันได้ด้วยตัวเองจริงๆหรอเนี้ย?!!!";
+		.@card[0] = .@enchant;
+	}
+	else {
+		mes "[Enchant Weapon Costume]";
+		mes "โอ้ ไม่!";
+		mes "เปิ้งงงง!!!!! ฉันไม่สามารถแสดงความล้มเหลวนี้ให้โลกเห็นได้!!!";
+		.@card[0] = 0;
+	}
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	close;
+OnInit:
+		waitingroom "- ออฟคอสอาวุธ -",0;
+		end;	
+}

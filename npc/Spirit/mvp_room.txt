@@ -1,0 +1,500 @@
+-	script	mvp01	-1,{
+	if ( Delay_PvP > gettimetick(2) ) goto deley;
+    mes "- วาปไปล่าบอส -";
+    next;
+    menu
+    "Boss Room Normal",boss2,
+    "Boss Room PvP",boss1;
+	
+	deley:
+		dispbottom "กรุณาออกเกมเข้าใหม่";
+		end;
+
+    boss1:
+        mes "- วาปไปล่าบอส -";
+        next;
+        menu
+        "Boss Room PvP ห้อง 1",map1_400, 
+        "Boss Room PvP ห้อง 2",map2_400,
+        "Boss Room PvP ห้อง 3",map3_400,
+        "Boss Room PvP ห้อง 4",map4_400,
+        "Boss Room PvP ห้อง 5",map5_400,
+        "Boss Room PvP ห้อง 6",map6_400,
+        "Boss Room PvP ห้อง 7",map7_400,
+        "Boss Room PvP ห้อง 8",map8_400,
+        "Boss Room PvP ห้อง 9",map9_400,
+        "Boss Room PvP ห้อง 10",map10_400;
+    
+    boss2: 
+        mes "- วาปไปล่าบอส -";
+        next;
+        menu
+        "Boss Room Normal ห้อง 1",map1, 
+        "Boss Room Normal ห้อง 2",map2,
+        "Boss Room Normal ห้อง 3",map3,
+        "Boss Room Normal ห้อง 4",map4,
+        "Boss Room Normal ห้อง 5",map5,
+        "Boss Room Normal ห้อง 6",map6,
+        "Boss Room Normal ห้อง 7",map7,
+        "Boss Room Normal ห้อง 8",map8,
+        "Boss Room Normal ห้อง 9",map9,
+        "Boss Room Normal ห้อง 10",map10;
+
+        map1: 
+	    warp "boss1",0,0; 
+	    close;
+        map2: 
+	    warp "boss2",0,0; 
+	    close;
+        map3: 
+	    warp "boss3",0,0; 
+	    close;
+        map4: 
+	    warp "boss4",0,0; 
+	    close;
+        map5: 
+	    warp "boss5",0,0; 
+	    close;
+        map6: 
+	    warp "boss6",0,0; 
+	    close;
+        map7: 
+	    warp "boss7",0,0; 
+	    close;
+        map8: 
+	    warp "boss8",0,0; 
+	    close;
+        map9: 
+	    warp "boss9",0,0; 
+	    close;
+        map10: 
+	    warp "boss10",0,0; 
+	    close;  
+        
+        map1_400: 
+	    warp "boss11",0,0; 
+	    close;
+        map2_400: 
+	    warp "boss12",0,0; 
+	    close;
+        map3_400: 
+	    warp "boss13",0,0; 
+	    close;
+        map4_400: 
+	    warp "boss14",0,0; 
+	    close;
+        map5_400: 
+	    warp "boss15",0,0; 
+	    close;
+        map6_400: 
+	    warp "boss16",0,0; 
+	    close;
+        map7_400: 
+	    warp "boss17",0,0; 
+	    close;
+        map8_400: 
+	    warp "boss18",0,0; 
+	    close;
+        map9_400: 
+	    warp "boss19",0,0; 
+	    close;
+        map10_400: 
+	    warp "boss20",0,0; 
+	    close;        
+
+        Oninit:
+        waitingroom "- วาปไปล่าบอส -",0;
+        end;
+        }
+		poring_c01,0,0,0,0	monster	Poring	1002,20
+		poring_c01,0,0,0,0	monster	Drops	1113,20
+		poring_c01,0,0,0,0	monster	Poporing	1031,20
+        ///////////////////////////1 400///////////////////////////////// 
+        boss11,0,0,0,0	boss_monster	Gioia	2251,2,3600000,1800000,0
+        boss11,0,0,0,0	boss_monster	Leak	2156,6,600000,300000,0
+        boss11,0,0,0,0	boss_monster	Amon Ra	1511,6,600000,300000,0
+        boss11,0,0,0,0	boss_monster	Maya	1147,7,600000,300000,0
+        boss11,0,0,0,0	boss_monster	Atroce	1785,8,600000,300000,0
+        boss11,0,0,0,0	boss_monster	Bacsojin	1518,10,600000,300000,0
+        boss11,0,0,0,0	boss_monster	Osiris	1038,6,600000,300000,0
+        boss11,0,0,0,0	boss_monster	Baphomet	1039,5,600000,300000,0
+        boss11,0,0,0,0	boss_monster	Beelzebub	1873,5,600000,300000,0
+        //miniboss 
+        boss11,0,0,0,0	monster	Dragon Fly	1091,2,300000,180000,0
+        boss11,0,0,0,0	monster	Arc Angeling	1388,2,300000,180000,0
+        boss11,0,0,0,0	monster	Cat o' Nine Tails	1307,2,300000,180000,0
+        boss11,0,0,0,0	monster	Dark Illusion	1302,2,300000,180000,0
+        boss11,0,0,0,0	monster	Deviling	1582,2,300000,180000,0
+
+        ///////////////////////////2 400///////////////////////////////// 
+        boss12,0,0,0,0	boss_monster	Dark Guardian Kades	2255,2,3600000,1800000,0
+        boss12,0,0,0,0	boss_monster	Boitata	2068,10,600000,300000,0
+        boss12,0,0,0,0	boss_monster	Buwaya	2319,8,600000,300000,0
+        boss12,0,0,0,0	boss_monster	Dark Lord	1272,5,600000,300000,0
+        boss12,0,0,0,0	boss_monster	Detardeurus	1719,5,600000,300000,0
+        boss12,0,0,0,0	boss_monster	Doppelganger	1046,5,600000,300000,0
+        boss12,0,0,0,0	boss_monster	Dracula	1389,7,600000,300000,0
+        boss12,0,0,0,0	boss_monster	Drake	1112,5,600000,300000,0
+        boss12,0,0,0,0	boss_monster	Vesper	1685,5,600000,300000,0
+        //miniboss 
+        boss12,0,0,0,0	monster	Angeling	1096,2,300000,180000,0
+        boss12,0,0,0,0	monster	Eclipse	1093,2,300000,180000,0
+        boss12,0,0,0,0	monster	Gryphon	1259,2,300000,180000,0
+        boss12,0,0,0,0	monster	Hydrolancer	1813,2,300000,180000,0
+        boss12,0,0,0,0	monster	Hardrock Mammoth	1990,2,300000,180000,0
+
+        ///////////////////////////3 400///////////////////////////////// 
+        boss13,0,0,0,0	boss_monster	Eddga	1115,7,600000,300000,0
+        boss13,0,0,0,0	boss_monster	Evil Snake Lord	1418,7,600000,300000,0
+        boss13,0,0,0,0	boss_monster	Fallen Bishop	1871,3,600000,300000,0
+        boss13,0,0,0,0	boss_monster	Stormy Knight	1251,5,600000,300000,0
+        boss13,0,0,0,0	boss_monster	Gloom Under Night	1768,5,600000,300000,0
+        boss13,0,0,0,0	boss_monster	Golden Thief Bug	1086,10,600000,300000,0
+        boss13,0,0,0,0	boss_monster	Garm	1252,10,600000,300000,0
+        boss13,0,0,0,0	boss_monster	Turtle General	1312,3,600000,300000,0
+        //miniboss 
+        boss13,0,0,0,0	monster	Ghostring	1120,2,300000,180000,0
+        boss13,0,0,0,0	monster	Mysteltainn	1203,2,300000,180000,0
+        boss13,0,0,0,0	monster	Mastering	1090,2,300000,180000,0
+        boss13,0,0,0,0	monster	Mutant Dragon	1262,2,300000,180000,0
+
+        ///////////////////////////4 400///////////////////////////////// 
+        boss14,0,0,0,0	boss_monster	Gopinich	1885,10,600000,300000,0
+        boss14,0,0,0,0	boss_monster	Ifrit	1832,4,600000,300000,0
+        boss14,0,0,0,0	boss_monster	Incantation Samurai	1492,4,600000,300000,0
+        boss14,0,0,0,0	boss_monster	Kiel D-01	1734,5,600000,300000,0
+        boss14,0,0,0,0	boss_monster	Ktullanux	1779,10,600000,300000,0
+        boss14,0,0,0,0	boss_monster	Lady Tanee	1688,5,600000,300000,0
+        boss14,0,0,0,0	boss_monster	Lord of Death	1373,4,600000,300000,0
+        boss14,0,0,0,0	boss_monster	Thanatos Phantom	1708,1,600000,300000,0
+        //miniboss 
+        boss14,0,0,0,0	monster	Necromancer	1870,2,300000,180000,0
+        boss14,0,0,0,0	monster	Tendrillion	1991,2,300000,180000,0
+        boss14,0,0,0,0	monster	Toad	1089,2,300000,180000,0
+        boss14,0,0,0,0	monster	Arc Angeling	2934,2,300000,180000,0     
+
+        ///////////////////////////5 400///////////////////////////////// 
+        boss15,0,0,0,0	boss_monster	Mistress	1059,4,600000,300000,0
+        boss15,0,0,0,0	boss_monster	Moonlight Flower	1150,7,600000,300000,0
+        boss15,0,0,0,0	boss_monster	Orc Hero	1087,6,600000,300000,0
+        boss15,0,0,0,0	boss_monster	Orc Lord	1190,6,600000,300000,0
+        boss15,0,0,0,0	boss_monster	Pharaoh	1157,7,600000,300000,0
+        boss15,0,0,0,0	boss_monster	Phreeoni	1159,8,600000,300000,0
+        boss15,0,0,0,0	boss_monster	Queen Scaraba	2087,4,600000,300000,0
+        boss15,0,0,0,0	boss_monster	RSX 0806	1623,7,600000,300000,0
+        boss15,0,0,0,0	boss_monster	Tao Gunka	1583,5,600000,300000,0
+        //miniboss 
+        boss15,0,0,0,0	monster	Vagabond Wolf	1092,2,300000,180000,0
+        boss15,0,0,0,0	monster	Valkyrie	1765,2,300000,180000,0
+        boss15,0,0,0,0	monster	Wild Rider	2208,2,300000,180000,0
+        boss15,0,0,0,0	monster	Vocal	1088,2,300000,180000,0    
+
+         ///////////////////////////6 400///////////////////////////////// 
+         boss16,0,0,0,0	boss_monster	Gioia	2251,2,3600000,1800000,0
+         boss16,0,0,0,0	boss_monster	Leak	2156,6,600000,300000,0
+         boss16,0,0,0,0	boss_monster	Amon Ra	1511,6,600000,300000,0
+         boss16,0,0,0,0	boss_monster	Maya	1147,7,600000,300000,0
+         boss16,0,0,0,0	boss_monster	Atroce	1785,8,600000,300000,0
+         boss16,0,0,0,0	boss_monster	Bacsojin	1518,10,600000,300000,0
+         boss16,0,0,0,0	boss_monster	Osiris	1038,6,600000,300000,0
+         boss16,0,0,0,0	boss_monster	Baphomet	1039,5,600000,300000,0
+         boss16,0,0,0,0	boss_monster	Beelzebub	1873,5,600000,300000,0
+         //miniboss 
+         boss16,0,0,0,0	monster	Dragon Fly	1091,2,300000,180000,0
+         boss16,0,0,0,0	monster	Arc Angeling	1388,2,300000,180000,0
+         boss16,0,0,0,0	monster	Cat o' Nine Tails	1307,2,300000,180000,0
+         boss16,0,0,0,0	monster	Dark Illusion	1302,2,300000,180000,0
+         boss16,0,0,0,0	monster	Deviling	1582,2,300000,180000,0
+ 
+         ///////////////////////////7 400///////////////////////////////// 
+         boss17,0,0,0,0	boss_monster	Dark Guardian Kades	2255,2,3600000,1800000,0
+         boss17,0,0,0,0	boss_monster	Boitata	2068,10,600000,300000,0
+         boss17,0,0,0,0	boss_monster	Buwaya	2319,8,600000,300000,0
+         boss17,0,0,0,0	boss_monster	Dark Lord	1272,5,600000,300000,0
+         boss17,0,0,0,0	boss_monster	Detardeurus	1719,5,600000,300000,0
+         boss17,0,0,0,0	boss_monster	Doppelganger	1046,5,600000,300000,0
+         boss17,0,0,0,0	boss_monster	Dracula	1389,7,600000,300000,0
+         boss17,0,0,0,0	boss_monster	Drake	1112,5,600000,300000,0
+         boss17,0,0,0,0	boss_monster	Vesper	1685,5,600000,300000,0
+         //miniboss 
+         boss17,0,0,0,0	monster	Angeling	1096,2,300000,180000,0
+         boss17,0,0,0,0	monster	Eclipse	1093,2,300000,180000,0
+         boss17,0,0,0,0	monster	Gryphon	1259,2,300000,180000,0
+         boss17,0,0,0,0	monster	Hydrolancer	1813,2,300000,180000,0
+         boss17,0,0,0,0	monster	Hardrock Mammoth	1990,2,300000,180000,0
+ 
+         ///////////////////////////8 400///////////////////////////////// 
+         boss18,0,0,0,0	boss_monster	Eddga	1115,7,600000,300000,0
+         boss18,0,0,0,0	boss_monster	Evil Snake Lord	1418,7,600000,300000,0
+         boss18,0,0,0,0	boss_monster	Fallen Bishop	1871,3,600000,300000,0
+         boss18,0,0,0,0	boss_monster	Stormy Knight	1251,5,600000,300000,0
+         boss18,0,0,0,0	boss_monster	Gloom Under Night	1768,5,600000,300000,0
+         boss18,0,0,0,0	boss_monster	Golden Thief Bug	1086,10,600000,300000,0
+         boss18,0,0,0,0	boss_monster	Garm	1252,10,600000,300000,0
+         boss18,0,0,0,0	boss_monster	Turtle General	1312,3,600000,300000,0
+         //miniboss 
+         boss18,0,0,0,0	monster	Ghostring	1120,2,300000,180000,0
+         boss18,0,0,0,0	monster	Mysteltainn	1203,2,300000,180000,0
+         boss18,0,0,0,0	monster	Mastering	1090,2,300000,180000,0
+         boss18,0,0,0,0	monster	Mutant Dragon	1262,2,300000,180000,0
+ 
+         ///////////////////////////9 400///////////////////////////////// 
+         boss19,0,0,0,0	boss_monster	Gopinich	1885,10,600000,300000,0
+         boss19,0,0,0,0	boss_monster	Ifrit	1832,4,600000,300000,0
+         boss19,0,0,0,0	boss_monster	Incantation Samurai	1492,4,600000,300000,0
+         boss19,0,0,0,0	boss_monster	Kiel D-01	1734,5,600000,300000,0
+         boss19,0,0,0,0	boss_monster	Ktullanux	1779,10,600000,300000,0
+         boss19,0,0,0,0	boss_monster	Lady Tanee	1688,5,600000,300000,0
+         boss19,0,0,0,0	boss_monster	Lord of Death	1373,4,600000,300000,0
+         boss19,0,0,0,0	boss_monster	Thanatos Phantom	1708,1,600000,300000,0
+         //miniboss 
+         boss19,0,0,0,0	monster	Necromancer	1870,2,300000,180000,0
+         boss19,0,0,0,0	monster	Tendrillion	1991,2,300000,180000,0
+         boss19,0,0,0,0	monster	Toad	1089,2,300000,180000,0
+         boss19,0,0,0,0	monster	Arc Angeling	2934,2,300000,180000,0     
+ 
+         ///////////////////////////10 400///////////////////////////////// 
+         boss20,0,0,0,0	boss_monster	Mistress	1059,4,600000,300000,0
+         boss20,0,0,0,0	boss_monster	Moonlight Flower	1150,7,600000,300000,0
+         boss20,0,0,0,0	boss_monster	Orc Hero	1087,6,600000,300000,0
+         boss20,0,0,0,0	boss_monster	Orc Lord	1190,6,600000,300000,0
+         boss20,0,0,0,0	boss_monster	Pharaoh	1157,7,600000,300000,0
+         boss20,0,0,0,0	boss_monster	Phreeoni	1159,8,600000,300000,0
+         boss20,0,0,0,0	boss_monster	Queen Scaraba	2087,4,600000,300000,0
+         boss20,0,0,0,0	boss_monster	RSX 0806	1623,7,600000,300000,0
+         boss20,0,0,0,0	boss_monster	Tao Gunka	1583,5,600000,300000,0
+         //miniboss 
+         boss20,0,0,0,0	monster	Vagabond Wolf	1092,2,300000,180000,0
+         boss20,0,0,0,0	monster	Valkyrie	1765,2,300000,180000,0
+         boss20,0,0,0,0	monster	Wild Rider	2208,2,300000,180000,0
+         boss20,0,0,0,0	monster	Vocal	1088,2,300000,180000,0
+         
+         //////////////////////// 800 /////////////////////////////////
+        /////////////////////////// 1 ///////////////////////////////// 
+        boss1,0,0,0,0	boss_monster	Gioia	2251,2,3600000,1800000,0
+        boss1,0,0,0,0	boss_monster	Leak	2156,6,600000,300000,0
+        boss1,0,0,0,0	boss_monster	Amon Ra	1511,6,600000,300000,0
+        boss1,0,0,0,0	boss_monster	Maya	1147,7,600000,300000,0
+        boss1,0,0,0,0	boss_monster	Atroce	1785,8,600000,300000,0
+        boss1,0,0,0,0	boss_monster	Bacsojin	1518,10,600000,300000,0
+        boss1,0,0,0,0	boss_monster	Osiris	1038,6,600000,300000,0
+        boss1,0,0,0,0	boss_monster	Baphomet	1039,5,600000,300000,0
+        boss1,0,0,0,0	boss_monster	Beelzebub	1873,5,600000,300000,0
+        //miniboss 
+        boss1,0,0,0,0	monster	Dragon Fly	1091,2,300000,180000,0
+        boss1,0,0,0,0	monster	Arc Angeling	1388,2,300000,180000,0
+        boss1,0,0,0,0	monster	Cat o' Nine Tails	1307,2,300000,180000,0
+        boss1,0,0,0,0	monster	Dark Illusion	1302,2,300000,180000,0
+        boss1,0,0,0,0	monster	Deviling	1582,2,300000,180000,0
+
+        /////////////////////////// 2 ///////////////////////////////// 
+        boss2,0,0,0,0	boss_monster	Dark Guardian Kades	2255,2,3600000,1800000,0
+        boss2,0,0,0,0	boss_monster	Boitata	2068,10,600000,300000,0
+        boss2,0,0,0,0	boss_monster	Buwaya	2319,8,600000,300000,0
+        boss2,0,0,0,0	boss_monster	Dark Lord	1272,5,600000,300000,0
+        boss2,0,0,0,0	boss_monster	Detardeurus	1719,5,600000,300000,0
+        boss2,0,0,0,0	boss_monster	Doppelganger	1046,5,600000,300000,0
+        boss2,0,0,0,0	boss_monster	Dracula	1389,7,600000,300000,0
+        boss2,0,0,0,0	boss_monster	Drake	1112,5,600000,300000,0
+        boss2,0,0,0,0	boss_monster	Vesper	1685,5,600000,300000,0
+        //miniboss 
+        boss2,0,0,0,0	monster	Angeling	1096,2,300000,180000,0
+        boss2,0,0,0,0	monster	Eclipse	1093,2,300000,180000,0
+        boss2,0,0,0,0	monster	Gryphon	1259,2,300000,180000,0
+        boss2,0,0,0,0	monster	Hydrolancer	1813,2,300000,180000,0
+        boss2,0,0,0,0	monster	Hardrock Mammoth	1990,2,300000,180000,0
+
+        /////////////////////////// 3 ///////////////////////////////// 
+        boss3,0,0,0,0	boss_monster	Eddga	1115,7,600000,300000,0
+        boss3,0,0,0,0	boss_monster	Evil Snake Lord	1418,7,600000,300000,0
+        boss3,0,0,0,0	boss_monster	Fallen Bishop	1871,3,600000,300000,0
+        boss3,0,0,0,0	boss_monster	Stormy Knight	1251,5,600000,300000,0
+        boss3,0,0,0,0	boss_monster	Gloom Under Night	1768,5,600000,300000,0
+        boss3,0,0,0,0	boss_monster	Golden Thief Bug	1086,10,600000,300000,0
+        boss3,0,0,0,0	boss_monster	Garm	1252,10,600000,300000,0
+        boss3,0,0,0,0	boss_monster	Turtle General	1312,3,600000,300000,0
+        //miniboss 
+        boss3,0,0,0,0	monster	Ghostring	1120,2,300000,180000,0
+        boss3,0,0,0,0	monster	Mysteltainn	1203,2,300000,180000,0
+        boss3,0,0,0,0	monster	Mastering	1090,2,300000,180000,0
+        boss3,0,0,0,0	monster	Mutant Dragon	1262,2,300000,180000,0
+
+        /////////////////////////// 4 ///////////////////////////////// 
+        boss4,0,0,0,0	boss_monster	Gopinich	1885,10,600000,300000,0
+        boss4,0,0,0,0	boss_monster	Ifrit	1832,4,600000,300000,0
+        boss4,0,0,0,0	boss_monster	Incantation Samurai	1492,4,600000,300000,0
+        boss4,0,0,0,0	boss_monster	Kiel D-01	1734,5,600000,300000,0
+        boss4,0,0,0,0	boss_monster	Ktullanux	1779,10,600000,300000,0
+        boss4,0,0,0,0	boss_monster	Lady Tanee	1688,5,600000,300000,0
+        boss4,0,0,0,0	boss_monster	Lord of Death	1373,4,600000,300000,0
+        boss4,0,0,0,0	boss_monster	Thanatos Phantom	1708,1,600000,300000,0
+        //miniboss 
+        boss4,0,0,0,0	monster	Necromancer	1870,2,300000,180000,0
+        boss4,0,0,0,0	monster	Tendrillion	1991,2,300000,180000,0
+        boss4,0,0,0,0	monster	Toad	1089,2,300000,180000,0
+        boss4,0,0,0,0	monster	Arc Angeling	2934,2,300000,180000,0     
+
+        /////////////////////////// 5 ///////////////////////////////// 
+        boss5,0,0,0,0	boss_monster	Mistress	1059,4,600000,300000,0
+        boss5,0,0,0,0	boss_monster	Moonlight Flower	1150,7,600000,300000,0
+        boss5,0,0,0,0	boss_monster	Orc Hero	1087,6,600000,300000,0
+        boss5,0,0,0,0	boss_monster	Orc Lord	1190,6,600000,300000,0
+        boss5,0,0,0,0	boss_monster	Pharaoh	1157,7,600000,300000,0
+        boss5,0,0,0,0	boss_monster	Phreeoni	1159,8,600000,300000,0
+        boss5,0,0,0,0	boss_monster	Queen Scaraba	2087,4,600000,300000,0
+        boss5,0,0,0,0	boss_monster	RSX 0806	1623,7,600000,300000,0
+        boss5,0,0,0,0	boss_monster	Tao Gunka	1583,5,600000,300000,0
+        //miniboss 
+        boss5,0,0,0,0	monster	Vagabond Wolf	1092,2,300000,180000,0
+        boss5,0,0,0,0	monster	Valkyrie	1765,2,300000,180000,0
+        boss5,0,0,0,0	monster	Wild Rider	2208,2,300000,180000,0
+        boss5,0,0,0,0	monster	Vocal	1088,2,300000,180000,0    
+
+         /////////////////////////// 6 ///////////////////////////////// 
+         boss6,0,0,0,0	boss_monster	Gioia	2251,2,3600000,1800000,0
+         boss6,0,0,0,0	boss_monster	Leak	2156,6,600000,300000,0
+         boss6,0,0,0,0	boss_monster	Amon Ra	1511,6,600000,300000,0
+         boss6,0,0,0,0	boss_monster	Maya	1147,7,600000,300000,0
+         boss6,0,0,0,0	boss_monster	Atroce	1785,8,600000,300000,0
+         boss6,0,0,0,0	boss_monster	Bacsojin	1518,10,600000,300000,0
+         boss6,0,0,0,0	boss_monster	Osiris	1038,6,600000,300000,0
+         boss6,0,0,0,0	boss_monster	Baphomet	1039,5,600000,300000,0
+         boss6,0,0,0,0	boss_monster	Beelzebub	1873,5,600000,300000,0
+         //miniboss 
+         boss6,0,0,0,0	monster	Dragon Fly	1091,2,300000,180000,0
+         boss6,0,0,0,0	monster	Arc Angeling	1388,2,300000,180000,0
+         boss6,0,0,0,0	monster	Cat o' Nine Tails	1307,2,300000,180000,0
+         boss6,0,0,0,0	monster	Dark Illusion	1302,2,300000,180000,0
+         boss6,0,0,0,0	monster	Deviling	1582,2,300000,180000,0
+ 
+         /////////////////////////// 7 ///////////////////////////////// 
+         boss7,0,0,0,0	boss_monster	Dark Guardian Kades	2255,2,3600000,1800000,0
+         boss7,0,0,0,0	boss_monster	Boitata	2068,10,600000,300000,0
+         boss7,0,0,0,0	boss_monster	Buwaya	2319,8,600000,300000,0
+         boss7,0,0,0,0	boss_monster	Dark Lord	1272,5,600000,300000,0
+         boss7,0,0,0,0	boss_monster	Detardeurus	1719,5,600000,300000,0
+         boss7,0,0,0,0	boss_monster	Doppelganger	1046,5,600000,300000,0
+         boss7,0,0,0,0	boss_monster	Dracula	1389,7,600000,300000,0
+         boss7,0,0,0,0	boss_monster	Drake	1112,5,600000,300000,0
+         boss7,0,0,0,0	boss_monster	Vesper	1685,5,600000,300000,0
+         //miniboss 
+         boss7,0,0,0,0	monster	Angeling	1096,2,300000,180000,0
+         boss7,0,0,0,0	monster	Eclipse	1093,2,300000,180000,0
+         boss7,0,0,0,0	monster	Gryphon	1259,2,300000,180000,0
+         boss7,0,0,0,0	monster	Hydrolancer	1813,2,300000,180000,0
+         boss7,0,0,0,0	monster	Hardrock Mammoth	1990,2,300000,180000,0
+ 
+         /////////////////////////// 8 ///////////////////////////////// 
+         boss8,0,0,0,0	boss_monster	Eddga	1115,7,600000,300000,0
+         boss8,0,0,0,0	boss_monster	Evil Snake Lord	1418,7,600000,300000,0
+         boss8,0,0,0,0	boss_monster	Fallen Bishop	1871,3,600000,300000,0
+         boss8,0,0,0,0	boss_monster	Stormy Knight	1251,5,600000,300000,0
+         boss8,0,0,0,0	boss_monster	Gloom Under Night	1768,5,600000,300000,0
+         boss8,0,0,0,0	boss_monster	Golden Thief Bug	1086,10,600000,300000,0
+         boss8,0,0,0,0	boss_monster	Garm	1252,10,600000,300000,0
+         boss8,0,0,0,0	boss_monster	Turtle General	1312,3,600000,300000,0
+         //miniboss 
+         boss8,0,0,0,0	monster	Ghostring	1120,2,300000,180000,0
+         boss8,0,0,0,0	monster	Mysteltainn	1203,2,300000,180000,0
+         boss8,0,0,0,0	monster	Mastering	1090,2,300000,180000,0
+         boss8,0,0,0,0	monster	Mutant Dragon	1262,2,300000,180000,0
+ 
+         /////////////////////////// 9 ///////////////////////////////// 
+         boss9,0,0,0,0	boss_monster	Gopinich	1885,10,600000,300000,0
+         boss9,0,0,0,0	boss_monster	Ifrit	1832,4,600000,300000,0
+         boss9,0,0,0,0	boss_monster	Incantation Samurai	1492,4,600000,300000,0
+         boss9,0,0,0,0	boss_monster	Kiel D-01	1734,5,600000,300000,0
+         boss9,0,0,0,0	boss_monster	Ktullanux	1779,10,600000,300000,0
+         boss9,0,0,0,0	boss_monster	Lady Tanee	1688,5,600000,300000,0
+         boss9,0,0,0,0	boss_monster	Lord of Death	1373,4,600000,300000,0
+         boss9,0,0,0,0	boss_monster	Thanatos Phantom	1708,1,600000,300000,0
+         //miniboss 
+         boss9,0,0,0,0	monster	Necromancer	1870,2,300000,180000,0
+         boss9,0,0,0,0	monster	Tendrillion	1991,2,300000,180000,0
+         boss9,0,0,0,0	monster	Toad	1089,2,300000,180000,0
+         boss9,0,0,0,0	monster	Arc Angeling	2934,2,300000,180000,0     
+ 
+         /////////////////////////// 10 ///////////////////////////////// 
+         boss10,0,0,0,0	boss_monster	Mistress	1059,4,600000,300000,0
+         boss10,0,0,0,0	boss_monster	Moonlight Flower	1150,7,600000,300000,0
+         boss10,0,0,0,0	boss_monster	Orc Hero	1087,6,600000,300000,0
+         boss10,0,0,0,0	boss_monster	Orc Lord	1190,6,600000,300000,0
+         boss10,0,0,0,0	boss_monster	Pharaoh	1157,7,600000,300000,0
+         boss10,0,0,0,0	boss_monster	Phreeoni	1159,8,600000,300000,0
+         boss10,0,0,0,0	boss_monster	Queen Scaraba	2087,4,600000,300000,0
+         boss10,0,0,0,0	boss_monster	RSX 0806	1623,7,600000,300000,0
+         boss10,0,0,0,0	boss_monster	Tao Gunka	1583,5,600000,300000,0
+         //miniboss 
+         boss10,0,0,0,0	monster	Vagabond Wolf	1092,2,300000,180000,0
+         boss10,0,0,0,0	monster	Valkyrie	1765,2,300000,180000,0
+         boss10,0,0,0,0	monster	Wild Rider	2208,2,300000,180000,0
+         boss10,0,0,0,0	monster	Vocal	1088,2,300000,180000,0               
+        ////////////////////////////////////////////////////////////////
+
+        mooc,147,85,5	duplicate(mvp01)	WARPBOSSROOM#1	556
+
+boss11	mapflag	pvp
+boss12	mapflag	pvp
+boss13	mapflag	pvp
+boss14	mapflag	pvp
+boss15	mapflag	pvp
+boss16	mapflag	pvp
+boss17	mapflag	pvp
+boss18	mapflag	pvp
+boss19	mapflag	pvp
+boss20	mapflag	pvp
+
+boss11	mapflag	noteleport
+boss12	mapflag	noteleport
+boss13	mapflag	noteleport
+boss14	mapflag	noteleport
+boss15	mapflag	noteleport
+boss16	mapflag	noteleport
+boss17	mapflag	noteleport
+boss18	mapflag	noteleport
+boss19	mapflag	noteleport
+boss20	mapflag	noteleport
+
+boss11	mapflag	nomemo
+boss12	mapflag	nomemo
+boss13	mapflag	nomemo
+boss14	mapflag	nomemo
+boss15	mapflag	nomemo
+boss16	mapflag	nomemo
+boss17	mapflag	nomemo
+boss18	mapflag	nomemo
+boss19	mapflag	nomemo
+boss20	mapflag	nomemo
+
+boss11	mapflag	noreturn
+boss12	mapflag	noreturn
+boss13	mapflag	noreturn
+boss14	mapflag	noreturn
+boss15	mapflag	noreturn
+boss16	mapflag	noreturn
+boss17	mapflag	noreturn
+boss18	mapflag	noreturn
+boss19	mapflag	noreturn
+boss20	mapflag	noreturn
+
+boss11	mapflag	nowarp
+boss12	mapflag	nowarp
+boss13	mapflag	nowarp
+boss14	mapflag	nowarp
+boss15	mapflag	nowarp
+boss16	mapflag	nowarp
+boss17	mapflag	nowarp
+boss18	mapflag	nowarp
+boss19	mapflag	nowarp
+boss20	mapflag	nowarp
+
+boss11	mapflag	nocommand
+boss12	mapflag	nocommand
+boss13	mapflag	nocommand
+boss14	mapflag	nocommand
+boss15	mapflag	nocommand
+boss16	mapflag	nocommand
+boss17	mapflag	nocommand
+boss18	mapflag	nocommand
+boss19	mapflag	nocommand
+boss20	mapflag	nocommand

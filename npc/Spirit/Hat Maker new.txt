@@ -1,0 +1,241 @@
+//===== rAthena Script =======================================
+//= Euphy's Quest Shop
+//===== By: ==================================================
+//= Euphy
+//===== Update Hat Maker By: ==================================================
+//= Boy
+//===== Current Version: =====================================
+//= 1.4a
+//===== Compatible With: =====================================
+//= rAthena SVN r15340+
+//===== Description: =========================================
+//= A dynamic quest shop based on Lunar's, with easier config.
+//= Includes support for multiple shops & cashpoints.
+//= Item Preview script by ToastOfDoom.
+//============================================================
+					
+izlude_in,68,127,4	script	Quest Hat New	606,{
+    function Add; function Chk; function Slot; function A_An;
+    
+        if(.Shops$ != "") set .@i,1;
+        else {
+            set .@menu$,"";
+            for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1)
+                set .@menu$, .@menu$+.Shops$[.@i]+":";
+            set .@i, select(.@menu$); }
+        dispbottom "Select one item at a time.";
+        callshop "hatquestnew"+.@i,1;
+        npcshopattach "hatquestnew"+.@i;
+        end;
+    
+    function Add {
+        if (getitemname(getarg(1))=="null") {
+            debugmes "Quest reward #"+getarg(1)+" invalid (skipped)."; return; }
+        for(set .@n,5; .@n<127; set .@n,.@n+2) {
+            if (!getarg(.@n,0)) break;
+            if (getitemname(getarg(.@n))=="null") {
+                debugmes "Quest requirement #"+getarg(.@n)+" invalid (skipped) on Quest ItemID "+ getarg(1) +"."; return; } }
+        for(set .@i,2; .@i<.@n; set .@i,.@i+1)
+            set getd(".q_"+getarg(1)+"["+(.@i-2)+"]"), getarg(.@i);
+        npcshopadditem "hatquestnew"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+        return; }
+    function Chk {
+        if (getarg(0)<getarg(1)) { set @qe0,1; return "^FF0000"; }
+        else return "^00FF00"; }
+    function Slot {
+        set .@s$,getitemname(getarg(0));
+        switch(.ShowSlot){
+            case 1: if (!getitemslots(getarg(0))) return .@s$;
+            case 2: if (getiteminfo(getarg(0),11)>0) return .@s$+" ["+getitemslots(getarg(0))+"]";
+            default: return .@s$; } }
+    function A_An {
+        setarray .@A$[0],"a","e","i","o","u";
+        set .@B$, "_"+getarg(0);
+        for(set .@i,0; .@i<5; set .@i,.@i+1)
+            if (compare(.@B$,"_"+.@A$[.@i])) return "an "+getarg(0);
+        return "a "+getarg(0); }
+    
+    OnBuyItem:
+        set .@q[0],@bought_nameid;
+        copyarray .@q[1],getd(".q_"+@bought_nameid+"[0]"),getarraysize(getd(".q_"+@bought_nameid+"[0]"));
+        if (!.@q[1]) { message strcharinfo(0),"An error has occurred."; end; }
+        mes "[ สร้างหมวกใหม่ ]";
+        mes "เควส: ^0055FF"+((.@q[1]>1)?.@q[1]+"x ":"")+Slot(.@q[0])+"^000000";
+        mes "ต้องการ:";
+        if (.@q[2]) mes " > "+Chk(Zeny,.@q[2])+.@q[2]+" Zeny^000000";
+        if (.@q[3]) mes " > "+Chk(getd(.Points$[0]),.@q[3])+.@q[3]+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+.@q[3]+")^000000";
+        if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
+            mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1])+((.DisplayID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+.@q[.@i+1]+")^000000";
+        next;
+        set @qe1, getiteminfo(.@q[0],5); set @qe2, getiteminfo(.@q[0],11);
+        addtimer 1000, strnpcinfo(1)+"::OnEnd";
+        while(1){
+            switch(select(" ~ สร้าง ^0055FF"+getitemname(.@q[0])+"^000000:"+((((@qe1&1) || (@qe1&256) || (@qe1&512)) && @qe2>0 && !@qe6)?" ~ Preview...":"")+": ~ ^777777ยกเลิก^000000")) {
+                case 1:
+                    if (@qe0) { 
+                        mes "[ สร้างหมวกใหม่ ]";
+                        mes "You're missing one or more quest requirements.";
+                        close; }
+                    if (!checkweight(.@q[0],.@q[1])) {
+                        mes "[ สร้างหมวกใหม่ ]";
+                        mes "^FF0000You need "+(((.@q[1]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+                        close; }
+                    if (.@q[2]) set Zeny, Zeny-.@q[2];
+                    if (.@q[3]) setd .Points$[0], getd(.Points$[0])-.@q[3];
+                    if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
+                        delitem .@q[.@i],.@q[.@i+1];
+                    getitem .@q[0],.@q[1];
+                    if (.Announce) announce strcharinfo(0)+" has created "+A_An(getitemname(.@q[0]))+"!",0;
+                    specialeffect2 699;
+                    close;
+                case 2:
+                    set @qe3, getlook(3); set @qe4, getlook(4); set @qe5, getlook(5);
+                    if (@qe1&1) atcommand "@changelook 3 "+@qe2;
+                    if (@qe1&256) atcommand "@changelook 1 "+@qe2;
+                    if (@qe1&512) atcommand "@changelook 2 "+@qe2;
+                    set @qe6,1;
+                    break;
+                case 3:
+                    close; } }
+    OnEnd:
+        if (@qe6) { atcommand "@changelook 3 "+@qe3; atcommand "@changelook 1 "+@qe4; atcommand "@changelook 2 "+@qe5; }
+        for(set .@i,0; .@i<7; set .@i,.@i+1) setd "@qe"+.@i,0;
+        end;
+    OnInit:
+    waitingroom "[Quest] หมวกใหม่",0;
+    // --------------------- Config ---------------------
+    // Custom points, if needed: "<variable>","<name to display>"
+        setarray .Points$[0],"#CASHPOINTS","Cash Points";
+    
+        set .Announce,1;	// Announce quest completion? (1: yes / 0: no)
+        set .ShowSlot,1;	// Show item slots? (2: all equipment / 1: if slots > 0 / 0: never)
+        set .DisplayID,0;	// Show item IDs? (1: yes / 0: no)
+        set .ShowZeny,0;	// Show Zeny cost, if any? (1: yes / 0: no)
+    
+    // Shop categories, if needed: "<Shop 1>","<Shop 2>"{,...};
+    // Duplicate dummy data for any additional shops (bottom of script).
+    // If no categories, use the second line instead (remove //).
+    
+        setarray .Shops$[1],"[1st] หมวกบอสขั้น 1","[2nd] หมวกบอสขั้น 2","[3rd] หมวกบอสขั้น 3","[4th] ส่วนล่างพิเศษ","[New Hat] หมวกใหม่";
+        // set .Shops$,"n/a";]
+    
+    // Add(<shop number>,<reward ID>,<reward amount>,<Zeny cost>,<point cost>,
+    //     <required item ID>,<required item amount>{,...});
+    // Shop number corresponds with order above (default is 1).
+    // Note: Do NOT use a reward item more than once!
+    
+
+        sleep 10;                            
+        Add(1,31309,1,3000000,0,5053,4);
+        Add(1,31310,1,3000000,0,5123,4);
+        Add(1,31311,1,3000000,0,2234,4);
+        Add(1,31312,1,3000000,0,2256,4);
+        Add(1,31313,1,3000000,0,2258,4);
+        Add(1,31314,1,3000000,0,5019,4);
+        Add(1,31315,1,3000000,0,2268,4);
+        Add(1,31316,1,3000000,0,2246,4);
+        Add(1,31317,1,3000000,0,5007,4);
+        Add(1,31318,1,3000000,0,2235,4);
+        Add(1,31319,1,3000000,0,5002,4);
+        Add(1,31320,1,3000000,0,5016,4);
+//        Add(1,31321,1,3000000,0,5377,4);
+        sleep 10;
+        Add(2,31322,1,3000000,0,31309,4);
+        Add(2,31323,1,3000000,0,31310,4);
+        Add(2,31324,1,3000000,0,31311,4);
+        Add(2,31325,1,3000000,0,31312,4);
+        Add(2,31326,1,3000000,0,31313,4);
+        Add(2,31327,1,3000000,0,31314,4);
+        Add(2,31328,1,3000000,0,31315,4);
+        Add(2,31329,1,3000000,0,31316,4);
+        Add(2,31330,1,3000000,0,31317,4);
+        Add(2,31331,1,3000000,0,31318,4);
+        Add(2,31332,1,3000000,0,31319,4);
+        Add(2,31333,1,3000000,0,31320,4);
+//        Add(2,31334,1,3000000,0,31321,4);
+        sleep 10;
+        Add(3,31335,1,3000000,0,31322,4);
+        Add(3,31336,1,3000000,0,31323,4);
+        Add(3,31337,1,3000000,0,31324,4);
+        Add(3,31338,1,3000000,0,31325,4);
+        Add(3,31339,1,3000000,0,31326,4);
+        Add(3,31340,1,3000000,0,31327,4);
+        Add(3,31341,1,3000000,0,31328,4);
+        Add(3,31342,1,3000000,0,31329,4);
+        Add(3,31343,1,3000000,0,31330,4);
+        Add(3,31344,1,3000000,0,31331,4);
+        Add(3,31345,1,3000000,0,31332,4);
+        Add(3,31346,1,3000000,0,31333,4);
+//        Add(3,31347,1,3000000,0,31334,4);
+		sleep 10;
+        Add(5,40032,1,10000000,0,5172,2,1001,20,720,2,510,150,949,150);
+        Add(5,40033,1,10000000,0,5172,2,1001,20,720,2,510,150,949,150);
+        Add(5,40034,1,10000000,0,5172,2,1001,20,720,2,510,150,949,150);
+        Add(5,40035,1,10000000,0,5172,2,1001,20,720,2,510,150,949,150);
+        Add(5,40036,1,10000000,0,5172,2,1001,20,720,2,510,150,949,150);
+        Add(5,40037,1,10000000,0,5172,2,1001,20,720,2,510,150,949,150);
+        Add(5,40038,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40039,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40040,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40041,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40042,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40043,1,10000000,0,1045,300,7104,300,5398,1);
+        Add(5,40044,1,10000000,0,5170,1,7568,500);
+        Add(5,40045,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40046,1,10000000,0,5170,1,7568,500);
+		sleep 10;  
+        Add(5,40047,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40048,1,10000000,0,5045,2,7166,20,7754,5);
+        Add(5,40049,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40050,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40051,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40052,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40053,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40054,1,10000000,0,6426,200);
+        Add(5,40055,1,10000000,0,5160,1,7106,500,7106,400);
+        Add(5,40056,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40057,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40058,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40059,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40060,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40061,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40062,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40063,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40064,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40065,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+		sleep 10;  
+        Add(5,40066,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40067,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40068,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40069,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,40070,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+        Add(5,31283,1,10000000,0,5014,2,966,200,951,600,5800,1);
+        Add(5,31284,1,10000000,0,2254,2,5074,1,1034,500,5800,1);
+        Add(5,31285,1,10000000,0,7161,500,7206,200,1020,300,5800,1);
+        Add(5,31286,1,10000000,0,919,500,6252,500,10019,50,5800,1);
+        Add(5,31287,1,10000000,0,5068,5,7567,500,7568,500,5800,1);		
+        Add(5,40076,1,10000000,0,10019,20,2700,5,16001,5);
+        Add(5,40071,1,10000000,0,2257,5,1054,100,1053,100);
+        Add(5,40072,1,10000000,0,2269,15,2293,1);
+        Add(5,40073,1,10000000,0,748,50);
+        Add(5,40074,1,10000000,0,7270,100,629,100);
+        Add(5,40075,1,10000000,0,5068,5,7567,500,7568,500,5800,1);
+		sleep 10; 
+        Add(4,40355,1,500000000,0,31341,1,40076,5,7227,5000);
+        Add(4,40357,1,500000000,0,31341,1,40071,5,7227,5000);
+        Add(4,40358,1,500000000,0,31341,1,40072,5,7227,5000);
+        Add(4,40356,1,500000000,0,31341,1,40073,5,7227,5000);
+        Add(4,40354,1,500000000,0,31341,1,40074,5,7227,5000);
+
+    // --------------------------------------------------
+        for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1)
+            npcshopdelitem "hatquestnew"+.@i,909;
+        end;
+    }
+    
+    // -------- Dummy data (duplicate as needed) --------
+    -	shop	hatquestnew1	-1,909:-1
+    -	shop	hatquestnew2	-1,909:-1
+    -	shop	hatquestnew3	-1,909:-1
+    -	shop	hatquestnew4	-1,909:-1
+    -	shop	hatquestnew5	-1,909:-1

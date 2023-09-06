@@ -1,0 +1,271 @@
+/*
+	Script : Addpoint
+	Support : rAthena
+	Editor by : Durexz-Studio by DurexzOfficial 	
+	Commit Version :
+		Ver.1.0 เพิ่มไอเทม
+		Ver.1.1 เพิ่มยอดสะสม & เช็คยอดสะสมของไอดีต่างๆ
+		Ver.1.2 เพิ่มแบนทั้ง IP
+		Ver.1.3 เพิ่มปรับ EXP และ DROP Rate(แยกมอนธรรมดา กับ บอส)
+		Ver.1.4 ปรับแก้เช็คยอดสะสมให้เอายอดจาก table truemoney มาคิดด้วย
+	## ต้องเพิ่ม SQL ##
+== ประวัติการแอดไอเทม ==
+CREATE TABLE `additem` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `nameid` int(11) NOT NULL,
+  `amount` int(6) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `additem`
+  ADD PRIMARY KEY (`id`);
+ALTER TABLE `additem`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+*/
+
+-	script	AddPoint	FAKE_NPC,{
+
+OnInit:
+bindatcmd	"gm",strnpcinfo(3)+"::OnAtcommand";
+end;
+
+OnAtcommand:
+if(getgroupid() < 90)end;
+
+mes "^0000FF[เมนูสำหรับจีเอ็ม]^000000";
+mes "ท่านต้องการจะทำอะไร?";
+next;
+	switch(select("- แอดไอเทมเข้าตัว:- แบนทั้ง IP:- ปรับคูณ EXP:- ปรับ Drop Rate") ) {
+		case 1:
+			mes "กรุณากรอกไอดี";
+			input @aid$;
+			next;
+			mes "รหัสไอเทม";
+			input @nameid;
+			next;
+			mes "จำนวนไอเทม";
+			input @amount;
+			next;
+			mes "ไอดีเกม : ^0000FF"+@aid$;
+			mes "ไอเทม : ^FF0000"+getitemname(@nameid);
+			mes "จำนวนไอเทม : ^FF0000"+@amount;
+			next;
+			query_sql( "SELECT `account_id` FROM `login` WHERE `userid` = '"+@aid$+"';", .@aid );
+			if(select("- ตกลง:- ยกเลิก") == 1) {
+				if (!.@aid){
+					mes " ไม่มีไอดีเกมนี้ ";
+					end;
+				}else{
+					query_sql "INSERT INTO `additem` (`user_id`,`nameid`,`amount`,`status`,`time`) VALUES ('" + .@aid + "','" + @nameid + "','" + @amount + "','1',NOW())";
+					end;
+				}
+			}
+		break;
+		case 2:
+			mes "[ แบนไอพี ]";
+			mes "กรุณาใส่เลข Account ID ที่ต้องการแบน IP";
+			mes "จะถูกแบนจากวันล่าสุดไป 3 เดือน";
+			input @nameID$;
+			next;
+			mes "[ แบนไอพี ]";
+			mes "กรุณาใส่เหตุผลในการแบน";
+			input @reason$;
+			next;
+			set @ipbanner$,"";
+			query_sql "SELECT `last_ip` FROM `login` WHERE `account_id`='" + @nameID$ + "' and `sex` != 'S' limit 1",@ipbanner$;
+				if (@ipbanner$ != "") {
+					mes "[ แบนไอพี ]";
+					mes "Account ID ^FF0000" + @nameID$ + "^000000 ได้ถูกแบน IP";
+					mes "โดย IP คือ ^FF0000" + @ipbanner$ + "^000000";
+					mes "ด้วยเหตุผลที่ว่า ^FF0000" + @reason$ + "^000000";
+					mes "มีอะไรให้ช่วยบอกข้าได้เสมอ";
+					if(select("- ตกลง:- ยกเลิก") ==1 ){
+						//query_sql "UPDATE `login` SET `state`='5' WHERE `last_ip`='" + @ipbanner$ + "' and `sex` != 'S'";
+						query_sql "INSERT INTO `ipbanlist` (`list`,`btime`, `rtime`, `reason`) VALUES ('" + @ipbanner$ + "', NOW(), NOW() + INTERVAL 3 MONTH,'" + @reason$ + "')";
+						query_sql "SELECT `account_id` , `name` FROM `char` WHERE `account_id`='" + @nameID$ + "' and `online` = 1",@aid,@name$;
+						for (.@i = 0 ; .@i < getarraysize(@aid); .@i++){
+							atcommand "@kick "+@name$;
+							end;
+						}
+						end;
+					}
+				}
+				else {
+					mes "[ แบนไอพี ]";
+					mes "ไม่มี Account ID นี้โปรดตรวจสอบใหม่";
+				}
+		break;
+		case 3:
+			mes "[ ปรับ EXP ]";
+			mes "ใส่อัตราการคูณ Base Exp";
+			mes "1 = x1";
+			next;
+			input @rateEXP;
+			mes "[ ปรับ EXP ]";
+			mes "ใส่อัตราการคูณ Job Exp";
+			mes "1 = x1";
+			next;
+			input @rateJOB;
+			mes "[ ปรับ EXP ]";
+			mes "อัตราการคูณ Base Exp ^FF0000x"+@rateEXP;
+			mes "อัตราการคูณ Job Exp ^FF0000x"+@rateJOB;
+			next;
+				if (select("- ตกลง","- ยกเลิก")-1) break;
+					setbattleflag "base_exp_rate",@rateEXP*100;
+					setbattleflag "job_exp_rate",@rateJOB*100;
+					Announce "[ Exp System ] : ขณะนี้มีการเปลี่ยนแปลงอัตราการคูณเป็น Base Exp x"+@rateEXP+" | Job Exp x"+@rateJOB+" ",0;
+			mes "[ ปรับ EXP ]";
+			mes "ปรับเปลี่ยนตามที่ท่านต้องการแล้ว";
+		break;
+		case 4:
+
+		switch(select("- มอนเตอร์ทั่วไป","- บอส"))
+		{
+		case 1:
+			switch(select("- ไอเทม ฟื้นฟู/ขยะ","- ของสวมใส่","- การ์ด")) 
+			{						
+			case 1:
+				mes "[ ปรับ Drop Rate ]";
+				mes "ใส่อัตราการคูณ ไอเทมฟื้นฟู/ขยะ";
+				mes "1 = x1";
+				next;
+				input @ETC;					
+				mes "[ ปรับ Drop Rate ]";
+				mes "อัตราการคูณ ไอเทมฟื้นฟู/ขยะ ^FF0000x"+@ETC;
+				next;
+				if (select("- ตกลง","- ยกเลิก")-1) break;
+					setbattleflag "item_rate_common",@ETC*100;
+					setbattleflag "item_rate_heal",@ETC*100;
+					setbattleflag "item_rate_use",@ETC*100;
+					//atcommand "@reloadmobdb";
+					Announce "[ Common System ] : ขณะนี้มีการเปลี่ยนแปลงอัตราการคูณ คือ ไอเทมฟื้นฟู/ขยะ x"+@ETC+" ไม่รวมของบอส",0;
+				mes "[ ปรับ Drop Rate ]";
+				mes "ปรับเปลี่ยนตามที่ท่านต้องการแล้ว";
+				break;
+			case 2:
+				mes "[ ปรับ Drop Rate ]";
+				mes "ใส่อัตราการคูณ ของสวมใส่ ";
+				mes "1 = x1";
+				next;
+				input @Equipment;
+				mes "[ ปรับ Drop Rate ]";
+				mes "อัตราการคูณ ของสวมใส่ ^FF0000x"+@Equipment;
+				mes "1 = x1";
+				next;
+					if (select("- ตกลง","- ยกเลิก")-1) break;
+					setbattleflag "item_rate_equip",@Equipment*100;
+					//atcommand "@reloadmobdb";
+					Announce "[ Equipment System ] : ขณะนี้มีการเปลี่ยนแปลงอัตราการคูณ คือ ของสวมใส่ x"+@Equipment+" ไม่รวมของบอส",0;
+				mes "[ ปรับ Drop Rate ]";
+				mes "ปรับเปลี่ยนตามที่ท่านต้องการแล้ว";
+				break;
+			case 3:
+				mes "[ ปรับ Drop Rate ]";
+				mes "ใส่อัตราการคูณ การ์ด ";
+				next;
+				input @Card;
+				mes "[ ปรับ Drop Rate ]";
+				mes "อัตราการคูณ การ์ด ^FF0000x"+@Card;
+				next;
+					if (select("- ตกลง","- ยกเลิก")-1) break;
+					setbattleflag "item_rate_card",@Card*100;
+					//atcommand "@reloadmobdb";
+					Announce "[ Card System ] : ขณะนี้มีการเปลี่ยนแปลงอัตราการคูณ คือ การ์ด x"+@Card+" ไม่รวมการ์ดบอส",0;
+				mes "[ ปรับ Drop Rate ]";
+				mes "ปรับเปลี่ยนตามที่ท่านต้องการแล้ว";
+				break;
+			}
+			break;
+		case 2:
+			switch(select("- ไอเทมฟื้นฟู/ขยะ","- ของสวมใส่","- การ์ด")) 
+			{
+			case 1:
+				mes "[ ปรับ Drop Rate ]";
+				mes "ใส่อัตราการคูณ ไอเทมฟื้นฟู/ขยะ บอส ";
+				next;
+				input @ETC_Boss;
+				mes "[ ปรับ Drop Rate ]";
+				mes "อัตราการคูณ ไอเทมฟื้นฟู/ขยะ บอส ^FF0000x"+@ETC_Boss;
+				next;
+				if (select("- ตกลง","- ยกเลิก")-1) break;
+				setbattleflag "item_rate_common_boss",@ETC_Boss*100;
+				setbattleflag "item_rate_heal_boss",@ETC_Boss*100;
+				setbattleflag "item_rate_use_boss",@ETC_Boss*100;
+				//atcommand "@reloadmobdb";
+				Announce "[ Common System ] : ขณะนี้มีการเปลี่ยนแปลงอัตราการคูณ คือ ไอเทมฟื้นฟู/ขยะ x"+@ETC_Boss+" เฉพาะบอส",0;
+				mes "[ ปรับ Drop Rate ]";
+				mes "ปรับเปลี่ยนตามที่ท่านต้องการแล้ว";
+				break;
+			case 2:
+				mes "[ ปรับ Drop Rate ]";
+				mes "ใส่อัตราการคูณ ของสวมใส่ บอส";
+				next;
+				input @Equipment_Boss;
+				mes "[ ปรับ Drop Rate ]";
+				mes "อัตราการคูณ ของสวมใส่ บอส ^FF0000x"+@Equipment_Boss;
+				next;
+				if (select("- ตกลง","- ยกเลิก")-1) break;
+				setbattleflag "item_rate_equip_boss",@Equipment_Boss*100;
+				//atcommand "@reloadmobdb";
+				Announce "[ Equipment System ] : ขณะนี้มีการเปลี่ยนแปลงอัตราการคูณ คือ ของสวมใส่ x"+@Equipment_Boss+" เฉพาะบอส",0;
+				mes "[ ปรับ Drop Rate ]";
+				mes "ปรับเปลี่ยนตามที่ท่านต้องการแล้ว";
+				break;
+			case 3:
+				mes "[ ปรับ Drop Rate ]";
+				mes "ใส่อัตราการคูณ การ์ด บอส";
+				next;
+				input @Card_boss;
+				mes "[ ปรับ Drop Rate ]";
+				mes "อัตราการคูณ การ์ด บอส ^FF0000x"+@Card_boss;
+				next;
+				if (select("- ตกลง","- ยกเลิก")-1) break;
+				setbattleflag "item_rate_card_boss",@Card_boss*100;
+				setbattleflag "item_rate_card_mvp",@Card_boss*100;
+				//atcommand "@reloadmobdb";
+				Announce "[ Card System ] : ขณะนี้มีการเปลี่ยนแปลงอัตราการคูณ คือ การ์ด x"+@Card_boss+" เฉพาะบอส",0;
+				mes "[ ปรับ Drop Rate ]";
+				mes "ปรับเปลี่ยนตามที่ท่านต้องการแล้ว";
+				break;
+			}
+		break;
+		}
+	}
+end;
+
+}
+
+//======================================== SCRIPT ADDITEM AUTO VIP ============================================
+
+-	script	ADDITEM	-1,{
+
+Oninit :
+
+	while (1)
+	{
+		query_sql "SELECT `id`,`nameid`,`amount`,`status`,`user_id` FROM `additem` where `status` = 1",.id,.@nameid,.@amount,.status,.userid;
+		set .item_id[1],.@nameid;
+		set .item_amount[1],.@amount;
+		sleep 500;
+		if (getarraysize(.id) > 0) {
+			for (set .i,0; .i < getarraysize(.id); set .i,.i+1) {
+				if(.status[.i] > 0 && attachrid(.userid[.i]) == 1)
+				{
+					if(.item_id[.status[i]] > 0 && .item_amount[.status[i]])
+					{
+						getitem .item_id[1],.item_amount[1];
+						dispbottom "[ SYSTEM ] คุณได้รับ " + getitemname(.item_id[1]) + " จำนวน " + .item_amount[1] + " ชิ้น";
+					}
+					query_sql "UPDATE `additem` SET `status` = 2 WHERE `id` = " + .id[.i];
+					detachrid;
+				}
+			}
+			deletearray .id[0],getarraysize(.id);
+			deletearray .amount[0],getarraysize(.amount);
+			deletearray .userid[0],getarraysize(.userid);
+		}
+		sleep 5000;
+	}
+	end;
+}

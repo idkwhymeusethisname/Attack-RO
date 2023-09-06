@@ -1,0 +1,11 @@
+mooc,144,100,4	script	ห้องตีบวก	858,{
+    OnInit:
+    waitingroom "ห้องตีบวก ออฟชั่น ถอดการ์ด เจาะรู",0;
+end;
+}
+
+mooc,172,101,4	script	ห้องรวมเควส	858,{
+    OnInit:
+    waitingroom "  ห้องรวมเควส",0;
+end;
+}

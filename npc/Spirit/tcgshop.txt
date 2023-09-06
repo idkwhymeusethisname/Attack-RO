@@ -1,0 +1,52 @@
+mooc,121,67,5	script	TCG SHOP#1	10262,{
+	mes "สามารถซื้อได้โดยใช้ ^ff0000TCG CARD^000000";
+	mes "^00ff00—————————————————————^000000";
+	mes "^ff0000คำเตือนกรุณาเคลียเก็บของให้เพียงพอไม่งั้นไอเทมจะตกลงพื้นทีมงานจะไม่รับผิดชอบใดๆทั้งสิ้นหากเห็นไอเทมเป็นรูปแอ๊ปเปิ้ลให้เข้าเกมโดยเข้าผ่านตัวโหลดแพท^000000";
+	mes "^00ff00—————————————————————^000000";
+    mes "เลือกได้ตามใจชอบเลยจ้า";
+	callshop "TCG_SHOP#1",1;
+	npcshopattach "TCG_SHOP#1";
+//	dispbottom "[ระบบ] : สกิลDCลดราคาไม่มีผลสำหรับการซื้อไอเทมในนี้";
+	dispbottom "[ระบบ] : คุณมี TCG Card ทั้งหมด [ "+countitem(.Given_ItemID)+" ชิ้น ]";
+//	mes "คุณมี TCG Card ทั้งหมด : "+countitem(.Given_ItemID)+"";
+	end;
+
+OnBuyItem:
+	for(set @i,0; @i < getarraysize(@bought_nameid); set @i,@i+1) {
+		for(set @j,0; @j < getarraysize(.Shop_ItemID); set @j,@j+1) {
+			if(.Shop_ItemID[@j] == @bought_nameid[@i]) {
+				set @itemcost,(.Shop_Price[(@j)]*@bought_quantity[@i]);
+				set @totalcost,(@totalcost+@itemcost);
+				break;
+			}
+		}
+	}
+	
+	if(@totalcost > countitem(.Given_ItemID)) {
+		dispbottom "[ระบบ] : คุณมี TCG Card ไม่พอสำหรับจะซื้อไอเทมนี้";
+	}
+	else {
+		for(set @i,0; @i < getarraysize(@bought_nameid); set @i,@i+1) {
+		getitem @bought_nameid[@i],@bought_quantity[@i];
+	}
+		delitem .Given_ItemID,@totalcost;
+//		dispbottom "[ระบบ] : ขอบคุณครับ โอกาศหน้าเชิญใหม่.";
+		dispbottom "[ระบบ] : คุณเหลือ TCG Card ทั้งหมด [ "+countitem(.Given_ItemID)+" ชิ้น ]";
+	}
+	set @totalcost,0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+end;
+
+OnInit:
+waitingroom "ร้าน TCG Shop",0;
+npcshopdelitem "TCG_SHOP#1",909;
+set .Given_ItemID,7227; // รหัสไอเทมใช้ซื้อ
+setarray .Shop_ItemID[0],31174,7539,32009,32010; //รหัสไอเทม
+setarray .Shop_Price[0],5,1,500,1000; //ราคา
+for(set .@i,0; .@i < getarraysize(.Shop_ItemID); set .@i,.@i+1) {
+npcshopadditem "TCG_SHOP#1",.Shop_ItemID[.@i],.Shop_Price[.@i];
+}
+end;
+}
+-	shop	TCG_SHOP#1	-1,909:-1

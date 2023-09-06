@@ -1,0 +1,55 @@
+-	script	Auto-Annouce	-1,{
+
+OnMinute00:
+Announce "เติมเงินวันนี้ทุกๆ 2,000 บาทรับฟรีกล่องสุ่มคอสตูมสุดแรร์สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com ",8,0xFFFFFF;
+end;
+
+OnMinute05:
+Announce "ทุกยอดเติมเงินจะได้รับ Bonus Coin สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com ",8,0xFFFFFF;
+end;
+
+OnMinute10:
+Announce "สามารถเติมเงินหากต้องการใช้ระบบ Mobile Banking สามารถสอบถามผ่านเพจเฟสบุ๊คหรือ Line @930natcm",8,0xFFFFFF;
+end;
+
+OnMinute15:
+Announce "เติมเงินวันนี้ทุกๆ 2,000 บาทรับฟรีกล่องสุ่มคอสตูมสุดแรร์สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com ",8,0xFFFFFF;
+end;
+
+OnMinute20:
+Announce "ทุกยอดเติมเงินจะได้รับ Bonus Coin สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com ",8,0xFFFFFF;
+end;
+
+OnMinute25:
+Announce "สามารถเติมเงินหากต้องการใช้ระบบ Mobile Banking สามารถสอบถามผ่านเพจเฟสบุ๊คหรือ Line @930natcm",8,0xFFFFFF;
+end;
+
+OnMinute30:
+Announce "ทุกยอดเติมเงินจะได้รับ Bonus Coin สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com ",8,0xFFFFFF;
+end;
+
+OnMinute35:
+Announce "เติมเงินวันนี้ทุกๆ 2,000 บาทรับฟรีกล่องสุ่มคอสตูมสุดแรร์สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com ",8,0xFFFFFF;
+end;
+
+OnMinute40:
+Announce "ทุกยอดเติมเงินจะได้รับ Bonus Coin สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com ",8,0xFFFFFF;
+end;
+
+OnMinute45:
+Announce "สามารถเติมเงินหากต้องการใช้ระบบ Mobile Banking สามารถสอบถามผ่านเพจเฟสบุ๊คหรือ Line @930natcm",8,0xFFFFFF;
+end;
+
+OnMinute50:
+Announce "เติมเงินวันนี้ทุกๆ 2,000 บาทรับฟรีกล่องสุ่มคอสตูมสุดแรร์สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com",8,0xFFFFFF;
+end;
+
+OnMinute55:
+Announce "สามารถเติมเงินหากต้องการใช้ระบบ Mobile Banking สามารถสอบถามผ่านเพจเฟสบุ๊คหรือ Line @930natcm",8,0xFFFFFF;
+end;
+
+OnMinute58:
+Announce "เติมเงินวันนี้ทุกๆ 2,000 บาทรับฟรีกล่องสุ่มคอสตูมสุดแรร์สามารถเติมเงินได้ที่หน้าเว็บ www.spirit-ro.com",8,0xFFFFFF;
+end;
+
+}

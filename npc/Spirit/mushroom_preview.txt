@@ -1,0 +1,81 @@
+-	script	preview_mushroom_ss	-1,{
+
+OnInit:
+	waitingroom "~ ตัวอย่างของรางวัล", 0;
+    end;
+}
+
+-	script	preview_mushroom	-1,{ 
+// =============================================================
+function PreviewAddItems;
+// =============================================================
+OnInit:
+	freeloop(1);
+	setarray .Shops$[1],"~ ตัวอย่างของรางวัล";
+// =============================================================	
+	PreviewAddItems(1,7227,1,0,0);
+	PreviewAddItems(1,61002,1,0,0);
+	PreviewAddItems(1,61405,1,0,0);
+	PreviewAddItems(1,61408,1,0,0);
+	PreviewAddItems(1,61001,1,0,0);
+	PreviewAddItems(1,61403,1,0,0);
+	PreviewAddItems(1,61404,1,0,0);
+	PreviewAddItems(1,61010,1,0,0);	
+	PreviewAddItems(1,61006,1,0,0);
+	PreviewAddItems(1,61409,1,0,0);
+	PreviewAddItems(1,61007,1,0,0);
+
+
+
+// =============================================================
+
+	freeloop(0);
+	set .menu$,"";
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1) {
+		set .menu$, .menu$+.Shops$[.@i]+":";
+		npcshopdelitem "preview_mushroom_shop"+.@i,909;
+	}
+	end;
+
+OnMainMenu:
+
+	set .@size, getarraysize(@i);
+	if (!.@size) set .@i, select(.menu$);
+	else if (.@size == 1) set .@i, @i[0];
+	else {
+		for(set .@j,0; .@j<.@size; set .@j,.@j+1)
+			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
+		set .@i, @i[select(.@menu$)-1];
+	}
+	deletearray @i[0],getarraysize(@i);
+	if (.Shops$[.@i] == "") {
+		message strcharinfo(0),"เกิดข้อผิดพลาด.";
+		end;
+	}
+	callshop "preview_mushroom_shop"+.@i,1;
+	npcshopattach "preview_mushroom_shop"+.@i;
+	end;
+
+OnBuyItem:
+	end;
+
+function PreviewAddItems {
+	
+	npcshopadditem "preview_mushroom_shop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	return;
+}
+
+}
+
+function	script	preview_mushroom_shop	{
+
+	deletearray @i[0],getarraysize(@i);
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+1)
+		set @i[.@i],getarg(.@i);
+	doevent "preview_mushroom::OnMainMenu";
+	end;
+}
+
+-	shop	preview_mushroom_shop1	-1,909:-1
+
+//morocc,180,30,3	duplicate(preview_mushroom_ss)	ตัวอย่างของรางวัล#01	564

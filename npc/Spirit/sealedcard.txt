@@ -1,0 +1,24 @@
+function	script	sealedcard	{
+
+	.@item = F_Rand(    4488,
+						4497,
+						4486,
+						4480,
+						4485,
+						4539,
+						4487,
+						4494,
+						4538,
+						4489,
+						4490,
+						4482,
+						4503,
+						4483
+			);
+	
+	
+			getitem (.@item),1;
+			announce "ผู้เล่น ["+strcharinfo(0)+"] เปิด Sealed Card Album ได้รับ "+getitemname(.@item)+" ",bc_all,0xFF0000;
+			end; 
+
+}

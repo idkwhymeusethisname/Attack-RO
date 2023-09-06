@@ -1,0 +1,43 @@
+-	script	gozonevending	-1,{
+	callfunc	"zonevending";
+OnInit:
+    waitingroom "[•]วาปไปโซนร้านค้า",0;    
+end;
+}
+
+function	script	zonevending	{
+	mes "[หัวหน้าสมาคมพ่อค้า]";
+    mes "เจ้าอยากใช้เงินใช่มั้ย ข้าจะพาเจ้าเข้าไปเอง";
+	next;
+	switch (select(
+		"พาข้าไปดูร้านค้าที  [ "+getmapusers("vdistrict")+" ] คน."))
+	{
+	case 1:
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_POEMBRAGI;
+		sc_end SC_APPLEIDUN;
+		sc_end SC_ASSNCROS;
+		sc_end SC_SKE;
+		sc_end SC_KAITE;
+		sc_end SC_SWOO;
+		sc_end SC_SKA;
+		sc_end SC_BATTLEORDERS;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+			warp "vdistrict",46,50;
+			break;
+	}
+	end;
+}
+
+mooc,138,99,5	duplicate(gozonevending)	หัวหน้าสมาคมพ่อค้า#1	790 

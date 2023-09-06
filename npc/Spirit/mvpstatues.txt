@@ -1,0 +1,110 @@
+//===== rAthena Script =======================================
+//= Character Statues
+//===== Current Version: =====================================
+//= 3.0
+//===== Features: ============================================
+//= Display statues on server based from a specified
+//  character looks.
+//===== Features: ============================================
+//
+//= THIS IS A PAID SCRIPT. PLEASE DO NOT REDISTRIBUTE
+//
+//===== Change Logs: =========================================
+//= 1.0 First version.
+//= 2.0 Revamped script to work with Annieruru's MvP Ladder
+//= 3.0 Added TOP to player names
+//============================================================
+-	script	CharacterStatuesMVP	-1,{
+OnInit:
+
+	// -------- C O N F I G U R A T I O N ---------
+	// If you put 5 Entries, it will spawn the top 5 in order
+	setarray .info$[0], // <map name>,<map x>,<map y>;
+//		"mooc,177,86", // top 1 statue coordinates
+//		"mooc,175,86", // top 2 statue coordinates
+		"mooc,183,80";
+
+	deletearray $terces_MvP_names$;
+	.@nb = query_sql("SELECT `char_id`, `point_mvp`, `name` FROM `char` ORDER BY `point_mvp` DESC LIMIT 5",.@char_id, .@ratio, .@charname$);
+	for( .@i=0; .@i < getarraysize(.@char_id); .@i++ ) {
+		$terces_MvP_names$[.@i] = .@charname$[.@i];
+	}
+	
+	// Clear Vars
+	deletearray .@char_id;
+	deletearray .@ratio;
+	deletearray .@charname$;
+
+
+	// ---------------------------------------------
+OnSpawn:
+	.size = getarraysize(.info$);
+	if($terces_MvP_names$[0] == "0") {
+		debugmes "MvP Ladder not found! Stopping script!";
+		debugmes strnpcinfo(0);
+		end;
+	}
+	.@terces_size = getarraysize($terces_MvP_names$);
+	if(.@terces_size < .size) .size = .@terces_size;
+	.terces_MvP_names$ = "";
+	for( .@i = 0; .@i < .size; .@i++ ) {	
+		.terces_MvP_names$ += $terces_MvP_names$[.@i]+":";
+		explode(.@tmp$,.info$[.@i],",");
+		.@map$ = .@tmp$[0];
+		.@x = atoi(.@tmp$[1]);
+		.@y = atoi(.@tmp$[2]);
+		.@nb = query_sql( " SELECT `char_id`, `name`, `class`, `option`, `hair`, `hair_color`, `clothes_color`, `weapon`, `shield`, `head_top`, `head_mid`, `head_bottom`, `sex` FROM `char` WHERE `name` = '"+$terces_MvP_names$[.@i]+"'", .@char_id, .@name$, .@class, .@option, .@hair, .@hair_color, .@clothes_color, .@weapon, .@shield, .@head_top, .@head_mid, .@head_bottom, .@sex$ );
+//		.@COSWING = query_sql("SELECT `char_id`, `nameid` FROM `inventory` ORDER BY `nameid` DESC LIMIT 5",.@char_id, .@Robe);
+		if(!.@nb) {
+			debugmes "Character Name "+.@name$+" was not found! Statue was skipped and not deployed.";
+			continue;
+		}
+		monster .@map$ ,.@x,.@y,"[MvP Top "+(.@i+1)+"] "+.@name$,3998,1,strnpcinfo(0)+"::OnStatue";
+		.mobGID = $@mobid[0];
+		setunitdata .mobGID, UMOB_CLASS, .@class;
+		if(.@option) setunitdata .mobGID, UMOB_SCOPTION, .@option;
+		if(.@hair) setunitdata .mobGID, UMOB_HAIRSTYLE, .@hair;
+		if(.@hair_color) setunitdata .mobGID, UMOB_HAIRCOLOR, .@hair_color;
+		if(.@clothes_color) setunitdata .mobGID, UMOB_CLOTHCOLOR, .@clothes_color;
+		if(.@weapon) setunitdata .mobGID, UMOB_WEAPON, .@weapon;
+		if(.@shield) setunitdata .mobGID, UMOB_SHIELD, .@shield;
+		if(.@head_top) setunitdata .mobGID, UMOB_HEADTOP, .@head_top;
+		if(.@head_mid) setunitdata .mobGID, UMOB_HEADMIDDLE, .@head_mid;
+		if(.@head_bottom) setunitdata .mobGID, UMOB_HEADBOTTOM, .@head_bottom;
+//		if(.@Robe) setunitdata .mobGID, UMOB_ROBE, .@char_id .@Robe;
+		setunitdata .mobGID, UMOB_SEX, ((.@sex$ == "M")?1:0);
+		setunitdata .mobGID, UMOB_SIZE, 1;
+		setunitdata .mobGID, UMOB_MODE, 0;
+		setunitdata .mobGID, UMOB_LOOKDIR, 4;
+		setunitdata .mobGID, UMOB_DMGIMMUNE, 1;
+	}
+	end;
+	
+OnTimer1000: // Every 1 min checks if statues are still there then sort them out based from MvP Ladder
+	deletearray $terces_MvP_names$;
+	.@nb = query_sql("SELECT `char_id`, `point_mvp`, `name` FROM `char` ORDER BY `point_mvp` DESC LIMIT 5",.@char_id, .@ratio, .@charname$);
+	for( .@i=0; .@i < getarraysize(.@char_id); .@i++ ) {
+		$terces_MvP_names$[.@i] = .@charname$[.@i];
+	}
+	stopnpctimer;
+	for( .@i = 0; .@i < .size; .@i++ ) {
+		explode(.@tmp$,.info$[.@i],",");
+		if(!compare(.@tmap$,.@tmp$[0])) {
+			.@count += mobcount(.@tmp$[0],strnpcinfo(0)+"::OnStatue");
+			.@tmap$ += .@tmp$[0]+" ";
+		}
+		explode(.@tmpname$,.terces_MvP_names$,":");
+		if( $terces_MvP_names$[.@i] != .@tmpname$[.@i] || (.@i == .size-1 && .@count < .size)) {
+			for( .@j = 0; .@j < .size; .@j++ ) {
+				explode(.@tmp$,.info$[.@j],",");
+				killmonster .@tmp$[0],strnpcinfo(0)+"::OnStatue";
+				cleanarea .@tmp$[0],atoi(.@tmp$[1])-1,atoi(.@tmp$[2])-1,atoi(.@tmp$[1])+1,atoi(.@tmp$[2])+1;
+			}
+			donpcevent strnpcinfo(0)+"::OnSpawn";
+			end;
+		}
+	}
+	initnpctimer;
+	end;
+
+}

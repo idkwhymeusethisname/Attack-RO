@@ -1,0 +1,66 @@
+//===== Developers Script ===================================
+//= Server Rate
+//===== Current Version =====================================
+//= 1.0
+//===== Description =========================================
+//= Server Rate
+//===== Additional Comments =================================
+//= 1.0 Start Version
+//= 1.1 Edit By Ragnarok PVP GVG
+//===========================================================
+mooc,164,102,4	script	ตรวจสอบข้อมูลผู้เล่น	415,{
+
+    mes "^ff0000[ Support Player ]^000000";
+    mes "สวัสดีท่าน ^0000ff"+strcharinfo(0)+"^000000";
+    mes "มีอะไรให้ข้าช่วย ";
+    next;
+	menu
+	"เช็คข้อมูลผู้เล่นอื่น",checkitemotherplayer,
+	"ออก",exitaa;
+	
+	checkitemotherplayer:
+    mes "^ff0000[ Support Player ]^000000";
+    mes "ค่าตรวจสอบครั้งละ 1000 Zeny";
+    mes "ตกลงมั้ย";
+	next;
+    mes "^ff0000[ Support Player ]^000000";
+    mes "ค่าตรวจสอบครั้งละ 1000 Zeny";
+    mes "ตกลงมั้ย";	
+	menu
+	"ตกลง",checkitemotherplayer2,
+	"แพงไม่เอาละ",exitaa;
+	
+	checkitemotherplayer2:
+	next;
+	mes "^ff0000[ Support Player ]^000000";
+    mes "ใส่ชื่อคนที่ต้องการดู";
+	next;
+    input @checkitem$;
+	mes "^ff0000[ Support Player ]^000000";
+    mes "ต้องการดูอะไรละ";
+	next;
+	mes "^ff0000[ Support Player ]^000000";
+    mes "ต้องการดูอะไรละ";
+	menu
+	"ของในตัว",checkitem,"ในรถเข็น",checkcart1,"ในคาฟ่า",checkkafra,"เช็คสเตตัส",checkstats;
+	
+	checkitem:
+    atcommand "#itemlist "+@checkitem$+"";
+	
+	checkcart1:
+    atcommand "#cartlist "+@checkitem$+"";
+	
+	checkkafra:
+    atcommand "#storagelist "+@checkitem$+"";
+	
+	checkstats:
+    atcommand "#Stats "+@checkitem$+"";
+    
+	
+    exitaa:
+	end;	
+	
+    OnInit:
+    waitingroom "ตรวจสอบข้อมูลผู้เล่น",0;
+    end;
+}

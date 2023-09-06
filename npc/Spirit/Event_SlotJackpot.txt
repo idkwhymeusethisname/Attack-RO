@@ -1,0 +1,395 @@
+mooc,137,67,3	script	SlotJackpot#1	563,{
+//sec_pri,23,34,120,6	script	SlotJackpot#1	853,{
+	goto SJP_main;
+	OnInit:
+		// Slot Jackpot Setup by Gusjungsza
+		// โหมดในการเล่น 0 = Zeny , 1 = Item
+		//set $@SJP_mode,1;
+
+		// รหัสไอเทมที่ใช้ในการเล่น
+		set $@SJP_mode_itemid,677;
+
+		// จำนวน Item ตอนเริ่มเล่นเลเวล 1 , 2 , 3 , 4 , 5 , 6 , 7
+		setarray $@SJP_mode_amount[1],20,20,40,40,50,50,80;
+
+		// จำนวน Zeny ตอนเริ่มเล่นเลเวล 1 , 2 , 3 , 4 , 5 , 6 , 7
+		setarray $@SJP_mode_amount_[1],1000000,100000,100000,100000,100000,100000,100000;
+
+		// ของรางวัล เลเวล 1-7 (ใส่ให้ตรงกับภาพ 0 = อด) ปล.ถ้าไม่ตรงกับภาพด้านล่าง ระวังแสดงผลผิดพลาด
+		setarray $@SJP_reward_1[1],0,7619,7620,32039,32040,12103,12214,7621,0;
+		setarray $@SJP_reward_2[1],0,32039 , 32040 , 12221 , 12211 , 12103 , 40411,0;
+		setarray $@SJP_reward_3[1],0,12920 , 12921 , 12922 , 40411 , 12210,0;
+		setarray $@SJP_reward_4[1],0,12208 , 31225 , 40412 , 5914,0;
+		setarray $@SJP_reward_5[1],0,12210 , 20246 , 31224,0;
+		setarray $@SJP_reward_6[1],0,31225,32031,0;
+		setarray $@SJP_reward_7[1],0,31435,0;
+
+		// จำนวนของรางวัล เลเวล 1-7 (ใส่ให้ตรงกับภาพ 0 = อด) เชื่อมโยงกับด้านบน ให้ตรงกับรหัส
+		setarray $@SJP_rewardd_1[1],0,5,5,1,1,5,1,1,0;
+		setarray $@SJP_rewardd_2[1],0,3,1,1,10,10,1,0;
+		setarray $@SJP_rewardd_3[1],0,1,1,1,1,3,0;
+		setarray $@SJP_rewardd_4[1],0,5,10,1,1,0;
+		setarray $@SJP_rewardd_5[1],0,5,1,20,0;
+		setarray $@SJP_rewardd_6[1],0,20,1,0;
+		setarray $@SJP_rewardd_7[1],0,500,0;
+
+		// โหมดการวิ่งของภาพ ( 0 = ใช้ แรนดอมจำนวนการไหล , 1 = ใช้ % เป็นการไหล ) แนะนำ 0
+		set $@SJP_mode_image_r,1;
+
+		if ($@SJP_mode_image_r) {
+			// โหมดการวิ่งของภาพ 1 เป็น % ถ้าแรนดอมมากกว่า ก็จะไหลต่อไป
+			setarray $@SJP_mode_image_1[1],40,40,40,40,40,40,40,40,40;
+			setarray $@SJP_mode_image_2[1],40,35,35,35,35,35,35,40;
+			setarray $@SJP_mode_image_3[1],40,30,30,9,9,9,40;
+			setarray $@SJP_mode_image_4[1],40,25,25,25,25,40;
+			setarray $@SJP_mode_image_5[1],40,20,20,20,40;
+			setarray $@SJP_mode_image_6[1],40,10,10,40;
+			setarray $@SJP_mode_image_7[1],40,5,40;
+			set $@SJP_mode_image_per,100; // ห้ามแก้ไข
+		} else if (!$@SJP_mode_image_r) {
+			// โหมดการวิ่งของภาพ 2 เป็นแรนดอมจำนวนการไหล (จำนวนการแรนดอม1 ถึง จำนวนการแรนดอม2,ระยะเวลาไหลช้า1 ถึง ระยะเวลาไหลช้า2)
+			setarray $@SJP_mode_image_1[0],40,90,1,6;
+			setarray $@SJP_mode_image_2[0],35,80,1,12;
+			setarray $@SJP_mode_image_3[0],30,70,1,18;
+			setarray $@SJP_mode_image_4[0],25,60,1,24;
+			setarray $@SJP_mode_image_5[0],20,50,1,30;
+			setarray $@SJP_mode_image_6[0],15,45,1,36;
+			setarray $@SJP_mode_image_7[0],10,30,1,42;
+		}
+		setarray $@SJP_mode_image_rr[0],20,50; // ห้ามแก้ไข
+
+		// โหมดภาพที่แสดง ( 0 = ซ้ายล่างขยับไม่ได้ , 1 = กลางขยับไม่ได้ , 2 = ขวาล่างขยับไม่ได้ , 3 = กลางขยับได้ มีแถบบนภาพปิดได้ , 4 = กลางขยับได้ ไม่มีแถบ ปิดได้ )
+		set $@SJP_mode_image,4;
+		// ใส่ชื่อภาพทั้งหมด (ให้พอดีที่มี ห้ามเกิน)
+		setarray $@SJP_image_1$[0],
+		"slot1_0",	// ภาพให้ชมของรางวัล
+		"slot1_1",	// ภาพระดับ 1 ชิ้น 1
+		"slot1_2",	// ภาพระดับ 1 ชิ้น 2
+		"slot1_3",	// ภาพระดับ 1 ชิ้น 3
+		"slot1_4",	// ภาพระดับ 1 ชิ้น 4
+		"slot1_5",	// ภาพระดับ 1 ชิ้น 5
+		"slot1_6",	// ภาพระดับ 1 ชิ้น 6
+		"slot1_7",	// ภาพระดับ 1 ชิ้น 7
+		"slot1_8",	// ภาพระดับ 1 ชิ้น 8
+		"slot1_9"	// ภาพระดับ 1 ชิ้น 9
+		;
+		setarray $@SJP_image_2$[1],
+		"slot1_10",	// ภาพระดับ 2 ชิ้น 1
+		"slot1_11",	// ภาพระดับ 2 ชิ้น 2
+		"slot1_12",	// ภาพระดับ 2 ชิ้น 3
+		"slot1_13",	// ภาพระดับ 2 ชิ้น 4
+		"slot1_14",	// ภาพระดับ 2 ชิ้น 5
+		"slot1_15",	// ภาพระดับ 2 ชิ้น 6
+		"slot1_16",	// ภาพระดับ 2 ชิ้น 7
+		"slot1_17"	// ภาพระดับ 2 ชิ้น 8
+		;
+		setarray $@SJP_image_3$[1],
+		"slot1_18",	// ภาพระดับ 3 ชิ้น 1
+		"slot1_19",	// ภาพระดับ 3 ชิ้น 2
+		"slot1_20",	// ภาพระดับ 3 ชิ้น 3
+		"slot1_21",	// ภาพระดับ 3 ชิ้น 4
+		"slot1_22",	// ภาพระดับ 3 ชิ้น 5
+		"slot1_23",	// ภาพระดับ 3 ชิ้น 6
+		"slot1_24"	// ภาพระดับ 3 ชิ้น 7
+		;
+		setarray $@SJP_image_4$[1],
+		"slot1_25",	// ภาพระดับ 4 ชิ้น 1
+		"slot1_26",	// ภาพระดับ 4 ชิ้น 2
+		"slot1_27",	// ภาพระดับ 4 ชิ้น 3
+		"slot1_28",	// ภาพระดับ 4 ชิ้น 4
+		"slot1_29",	// ภาพระดับ 4 ชิ้น 5
+		"slot1_30"	// ภาพระดับ 4 ชิ้น 6
+		;
+		setarray $@SJP_image_5$[1],
+		"slot1_31",	// ภาพระดับ 5 ชิ้น 1
+		"slot1_32",	// ภาพระดับ 5 ชิ้น 2
+		"slot1_33",	// ภาพระดับ 5 ชิ้น 3
+		"slot1_34",	// ภาพระดับ 5 ชิ้น 4
+		"slot1_35"	// ภาพระดับ 5 ชิ้น 5
+		;
+		setarray $@SJP_image_6$[1],
+		"slot1_36",	// ภาพระดับ 6 ชิ้น 1
+		"slot1_37",	// ภาพระดับ 6 ชิ้น 2
+		"slot1_38",	// ภาพระดับ 6 ชิ้น 3
+		"slot1_39"	// ภาพระดับ 6 ชิ้น 4
+		;
+		setarray $@SJP_image_7$[1],
+		"slot1_40",	// ภาพระดับ 7 ชิ้น 1
+		"slot1_41",	// ภาพระดับ 7 ชิ้น 2
+		"slot1_42"	// ภาพระดับ 7 ชิ้น 3
+		;
+
+		// ห้องพูดคุย
+		waitingroom "- Slot Jackpot -",0;
+		end;
+
+	SJP_main:
+	set .@modeplay,1;
+	cutin "",255;
+	mes "[ Slot Jackpot ]";
+	mes "สวัสดีคุณ, "+strcharinfo(0)+"";
+	mes "ทำการสุ่มชั้นที่ ^0000FF6^000000 ไปแล้ว ^FF0000"+#gachaGar2+"^000000 ครั้ง ";
+	mes "หากสุ่มชั้นสุดที่ 6 ครบ ^0000FF 15 ^000000 ครั้ง ได้รับ  <ITEM>"+getitemname(31435)+"<INFO>"+31435+"</INFO></ITEM> 50 ea.";
+	
+	mes "โปรดเลือกรายการด้านล่าง";
+	next;
+	switch(select("- เริ่้มเล่น (Cash Point ที่มีอยู่ ^0000FF"+#CASHPOINTS+"^000000)","- รายละเอียด","- ยกเลิก")){
+		//case 1:
+		//	set .@modeplay,1;
+		case 1:
+			mes "[ Slot Jackpot ]";
+			if (.@modeplay) {
+				mes "คุณต้องเสีย Cash Point "+$@SJP_mode_amount[1]+" Cash.";
+			} else if (!.@modeplay) {
+				mes "คุณต้องเสีย "+$@SJP_mode_amount_[1]+" zeny.";
+			}
+			mes "ในการเล่นระดับ 1";
+			cutin ""+$@SJP_image_1$[0]+"",$@SJP_mode_image;
+			next;
+			if (select("- เริ่มเล่นเลย [ระดับ 1]","- ยกเลิก") == 2) {
+				cutin "",255;
+				close;
+			}
+			set .@SJP,1;
+			set .@SJP_level,1;
+			while (.@SJP == 1) {
+				mes "[ Slot Jackpot ]";
+				if (.@modeplay) {
+					if (#CASHPOINTS < $@SJP_mode_amount[.@SJP_level]) {
+						mes "คุณมี Cash Point ไม่เพียงพอ ลาก่อน";
+						cutin "",255;
+						if (.@SJP_level>1) goto SJP_ItemFAIL;
+						close;
+					}
+					set #CASHPOINTS,(#CASHPOINTS - $@SJP_mode_amount[.@SJP_level]);
+					if (.@modeplay && .@SJP_level == 6) {
+					set #gachaGar2,(#gachaGar2 + 1);
+						if(#gachaGar2 >= 15){
+						getitem 31435,50;
+						set #gachaGar2,0;
+						}
+					}
+					dispbottom "[ Slot Jackpot ] : คุณใช้ Cash Point "+$@SJP_mode_amount[.@SJP_level]+" เหลือทั้งหมด ^00FF00"+#CASHPOINTS+"^000000 Point",0xAEFF00;
+					//delitem $@SJP_mode_itemid,$@SJP_mode_amount[.@SJP_level];
+				} else if (!.@modeplay) {
+					if (Zeny < $@SJP_mode_amount_[.@SJP_level]) {
+						mes "คุณมี Zeny ไม่เพียงพอ ลาก่อน";
+						cutin "",255;
+						if (.@SJP_level>1) goto SJP_ItemFAIL;
+						close;
+					}
+					set Zeny,Zeny-$@SJP_mode_amount_[.@SJP_level];
+				}
+				set .@r,rand($@SJP_mode_image_rr[0],$@SJP_mode_image_rr[1]);
+				set .@SJP_timer,0;
+				set .@SJP_reverse,1;
+				set .@SJP_reward,1;
+				cutin ""+getd("$@SJP_image_"+.@SJP_level+"$["+.@SJP_reward+"]")+"",$@SJP_mode_image;
+				sleep2 1;
+				for (set .@i,0; .@i < .@r; set .@i,.@i+1) {
+					set .@SJP_reward,.@SJP_reward+1;
+					cutin ""+getd("$@SJP_image_"+.@SJP_level+"$["+.@SJP_reward+"]")+"",$@SJP_mode_image;
+					//dispbottom "SJP Auto Add : "+.@SJP_reward+"";
+					sleep2 1;
+					if (.@SJP_reward == getarraysize(getd("$@SJP_reward_"+.@SJP_level+""))) {
+						for (set .@ii,.@SJP_reward; .@ii > 1; set .@ii,.@ii-1) {
+							set .@SJP_reverse,0;
+							set .@SJP_reward,.@SJP_reward-1;
+							cutin ""+getd("$@SJP_image_"+.@SJP_level+"$["+.@SJP_reward+"]")+"",$@SJP_mode_image;
+							sleep2 1;
+							if (.@i >= .@r) {
+								set .@ii,0;
+								set .@SJP_reverse,1;
+							}
+							if (.@i < .@r)
+								set .@i,.@i+1;
+							//dispbottom "SJP Auto Del : "+.@SJP_reward+"";
+						}
+					}
+				}
+				set .@r,0;
+				set .@i,0;
+				set .@ii,0;
+				if ($@SJP_mode_image_r) {
+					set .@SJP_timer,rand(10,100);
+					for (set .@i,0; .@i == 0; set .@iii,0) {
+						if ((.@SJP_reward == getarraysize(getd("$@SJP_reward_"+.@SJP_level+"")) || .@SJP_reverse) && !.@i) {
+							for (set .@ii,.@SJP_reward; .@ii > 1 && !.@i; set .@ii,.@ii-1) {
+								set .@SJP_reward,.@SJP_reward-1;
+								set .@SJP_rand,rand($@SJP_mode_image_per);
+								cutin ""+getd("$@SJP_image_"+.@SJP_level+"$["+.@SJP_reward+"]")+"",$@SJP_mode_image;
+								sleep2 .@SJP_timer;
+								if (getd("$@SJP_mode_image_"+.@SJP_level+"["+.@SJP_reward+"]") >= .@SJP_rand)
+									set .@i,1;
+								set .@SJP_timer,.@SJP_timer+rand(20,50);
+								//dispbottom "SJP Mode Per Del : "+.@SJP_reward+"";
+							}
+							set .@SJP_reverse,0;
+						}
+						if (!.@i) {
+							set .@SJP_rand,rand(1,$@SJP_mode_image_per);
+							set .@SJP_timer,.@SJP_timer+rand(20,50);
+							set .@SJP_reward,.@SJP_reward+1;
+							cutin ""+getd("$@SJP_image_"+.@SJP_level+"$["+.@SJP_reward+"]")+"",$@SJP_mode_image;
+							sleep2 .@SJP_timer;
+							if (getd("$@SJP_mode_image_"+.@SJP_level+"["+.@SJP_reward+"]") >= .@SJP_rand)
+								set .@i,1;
+							//dispbottom "SJP Mode Per Add : "+.@SJP_reward+"";
+						}
+					}
+				} else if (!$@SJP_mode_image_r) {
+					set .@SJP_timer,1;
+					set .@r,rand(getd("$@SJP_mode_image_"+.@SJP_level+"[0]"),getd("$@SJP_mode_image_"+.@SJP_level+"[1]"));
+					for (set .@i,0; .@i < .@r; set .@i,.@i+1) {
+						if (.@SJP_reward == getarraysize(getd("$@SJP_reward_"+.@SJP_level+"")) || .@SJP_reverse) {
+							for (set .@ii,.@SJP_reward; .@ii > 1; set .@ii,.@ii-1) {
+								set .@SJP_reward,.@SJP_reward-1;
+								cutin ""+getd("$@SJP_image_"+.@SJP_level+"$["+.@SJP_reward+"]")+"",$@SJP_mode_image;
+								//dispbottom "SJP Mode Ran Del : "+.@SJP_reward+"";
+								sleep2 .@SJP_timer;
+								if (.@i >= .@r)
+									set .@ii,0;
+								if (.@i < .@r)
+									set .@i,.@i+1;
+								set .@SJP_timer,.@SJP_timer+rand(getd("$@SJP_mode_image_"+.@SJP_level+"[2]"),getd("$@SJP_mode_image_"+.@SJP_level+"[3]"));
+							}
+							set .@SJP_reverse,0;
+						}
+						if (.@i < .@r) {
+							set .@SJP_reward,.@SJP_reward+1;
+							set .@SJP_timer,.@SJP_timer+rand(getd("$@SJP_mode_image_"+.@SJP_level+"[2]"),getd("$@SJP_mode_image_"+.@SJP_level+"[3]"));
+							//dispbottom "SJP Mode Ran Add : "+.@SJP_reward+"";
+							cutin ""+getd("$@SJP_image_"+.@SJP_level+"$["+.@SJP_reward+"]")+"",$@SJP_mode_image;
+							sleep2 .@SJP_timer;
+						}
+					}
+				}
+				if (.@SJP_reward == 1 || !.@SJP_reward || .@SJP_reward == getarraysize(getd("$@SJP_reward_"+.@SJP_level+""))) {
+					mes "ว้า, อดรางวัลเลย";
+					mes "ขอบคุณที่ร่วมสนุก";
+					mes "คุณต้องการเล่นต่อหรือไม่ ?";
+					set .@SJP_level,0;
+					set .@SJP_reward,1;
+				} else if (.@SJP_reward > 1) {
+					if (!getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))) mes "คุณได้รับ "+getitemname(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"";
+					else if (getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))) mes "คุณได้รับ "+getitemname(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"["+getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"]";
+				}
+				next;
+				mes "[ Slot Jackpot ]";
+				if (.@modeplay && .@SJP_level <= 7) {
+					mes "คุณต้องเสีย Cash Point "+$@SJP_mode_amount[.@SJP_level+1]+" Point.";
+					
+				} else if (!.@modeplay && .@SJP_level <= 7) {
+					mes "คุณต้องเสีย "+$@SJP_mode_amount_[.@SJP_level+1]+" zeny.";
+				}
+				mes "ในการเล่นระดับ "+(.@SJP_level+1)+"";
+				next;
+				set .@SJP,prompt("- เริ่มเล่นเลย [ระดับ "+(.@SJP_level+1)+"]",""+((.@SJP_reward > 1)?"- รับไอเทม ^FF0000"+((!getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]")))?""+getitemname(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"":""+getitemname(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"["+getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"]")+"^000000":"")+"","- ยกเลิก");
+				set .@SJP_level,.@SJP_level+1;
+				if (.@SJP_level >= 8) {
+					mes "[ Slot Jackpot ]";
+					mes "คุณเล่นมาระดับสูงสุดแล้ว";
+					mes "ไม่สามารถเล่นต่อได้ โปรดเริ่มใหม่";
+					set .@SJP,2;
+				}
+			}
+			if (.@SJP == 2 || .@SJP == 3 || .@SJP == 255) {
+				mes "[ Slot Jackpot ]";
+				SJP_ItemFAIL:
+				set .@SJP_level,.@SJP_level-1;
+				if (!getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]")) {
+					mes "คุณไม่ได้รับรางวัล";
+					mes "เสียใจด้วย แล้วกลับมาเล่นใหม่นะ";
+					next;
+					goto SJP_main;
+				}
+				mes "คุณได้รับรางวัลเรียบร้อยแล้ว";
+				mes "ขอบคุณที่ร่วมสนุก";
+				if (!getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))) dispbottom "คุณได้รับ "+getitemname(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"";
+				else if (getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))) dispbottom "คุณได้รับ "+getitemname(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"["+getitemslots(getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"))+"]";
+				getitem getd("$@SJP_reward_"+.@SJP_level+"["+.@SJP_reward+"]"),getd("$@SJP_rewardd_"+.@SJP_level+"["+.@SJP_reward+"]");
+				next;
+				goto SJP_main;
+			}
+			break;
+		
+		case 2:
+			mes "[ Slot Jackpot ]";
+			mes "แบบใช้ Cash Point ในการเล่น";
+			mes "ระดับ 1 : "+$@SJP_mode_amount[1]+" Cash Point.";
+			mes "ระดับ 2 : "+$@SJP_mode_amount[2]+" Cash Point.";
+			mes "ระดับ 3 : "+$@SJP_mode_amount[3]+" Cash Point.";
+			mes "ระดับ 4 : "+$@SJP_mode_amount[4]+" Cash Point.";
+			mes "ระดับ 5 : "+$@SJP_mode_amount[5]+" Cash Point.";
+			mes "ระดับ 6 : "+$@SJP_mode_amount[6]+" Cash Point.";
+			mes "ระดับ 7 : "+$@SJP_mode_amount[7]+" Cash Point.";
+			next;
+			//mes "[ Slot Jackpot ]";
+			//mes "แบบใช้ Zeny ในการเล่น";
+			//mes "ระดับ 1 : "+$@SJP_mode_amount_[1]+" Zeny.";
+			//mes "ระดับ 2 : "+$@SJP_mode_amount_[2]+" Zeny.";
+			//mes "ระดับ 3 : "+$@SJP_mode_amount_[3]+" Zeny.";
+			//mes "ระดับ 4 : "+$@SJP_mode_amount_[4]+" Zeny.";
+			//mes "ระดับ 5 : "+$@SJP_mode_amount_[5]+" Zeny.";
+			//mes "ระดับ 6 : "+$@SJP_mode_amount_[6]+" Zeny.";
+			//mes "ระดับ 7 : "+$@SJP_mode_amount_[7]+" Zeny.";
+			//next;
+			mes "[ Slot Jackpot ]";
+			mes "ถ้าคุณลง ตัวแรกสุด หรือ ตัวท้ายสุด คุณจะต้องเริ่มใหม่";
+			mes "และ ถ้าคุณลงช่องที่ไม่ใช่ช่องแรก และ สุดท้าย ระบบจะถาม";
+			mes "ต้องการ ไประดับต่อไป หรือ รับไอเทม";
+			mes "ถ้ากดระดับต่อไป คุณจะไม่ได้รับไอเทมจนกว่าจะกดรับไอเทม";
+			mes "ถ้ากดรับไอเทม คุณจะได้ไอเทมและต้องเล่นใหม่ตั้งแต่ต้นอีกครั้ง";
+			next;
+			cutin $@SJP_image_1$[0],$@SJP_mode_image;
+			mes "[ Slot Jackpot ]";
+			mes "นี่คือของรางวัลทั้งหมด";
+			mes "^FF0000[ ระดับ 1 ]^000000";
+			mes "- "+((getitemslots($@SJP_reward_1[2]))?""+getitemname($@SJP_reward_1[2])+"["+getitemslots($@SJP_reward_1[2])+"]":""+getitemname($@SJP_reward_1[2])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_1[3]))?""+getitemname($@SJP_reward_1[3])+"["+getitemslots($@SJP_reward_1[3])+"]":""+getitemname($@SJP_reward_1[3])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_1[4]))?""+getitemname($@SJP_reward_1[4])+"["+getitemslots($@SJP_reward_1[4])+"]":""+getitemname($@SJP_reward_1[4])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_1[5]))?""+getitemname($@SJP_reward_1[5])+"["+getitemslots($@SJP_reward_1[5])+"]":""+getitemname($@SJP_reward_1[5])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_1[6]))?""+getitemname($@SJP_reward_1[6])+"["+getitemslots($@SJP_reward_1[6])+"]":""+getitemname($@SJP_reward_1[6])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_1[7]))?""+getitemname($@SJP_reward_1[7])+"["+getitemslots($@SJP_reward_1[7])+"]":""+getitemname($@SJP_reward_1[7])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_1[8]))?""+getitemname($@SJP_reward_1[8])+"["+getitemslots($@SJP_reward_1[8])+"]":""+getitemname($@SJP_reward_1[8])+"")+"";
+			mes "^FF0000[ ระดับ 2 ]^000000";
+			mes "- "+((getitemslots($@SJP_reward_2[2]))?""+getitemname($@SJP_reward_2[2])+"["+getitemslots($@SJP_reward_2[2])+"]":""+getitemname($@SJP_reward_2[2])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_2[3]))?""+getitemname($@SJP_reward_2[3])+"["+getitemslots($@SJP_reward_2[3])+"]":""+getitemname($@SJP_reward_2[3])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_2[4]))?""+getitemname($@SJP_reward_2[4])+"["+getitemslots($@SJP_reward_2[4])+"]":""+getitemname($@SJP_reward_2[4])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_2[5]))?""+getitemname($@SJP_reward_2[5])+"["+getitemslots($@SJP_reward_2[5])+"]":""+getitemname($@SJP_reward_2[5])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_2[6]))?""+getitemname($@SJP_reward_2[6])+"["+getitemslots($@SJP_reward_2[6])+"]":""+getitemname($@SJP_reward_2[6])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_2[7]))?""+getitemname($@SJP_reward_2[7])+"["+getitemslots($@SJP_reward_2[7])+"]":""+getitemname($@SJP_reward_2[7])+"")+"";
+			mes "^FF0000[ ระดับ 3 ]^000000";
+			mes "- "+((getitemslots($@SJP_reward_3[2]))?""+getitemname($@SJP_reward_3[2])+"["+getitemslots($@SJP_reward_3[2])+"]":""+getitemname($@SJP_reward_3[2])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_3[3]))?""+getitemname($@SJP_reward_3[3])+"["+getitemslots($@SJP_reward_3[3])+"]":""+getitemname($@SJP_reward_3[3])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_3[4]))?""+getitemname($@SJP_reward_3[4])+"["+getitemslots($@SJP_reward_3[4])+"]":""+getitemname($@SJP_reward_3[4])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_3[5]))?""+getitemname($@SJP_reward_3[5])+"["+getitemslots($@SJP_reward_3[5])+"]":""+getitemname($@SJP_reward_3[5])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_3[6]))?""+getitemname($@SJP_reward_3[6])+"["+getitemslots($@SJP_reward_3[6])+"]":""+getitemname($@SJP_reward_3[6])+"")+"";
+			mes "^FF0000[ ระดับ 4 ]^000000";
+			mes "- "+((getitemslots($@SJP_reward_4[2]))?""+getitemname($@SJP_reward_4[2])+"["+getitemslots($@SJP_reward_4[2])+"]":""+getitemname($@SJP_reward_4[2])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_4[3]))?""+getitemname($@SJP_reward_4[3])+"["+getitemslots($@SJP_reward_4[3])+"]":""+getitemname($@SJP_reward_4[3])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_4[4]))?""+getitemname($@SJP_reward_4[4])+"["+getitemslots($@SJP_reward_4[4])+"]":""+getitemname($@SJP_reward_4[4])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_4[5]))?""+getitemname($@SJP_reward_4[5])+"["+getitemslots($@SJP_reward_4[5])+"]":""+getitemname($@SJP_reward_4[5])+"")+"";
+			mes "^FF0000[ ระดับ 5 ]^000000";
+			mes "- "+((getitemslots($@SJP_reward_5[2]))?""+getitemname($@SJP_reward_5[2])+"["+getitemslots($@SJP_reward_5[2])+"]":""+getitemname($@SJP_reward_5[2])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_5[3]))?""+getitemname($@SJP_reward_5[3])+"["+getitemslots($@SJP_reward_5[3])+"]":""+getitemname($@SJP_reward_5[3])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_5[4]))?""+getitemname($@SJP_reward_5[4])+"["+getitemslots($@SJP_reward_5[4])+"]":""+getitemname($@SJP_reward_5[4])+"")+"";
+			mes "^FF0000[ ระดับ 6 ]^000000";
+			mes "- "+((getitemslots($@SJP_reward_6[2]))?""+getitemname($@SJP_reward_6[2])+"["+getitemslots($@SJP_reward_6[2])+"]":""+getitemname($@SJP_reward_6[2])+"")+"";
+			mes "- "+((getitemslots($@SJP_reward_6[3]))?""+getitemname($@SJP_reward_6[3])+"["+getitemslots($@SJP_reward_6[3])+"]":""+getitemname($@SJP_reward_6[3])+"")+"";
+			mes "^FF0000[ ระดับ 7 ]^000000";
+			mes "- "+((getitemslots($@SJP_reward_7[2]))?""+getitemname($@SJP_reward_7[2])+"["+getitemslots($@SJP_reward_7[2])+"]":""+getitemname($@SJP_reward_7[2])+"")+"";
+			next;
+			cutin "",255;
+			mes "[ Slot Jackpot ]";
+			mes "การอธิบายรายละเอียดจบลงแล้ว";
+			mes "ถ้าไม่เข้าใจโปรดอ่านอีกครั้ง";
+			mes "หรือสอบถามทีมงาน";
+			break;
+
+		case 3:
+			close;
+	}
+	next;
+	goto SJP_main;
+}

@@ -1,0 +1,390 @@
+/*
+=================== TERMS OF SERVICES. ===================
+1. ALL RIGHT RESERVED RE-SELLER OR SHARE SCRIPT TO PUBLISH.
+2. BUT YOU RE-SELLER OR SHARE SCRIPT WITH OUT UNAUTHORIZRD
+   I WILL ALL CANCEL MY SUPPORT FOR YOU.
+3. MAINTENANCE SCRIPTS WILL BE FREE SERVICES.
+4. I WILL NOT KEEP ANY INFORMATIONS FROMS YOU SERVER THAT
+   YOU SEND FOR ME.
+5. I HOPE YOU WILL ALL ACCEPT TERMS OF SERVICES.
+==========================================================
+Script. Mushroom Slot																					 
+Create By. [Eddga-Studio]
+Translator By. Eddga Studio
+Bug Report. Dollaporn Naraphan [ FB ]																					 
+Contact Us. Dollaporn Naraphan [ FB ]																					 																				 
+==========================================================
+*/
+
+function	script	f_secret_mushroom	{
+	if($@Mushroom_Roll$[getarg(0)] != "") {
+		return $@Mushroom_Roll$[getarg(0)];
+	}
+	return "NULL";
+}
+
+-	script	scr_mushroom#template	-1,{
+	.@num = atoi(strnpcinfo(2));
+	.@n$ =  "[ คุณเลือก เห็ดเบอร์ ." + .@num + " ]";
+	mes .@n$;
+	mes "ของรางวัลทั้งหมด : " + $@Mushroom_WithReward_Count+" รางวัล";
+	mes "คุณต้องการจับเบอร์เห็ด";
+	mes "หมายเลข : ^FF0000" + .@num + "^000000 ใช่หรือไม่?";
+	mes "ต้องมีไอเท็ม ^FF0000Cash Coin 50 ea.^000000หรือ";
+	mes "จำนวนเงิน : ^FF00005,000,000^000000 Zeny.";
+	mes "เพื่อใช้ในการเปิดเห็ด ?";
+	next;
+	switch(select("~ ใช้ Cash Coin 50ea:~ ใช้ 5,000,000Zeny:~ ไม่ดีกว่า,เดียวหมดตัว"))
+	{
+		case 1:
+			switch(select("~ แน่นอน,ยืนยัน","~ ยกเลิก,กลัวหมดตัว")){
+			case 1:
+					if( countitem(.item_name) < .item_count) {
+						mes .@n$;
+						mes "คุณมี Cash Coin ไม่เพียงพอ";
+						close;
+					}
+					if(gettimetick(2) < mushroom_time) {
+						mes .@n$;
+						mes "ใจเย็นๆ..เจ้านาย";
+						mes "โปรดรออีก : ^FF0000" + .delay + "^000000 วินาที";
+						mes "ลองมาลุ้นเปิดใหม่อีกครั้ง !";
+						close;
+					}
+					if(!$@mushroom_active[.@num]) {
+						mes .@n$;
+						mes "เอ้า......คุณมาช้าไป";
+						mes "มีผู้เล่นคนอื่นเอาไปแล้ว";
+						mes "อิ อิ.. ไว้โอกาสหน้าน่ะ";
+						close;
+					}
+					$@mushroom_active[.@num] = 0;
+					delitem .item_name, .item_count;
+					mushroom_time = gettimetick(2) + (.delay);
+					.@result$ = callfunc("f_secret_mushroom", .@num);
+					if(.@result$ == "NULL") {
+						mes .@n$;
+						mes "แฮะๆ ๆ ๆ (เห็ดเน่า)";
+						mes "เสียใจด้วย คุณไม่ได้รับรางวัล";
+						hideonnpc strnpcinfo(0);
+						close;
+					} else {
+						close2;
+						specialeffect 183;
+						explode(.@item$, .@result$, ":");
+						.@nameid = atoi(.@item$[0]);
+						.@amount = atoi(.@item$[1]);
+						getitem .@nameid,.@amount;
+						$@Mushroom_WithReward_Count--;
+						mapannounce "mooc","[ กิจกรรม เบอร์เห็ด ลุ้นโชค : ผู้เล่น : " + strcharinfo(0) + " ได้รับไอเท็ม " + getitemname(.@nameid) + " จำนวน " + .@amount + "ea. เห็ดหมายเลข." + .@num + " ]",bc_all,0xEB984E;
+						hideonnpc strnpcinfo(0);
+						if(!$@Mushroom_WithReward_Count) {
+							for(.@i = 1; .@i <= 104; .@i++)
+								hideonnpc "เห็ดเบอร์." + .@i + "#" + .@i;
+							mapannounce "mooc","[ กิจกรรม เบอร์เห็ด ลุ้นโชค  ของรางวัลหมดแล้ว พบกันใหม่รอบหน้า ! ]",0;
+						}
+					}
+					end;
+				case 2:
+					close;
+			}
+		close;
+		
+		case 2:
+			switch(select("~ แน่นอน,ยืนยัน","~ ยกเลิก,กลัวหมดตัว")){
+			case 1:
+					if(Zeny < .cost) {
+						mes .@n$;
+						mes "คุณมีเงินไม่เพียงพอลงเดิมพัน";
+						close;
+					}
+					if(gettimetick(2) < mushroom_time) {
+						mes .@n$;
+						mes "ใจเย็นๆ..เจ้านาย";
+						mes "โปรดรออีก : ^FF0000" + .delay + "^000000 วินาที";
+						mes "ลองมาลุ้นเปิดใหม่อีกครั้ง !";
+						close;
+					}
+					if(!$@mushroom_active[.@num]) {
+						mes .@n$;
+						mes "เอ้า......คุณมาช้าไป";
+						mes "มีผู้เล่นคนอื่นเอาไปแล้ว";
+						mes "อิ อิ.. ไว้โอกาสหน้าน่ะ";
+						close;
+					}
+					$@mushroom_active[.@num] = 0;
+					Zeny -= .cost;
+					mushroom_time = gettimetick(2) + (.delay);
+					.@result$ = callfunc("f_secret_mushroom", .@num);
+					if(.@result$ == "NULL") {
+						mes .@n$;
+						mes "แฮะๆ ๆ ๆ (เห็ดเน่า)";
+						mes "เสียใจด้วย คุณไม่ได้รับรางวัล";
+						hideonnpc strnpcinfo(0);
+						close;
+					} else {
+						close2;
+						specialeffect 183;
+						explode(.@item$, .@result$, ":");
+						.@nameid = atoi(.@item$[0]);
+						.@amount = atoi(.@item$[1]);
+						getitem .@nameid,.@amount;
+						$@Mushroom_WithReward_Count--;
+						mapannounce "mooc","[ กิจกรรม เบอร์เห็ด ลุ้นโชค : ผู้เล่น : " + strcharinfo(0) + " ได้รับไอเท็ม " + getitemname(.@nameid) + " จำนวน " + .@amount + "ea. เห็ดหมายเลข." + .@num + " ]",bc_all,0xEB984E;
+						hideonnpc strnpcinfo(0);
+						if(!$@Mushroom_WithReward_Count) {
+							for(.@i = 1; .@i <= 104; .@i++)
+								hideonnpc "เห็ดเบอร์." + .@i + "#" + .@i;
+							mapannounce "mooc","[ กิจกรรม เบอร์เห็ด ลุ้นโชค : ของรางวัลหมดแล้ว พบกันใหม่รอบหน้า ! ]",0;
+						}
+					}
+					end;
+				case 2:
+					close;
+			}
+		close;
+		case 3:
+		mes .@n$;
+		mes "อะไรกัน...ไม่ใจพอนี้";
+		mes "อ่อนแอ ก็แพ้ไป อิอิ";
+		close;
+	}
+	
+OnInit:
+	.delay = 1;
+	// ตั้งค่าไอเท็ม
+	.item_name = 31174;
+	// ตั้งค่าจำนวนไอเท็ม
+	.item_count = 50;
+	// ตั้งค่าจำนวนเงิน
+	.cost = 5000000;
+
+}
+
+mooc,234,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.1#1	1084
+mooc,235,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.2#2	1084
+mooc,236,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.3#3	1084
+mooc,237,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.4#4	1084
+mooc,238,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.5#5	1084
+mooc,239,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.6#6	1084
+mooc,240,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.7#7	1084
+mooc,241,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.8#8	1084
+mooc,242,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.9#9	1084
+mooc,243,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.10#10	1084
+mooc,244,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.11#11	1084
+mooc,245,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.12#12	1084
+mooc,246,94,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.13#13	1084
+mooc,234,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.14#14	1084
+mooc,235,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.15#15	1084
+mooc,236,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.16#16	1084
+mooc,237,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.17#17	1084
+mooc,238,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.18#18	1084
+mooc,239,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.19#19	1084
+mooc,240,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.20#20	1084
+mooc,241,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.21#21	1084
+mooc,242,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.22#22	1084
+mooc,243,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.23#23	1084
+mooc,244,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.24#24	1084
+mooc,245,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.25#25	1084
+mooc,246,93,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.26#26	1084
+mooc,234,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.27#27	1084
+mooc,235,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.28#28	1084
+mooc,236,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.29#29	1084
+mooc,237,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.30#30	1084
+mooc,238,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.31#31	1084
+mooc,239,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.32#32	1084
+mooc,240,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.33#33	1084
+mooc,241,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.34#34	1084
+mooc,242,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.35#35	1084
+mooc,243,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.36#36	1084
+mooc,244,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.37#37	1084
+mooc,245,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.38#38	1084
+mooc,246,92,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.39#39	1084
+mooc,234,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.40#40	1084
+mooc,235,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.41#41	1084
+mooc,236,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.42#42	1084
+mooc,237,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.43#43	1084
+mooc,238,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.44#44	1084
+mooc,239,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.45#45	1084
+mooc,240,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.46#46	1084
+mooc,241,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.47#47	1084
+mooc,242,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.48#48	1084
+mooc,243,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.49#49	1084
+mooc,244,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.50#50	1084
+mooc,245,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.51#51	1084
+mooc,246,91,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.52#52	1084
+mooc,234,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.53#53	1084
+mooc,235,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.54#54	1084
+mooc,236,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.55#55	1084
+mooc,237,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.56#56	1084
+mooc,238,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.57#57	1084
+mooc,239,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.58#58	1084
+mooc,240,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.59#59	1084
+mooc,241,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.60#60	1084
+mooc,242,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.61#61	1084
+mooc,243,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.62#62	1084
+mooc,244,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.63#63	1084
+mooc,245,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.64#64	1084
+mooc,246,90,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.65#65	1084
+mooc,234,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.66#66	1084
+mooc,235,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.67#67	1084
+mooc,236,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.68#68	1084
+mooc,237,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.69#69	1084
+mooc,238,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.70#70	1084
+mooc,239,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.71#71	1084
+mooc,240,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.72#72	1084
+mooc,241,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.73#73	1084
+mooc,242,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.74#74	1084
+mooc,243,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.75#75	1084
+mooc,244,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.76#76	1084
+mooc,245,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.77#77	1084
+mooc,246,89,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.78#78	1084
+mooc,234,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.79#79	1084
+mooc,235,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.80#80	1084
+mooc,236,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.81#81	1084
+mooc,237,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.82#82	1084
+mooc,238,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.83#83	1084
+mooc,239,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.84#84	1084
+mooc,240,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.85#85	1084
+mooc,241,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.86#86	1084
+mooc,242,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.87#87	1084
+mooc,243,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.88#88	1084
+mooc,244,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.89#89	1084
+mooc,245,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.90#90	1084
+mooc,246,88,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.91#91	1084
+mooc,234,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.92#92	1084
+mooc,235,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.93#93	1084
+mooc,236,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.94#94	1084
+mooc,237,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.95#95	1084
+mooc,238,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.96#96	1084
+mooc,239,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.97#97	1084
+mooc,240,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.98#98	1084
+mooc,241,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.99#99	1084
+mooc,242,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.100#100	1084
+mooc,243,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.101#101	1084
+mooc,244,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.102#102	1084
+mooc,245,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.103#103	1084
+mooc,246,87,4	duplicate(scr_mushroom#template)	เห็ดเบอร์.104#104	1084
+
+
+mooc,240,96,4	script	Mushroom Slot	626,{
+	
+	mes .n$;
+	mes "ยินดีต้อนรับผู้เล่นทุกท่าน";
+	mes "จับเบอร์เห็ด ลุ้นโชคลาภ !";
+	next;
+	switch(select("~ วิธีการเล่นกิจกรรม","~ ตัวอย่างของรางวัล","~ ยกเลิก",(getgmlevel() >= .gmlevel ? "~ ^FF0000เมนู Game Master^000000" : ""))) {
+		case 1:
+			mes .n$;
+			mes "เลือกเบอร์เห็ดที่คุณชอบ";
+			mes "เวลาที่จะ Reset เห็ดใหม่ทุกๆ 6ชม.";
+			mes "กรณีที่ไม่เห็นเห็ด ไม่ต้องตกใจ เพราะเห็ดโดนเปิดไว้หมดแล้ว ให้มารอเวลาใหม่รอบถัดๆไป";
+			close;
+		case 2:
+			close2;
+			callfunc "preview_mushroom_shop",1;
+		end;
+		case 3:
+			end;
+		case 4:
+			if(getgmlevel() < .gmlevel) {
+				mes .n$;
+				mes "...?";
+				close;
+			}
+			switch(select("~ แสดงรายการของรางวัล","~ รีเซ็ตกิจกรรมเห็ด","~ ยกเลิก")) {
+				case 1:
+					close2;
+					dispbottom "========================================================",0xEB984E;
+					dispbottom "================= รายการของรางวัล กิจกรรมฟาร์มเห็ด ==================",0xEB984E;
+					for(.@i = 0; .@i < 105; .@i++) {
+						if($@Mushroom_RewardIndices[.@i] && $@mushroom_active[$@Mushroom_RewardIndices[.@i]]) {
+							explode(.@item$, $@Mushroom_Roll$[$@Mushroom_RewardIndices[.@i]], ":");
+							.@nameid = atoi(.@item$[0]);
+							.@amount = atoi(.@item$[1]);
+							dispbottom "[ หมายเลข " + $@Mushroom_RewardIndices[.@i] + ". ] " + getitemname(.@nameid) + " " + .@amount + "ea.",0xFFFF00;
+						}
+					}
+					dispbottom "========================================================",0xEB984E;
+					end;
+				case 2:
+					mes .n$;
+					mes "โปรดรอสักครู่.....";
+					callsub OnMushroomReset;
+					close;
+				case 3:
+					break;
+			}
+	}
+	close;
+
+
+OnTimer21600000: // Automatically reset every 6 hours.
+	.@scheduled = true;
+	
+OnMushroomReset:
+
+	$@Mushroom_WithReward_Count = 0;
+	for(.@i = 0; .@i < 105; .@i++) {
+		$@Mushroom_Roll$[.@i] = "";
+		$@Mushroom_RewardIndices[.@i] = 0;
+		$@Mushroom_WithReward_Count = 0;
+	}
+	.@i = 0;
+	while($Mushroom_Reward[.@i] != 0) {
+		.@nameid = $Mushroom_Reward[.@i];
+		.@amount = $Mushroom_Reward[.@i+1];
+		do {
+			.@rand = rand(1,104);
+		} while($@Mushroom_Roll$[.@rand] != "");
+		$@Mushroom_Roll$[.@rand] = .@nameid + ":" + .@amount;
+		.@i+=2;
+		$@Mushroom_RewardIndices[$@Mushroom_WithReward_Count] = .@rand;
+		$@Mushroom_WithReward_Count++;
+	}
+	for(.@i = 1; .@i < 105; .@i++) {
+		$@mushroom_active[.@i] = 1;
+		hideoffnpc "เห็ดเบอร์." + .@i + "#" + .@i;
+	}
+	initnpctimer;
+	if(getattachedrid())
+		sleep2 3000;
+	else
+		sleep 3000;
+	
+	if(.@scheduled)
+		end;
+	return;
+
+OnInit:
+	waitingroom "- เห็ดหรรษา -",0;
+	callsub OnMushroomReset;
+	.n$ = "[ Mushroom Slot ]"; // ชื่อ  NPC
+	.gmlevel = 99;
+	// เพิ่มของรางวัล
+	setarray $Mushroom_Reward, 
+	7227 , 1 , 61403 , 1 ,
+	61002 , 1 , 61404 , 1 ,
+	61001 , 1 , 61405 , 1 ,
+	61409 , 1 , 61408 , 1 ,
+	61409 , 1 , 61409 , 1 ,
+	61409 , 1 , 61006 , 1 ,
+	61006 , 1 , 61405 , 1 ,
+	61409 , 1 , 61408 , 1 ,
+	61002 , 1 , 61010 , 1 ,
+	61002 , 1 , 61010 , 1 ,
+	61409 , 1 , 61010 , 1 ,
+	61409 , 1 , 61007 , 1 ,
+	61403 , 1 , 61007 , 1 ,
+	61404 , 1 , 61010 , 1 ,
+	61403 , 1 , 61007 , 1 ,
+	61404 , 1 , 61010 , 1 ,
+	61403 , 1 , 61007 , 1 ,
+	61404 , 1 , 61010 , 1 ,
+	61403 , 1 , 61007 , 1 ,
+	61404 , 1 , 61010 , 1 ,
+	61403 , 1 , 61007 , 1 ,
+	61404 , 1 , 61010 , 1 ,
+	61006 , 1 , 61007 , 1;					
+end;
+}

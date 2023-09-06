@@ -1,0 +1,126 @@
+//==============================================
+// - Script By : M-Ro Online
+// - Script City : Thailand 
+// - Script Support Server : Hercules & rAthena
+//==============================================
+-	script	jutinpc	-1,{
+	callfunc	"juti";
+ OnInit:
+    waitingroom "- จุติ LV/JOB -",0;
+	   set $Homjuti,20; //จำนวนรอบจุติสกิลฟรี
+    set $juti,20; //จำนวนรอบจุติเลเวลฟรี
+    end;	
+end;
+}
+function	script	juti	{
+
+    mes "สวัสดีค่ะคุณ ^9360DB" + strcharinfo(0) + "^000000";
+    mes "คุณได้จุติเลเวลไปแล้วทั้งหมด";
+    mes "^ff7496"+free+"^000000/^ff0000"+$juti+"^000000 ครั้ง";
+    mes "คุณได้จุติสกิลไปแล้วทั้งหมด";
+    mes "^ff8565"+freeS+"^000000/^ff0000"+$Homjuti+"^000000 ครั้ง";
+    mes "คุณต้องการจุติเพิ่มไหมค่ะ";
+    next;
+    menu 
+    "จุติเลเวล",L_ok,
+//    "จุติสกิล",L_ok1,
+    "ยกเลิก",L_no;
+    
+    L_ok:
+    if (free >= $juti)
+    {
+    mes "คุณได้ทำการจุติเกินจำนวนครั้งฟรีที่กำหนดแล้วค่ะ";
+    dispbottom "การจุติฟรีสิ้นสุดแล้วที่"+ $juti +" ครั้ง";
+    next;
+    mes "หากคุณต้องการจุติ";
+    mes "เพิ่มอีกคุณจำเป็นต้องมี";
+    mes "ไอเทม TCG Card จำนวน 20 ชิ้น";
+    mes "คุณต้องการจะจุติเพิ่มไหมค่ะ";
+    next;
+    menu 
+    "ตกลง",Lsure,
+    "ยกเลิก",Lcancc;
+    
+    Lsure:
+    if ((BaseLevel != 175) || (countitem(7227) < 19)) goto Lcancc;
+    delitem 7227,20;
+    set BaseLevel,BaseLevel + -174;
+    set free,free + 1;
+    mes "คุณได้ทำการจุติไปแล้วทั้งหมด "+ free +" ครั้ง";
+    atcommand "@stpoint 5000";
+    announce "[ระบบ] : " + strcharinfo(0) + " ได้ทำการจุติเพื่อพัฒนาความสามารถไปแล้วทั้งหมด "+ free +" ครั้ง",0;
+    //announce "[ระบบ] : " + strcharinfo(0) + " ได้รับสเตตัสพ๊อยพิเศษเพิ่มขึ้นอีก 5000 แต้ม",0;
+    close;
+    
+    Lcancc:
+    mes "คุณยังเลเวลไม่ถึง 175 หรือ คุณมีไอเทมสำหรับการจุติไม่เพียงพอค่ะ";
+    close;
+    } else {
+    if (BaseLevel == 175)
+    {
+    set BaseLevel,BaseLevel + -174;
+    set free,free + 1;
+    mes "คุณได้ทำการจุติไปแล้วทั้งหมด "+ free +" ครั้ง";
+    atcommand "@stpoint 5000";
+    announce "[ระบบ] : " + strcharinfo(0) + " ได้ทำการจุติเพื่อพัฒนาความสามารถไปแล้วทั้งหมด "+ free +" ครั้ง",0;
+    //announce "[ระบบ] : " + strcharinfo(0) + " ได้รับสเตตัสพ๊อยพิเศษเพิ่มขึ้นอีก 5000 แต้ม",0;
+    close;
+    } else {
+    dispbottom "คุณยังเลเวลไม่เพียงพอสำหรับการจุติค่ะ";
+    close;
+    }
+    end;
+    }
+    
+    L_ok1:
+    if (free >= $Homjuti)
+    {
+    mes "คุณได้ทำการจุติสกิลเกินจำนวนครั้งฟรีที่กำหนดแล้วค่ะ";
+    dispbottom "การจุติสกิลฟรีสิ้นสุดแล้วที่"+ $Homjuti +" ครั้ง";
+    next;
+    mes "หากคุณต้องการจุติ";
+    mes "เพิ่มอีกคุณจำเป็นต้องมี";
+    mes "ไอเทม TCG Card จำนวน 20 ชิ้น";
+    mes "คุณต้องการจะจุติเพิ่มไหมค่ะ";
+    next;
+    menu 
+    "ตกลง",Lsure1,
+    "ยกเลิก",Lcancc1;
+    
+    Lsure1:
+    if ((JobLevel != 60) || (countitem(7227) < 19)) goto Lcancc;
+    delitem 7227,20;
+    set JobLevel,JobLevel + -59;
+    set freeS,freeS + 1;
+    mes "คุณได้ทำการจุติสกิลไปแล้วทั้งหมด "+ freeS +" ครั้ง";
+    announce "[ระบบ] : " + strcharinfo(0) + " ได้ทำการจุติเพื่อพัฒนาความสามารถของสกิลไปแล้วทั้งหมด "+ freeS +" ครั้ง",0;
+    close;
+    
+    Lcancc1:
+    mes "คุณยังจ๊อบเลเวลไม่ถึง 60 หรือ คุณมีไอเทมสำหรับการจุติไม่เพียงพอค่ะ";
+    close;
+    } else {
+    if (JobLevel == 60)
+    {
+    set JobLevel,JobLevel + -59;
+    set freeS,freeS + 1;
+    mes "คุณได้ทำการจุติสกิลไปแล้วทั้งหมด "+ freeS +" ครั้ง";
+    announce "[ระบบ] : " + strcharinfo(0) + " ได้ทำการจุติเพื่อพัฒนาความสามารถของสกิลไปแล้วทั้งหมด "+ freeS +" ครั้ง",0;
+    close;
+    } else {
+    dispbottom "คุณยังจ๊อบเลเวลไม่เพียงพอสำหรับการจุติค่ะ";
+    close;
+    }
+    end;
+    }
+    
+    L_no:
+    mes "ยินดีให้บริการค่ะ";
+    close;
+	end;
+    }
+    //==============================================
+    //ที่ตั้งNPC
+    //==============================================
+    mooc,164,107,4	duplicate(jutinpc)	เทพจุติ#01	403
+    //==============================================

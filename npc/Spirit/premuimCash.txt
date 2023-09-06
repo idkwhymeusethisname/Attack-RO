@@ -1,0 +1,52 @@
+mooc,129,75,5	script	BONUS SHOP#1	10262,{
+	mes "สามารถซื้อได้โดยใช้ ^ff0000Bonus Coin^000000";
+	mes "^00ff00—————————————————————^000000";
+	mes "^ff0000คำเตือนกรุณาเคลียเก็บของให้เพียงพอไม่งั้นไอเทมจะตกลงพื้นทีมงานจะไม่รับผิดชอบใดๆทั้งสิ้นหากเห็นไอเทมเป็นรูปแอ๊ปเปิ้ลให้เข้าเกมโดยเข้าผ่านตัวโหลดแพท^000000";
+	mes "^00ff00—————————————————————^000000";
+    mes "เลือกได้ตามใจชอบเลยจ้า";
+	callshop "PREMUIMSHOP#1",1;
+	npcshopattach "PREMUIMSHOP#1";
+//	dispbottom "[ระบบ] : สกิลDCลดราคาไม่มีผลสำหรับการซื้อไอเทมในนี้";
+	dispbottom "[ระบบ] : คุณมี Bonus Coin ทั้งหมด [ "+countitem(.Given_ItemID)+" ชิ้น ]";
+//	mes "คุณมี Bonus Coin ทั้งหมด : "+countitem(.Given_ItemID)+"";
+	end;
+
+OnBuyItem:
+	for(set @i,0; @i < getarraysize(@bought_nameid); set @i,@i+1) {
+		for(set @j,0; @j < getarraysize(.Shop_ItemID); set @j,@j+1) {
+			if(.Shop_ItemID[@j] == @bought_nameid[@i]) {
+				set @itemcost,(.Shop_Price[(@j)]*@bought_quantity[@i]);
+				set @totalcost,(@totalcost+@itemcost);
+				break;
+			}
+		}
+	}
+	
+	if(@totalcost > countitem(.Given_ItemID)) {
+		dispbottom "[ระบบ] : คุณมี Bonus Coin ไม่พอสำหรับจะซื้อไอเทมนี้";
+	}
+	else {
+		for(set @i,0; @i < getarraysize(@bought_nameid); set @i,@i+1) {
+		getitem @bought_nameid[@i],@bought_quantity[@i];
+	}
+		delitem .Given_ItemID,@totalcost;
+//		dispbottom "[ระบบ] : ขอบคุณครับ โอกาศหน้าเชิญใหม่.";
+		dispbottom "[ระบบ] : คุณเหลือ Bonus Coin ทั้งหมด [ "+countitem(.Given_ItemID)+" ชิ้น ]";
+	}
+	set @totalcost,0;
+	deletearray @bought_nameid[0],128;
+	deletearray @bought_quantity[0],128;
+end;
+
+OnInit:
+waitingroom "ร้าน Bonus Shop",0;
+npcshopdelitem "PREMUIMSHOP#1",909;
+set .Given_ItemID,31435; // รหัสไอเทมใช้ซื้อ
+setarray .Shop_ItemID[0],12208,12210,31436,31437,31438,31439,31440,31441,31442,31443,40360,40361,40362,40363,40364,40365,40366,40367,40368,40369,40370,40371,40372,40373,40374,40375,40376,40377,40378,40379,40380,40381,40382,40384,40385,40386,40387,40388,40389,40390,40391,40392,40393,40394,40395,40396,40397,40398,40399,40400,40401,40402,40403,40404,40405,40406,40407,40408,40409,40410,40476,40477,40478,40479,40480,40481,40482,40483,40484,40485,40486,40487,40488,40414,40415,40416,40425,40417,40418,40419,40420,40422,40421,40423,40424,40426,40427,40429,40428,40430,40431,40432,40433,40435,40434,40436,40437; //รหัสไอเทม
+setarray .Shop_Price[0],10,10,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200; //ราคา
+for(set .@i,0; .@i < getarraysize(.Shop_ItemID); set .@i,.@i+1) {
+npcshopadditem "PREMUIMSHOP#1",.Shop_ItemID[.@i],.Shop_Price[.@i];
+}
+end;
+}
+-	shop	PREMUIMSHOP#1	-1,909:-1

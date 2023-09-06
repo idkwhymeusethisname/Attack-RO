@@ -1,0 +1,331 @@
+/*
+=================== TERMS OF SERVICES. ===================
+1. ALL RIGHT RESERVED RE-SELLER OR SHARE SCRIPT TO PUBLISH.
+2. BUT YOU RE-SELLER OR SHARE SCRIPT WITH OUT UNAUTHORIZRD
+   I WILL ALL CANCEL MY SUPPORT FOR YOU.
+3. MAINTENANCE SCRIPTS WILL BE FREE SERVICES.
+4. I WILL NOT KEEP ANY INFORMATIONS FROMS YOU SERVER THAT
+   YOU SEND FOR ME.
+5. I HOPE YOU WILL ALL ACCEPT TERMS OF SERVICES.
+==========================================================
+Script. Hunting Mission												 
+Create By. [Eddga-Studio]
+Translator By. Eddga Studio
+Bug Report. Dollaporn Naraphan [ FB ]																					 
+Contact Us. Dollaporn Naraphan [ FB ]																					 
+==========================================================
+*/
+
+mooc,174,83,4	script	Hunting Missions	10277,{
+function Chk;
+	mes "[Hunting Missions]";
+	mes "สวัสดี, " + strcharinfo(0) + "!";
+	if (!#Mission_Delay) {
+		next;
+		mes "[Hunting Missions]";
+		mes "ฉันไม่พบบันทึกเกี่ยวกับคุณ...";
+		mes "ดังนั้น, คุณสามารถรับภารกิจใหม่ได้ที่นี่ !";
+		emotion ET_HUK;
+		next;
+		callsub Mission_Info;
+		emotion ET_GO;
+		#Mission_Delay = 1;
+		close;
+	}
+	mes "มีอะไรที่ฉันสามารถช่วยเหลือคุณได้เหลือเปล่า ?";
+	mes " ";
+	mes "^777777~ คุณเสร็จสิ้นภารกิจไป " + callfunc("F_InsertPlural",Mission_Total,"ภารกิจ",0,"^0055FF%d^777777 %s") + ". ~^000000";
+	next;
+	switch(select(
+		((!Mission0) ? " ~ รับภารกิจ::" : ": ~ ตรวจสอบภารกิจ: ~ ยกเลิกภารกิจ") +
+		": ~ รายละเอียดข้อมูล: ~ ร้านค้า: ~ อันดับนักล่าภารกิจ: ~ ^777777ยกเลิกการสนทนา^000000"
+	)) {
+	case 1:
+		mes "[Hunting Missions]";
+		if (#Mission_Count) {
+			mes "คุณได้รับภารกิจ";
+			mes "จากตัวละครอื่นไปแล้ว.";
+			if (!@hm_char_del_check) {
+				query_sql("SELECT 1 FROM `char_reg_num` WHERE `key` = 'Mission0' AND `char_id` IN(SELECT `char_id` FROM `char` WHERE `account_id` = " + getcharid(3) + ")", .@i);
+				if (!.@i) {
+					next;
+					mes "[Hunting Missions]";
+					mes "ฉันไม่สามารถค้นหาบันทึกเกี่ยวกับ";
+					mes "ตัวละครนั้นได้เลย, ดังนั้น...";
+					mes "โปรดรอ, ฉันสักครู่เดียว.";
+					emotion ET_SCRATCH;
+					#Mission_Count = 0;
+				}
+				@hm_char_del_check = 1;
+			}
+			close;
+		}
+		if (#Mission_Delay > gettimetick(2) && .Delay) {
+			mes "ฉันคิดว่าคุณจะต้องรอ " + callfunc("Time2Str",#Mission_Delay) + " ก่อนที่จะรับภารกิจใหม่อีกครั้ง.";
+			close;
+		}
+		mes "คุณต้องไปล่า :";
+		query_sql("SELECT ID FROM `" + .mob_db$ + "` WHERE left(Sprite, 4) != 'meta' AND left(Sprite, 2) != 'E_' AND ~Mode & 32 AND EXP > 0 AND MVP1id = 0 AND DropCardid > 4000 AND DropCardid < 5000 AND ID < 2000 AND instr('"+.Blacklist$+"',ID) = 0 ORDER BY rand() LIMIT " + .Quests, .@mob);
+		for (.@i = 0; .@i < .Quests; .@i++) {
+			setd "Mission" + .@i, .@mob[.@i];
+			setd "Mission" + .@i +"_", 0;
+		}
+		#Mission_Count = rand(.Count[0], .Count[1]);
+		callsub Mission_Status;
+		next;
+		mes "[Hunting Missions]";
+		mes "โปรดกลับมาหาฉัน";
+		mes "หลังจากคุณเสร็จสิ้นการล่าแล้ว.";
+		mes "ขอให้คุณโชคดี!";
+		close;
+	case 2:
+		mes "[Hunting Missions]";
+		mes "สถานะภารกิจ :";
+		callsub Mission_Status;
+		close;
+	case 3:
+		mes "[Hunting Missions]";
+		mes "คุณแน่ใจหรือว่าที่จะต้องการ";
+		mes "ยกเลิกภารกิจ ?";
+		if (.Reset < 0 && .Delay)
+			mes "เมื่อคุณยกเลิกคุณจะติดระยะเวลาในการรับภารกิจใหม่ นั่นหมายความว่าคุณจะต้องรอ ยังไงล่ะ.";
+		else if (.Reset > 0)
+			mes "คุณจะต้องเสีย " + callfunc("F_InsertComma",.Reset) + "  เซนี สำหรับการยกเลิกภารกิจ.";
+		next;
+		switch(select(" ~ ยกเลิกภารกิจ...: ~ ^777777ยกเลิกการสนทนา^000000")) {
+		case 1:
+			if (.Reset > 0) {
+				if (Zeny < .Reset) {
+					mes "[Hunting Missions]";
+					mes "ดูเหมือนว่า";
+					mes "คุณไม่ได้มีจำนวน เซนี เพียงพอสำหรับการยกเลิกภารกิจ.";
+					emotion ET_SORRY;
+					close;
+				}
+				Zeny -= .Reset;
+				emotion ET_MONEY;
+			}
+			mes "[Hunting Missions]";
+			mes "เอาล่ะ, ฉันได้ทำการ";
+			mes "ยกเลิกภารกิจในปัจจุบันของคุณเรียบร้อยแล้ว.";
+			specialeffect2 EF_STORMKICK4;
+			for (.@i = 0; .@i < .Quests; .@i++) {
+				setd "Mission"+.@i, 0;
+				setd "Mission"+.@i+"_", 0;
+			}
+			#Mission_Count = 0;
+			if (.Reset < 0 && .Delay)
+				#Mission_Delay = gettimetick(2) + (.Delay * 3600);
+			close;
+		case 2:
+			mes "[Hunting Missions]";
+			mes "ฉันคิดอยู่แล้วว่าคุณต้องล้อฉันเล่นแน่ๆ !";
+			mes "เอาล่ะ คุณควรกลับไปทำงานของคุณได้แล้ว โชคดี.";
+			emotion ET_SMILE;
+			close;
+		}
+	case 4:
+		callsub Mission_Info;
+		close;
+	case 5:
+		mes "[Hunting Missions]";
+		mes "คุณมี ^0055FF" + #Mission_Points + "^000000 Mission Points.";
+		mes "โปรดใช้มันอย่างชาญฉลาด !";
+		callshop "mission_shop",1;
+		npcshopattach "mission_shop";
+		end;
+	case 6:
+		mes "[Hunting Missions]";
+		mes "นี่คือรายชื่ออันดับนักล่าภารกิจ :";
+		query_sql("SELECT char_id AS id, (SELECT `name` FROM `char` WHERE char_id = id),`value` FROM `char_reg_num` WHERE `key` = 'Mission_Total' ORDER BY CAST(`value` AS SIGNED) DESC LIMIT 5", .@id, .@name$, .@val);
+		for (.@i = 0; .@i < 5; .@i++)
+			mes "  [Rank " + (.@i+1) + "]  " + ((.@name$[.@i] == "") ? "^777777ไม่มีอันดับนักล่าภารกิจ" : "^0055FF" + .@name$[.@i]+"^000000 : ^FF0000" + .@val[.@i] + " ภารกิจ.") + "^000000";
+		close;
+	case 7:
+		mes "[Hunting Missions]";
+		mes "ไม่มีอะไร ? โอเค...";
+		emotion ET_SCRATCH;
+		close;
+	}
+	end;
+
+Mission_Status:
+	@f = 0;
+	deletearray .@j[0], getarraysize(.@j);
+	for (.@i = 0; .@i < .Quests; .@i++) {
+		.@j[.@i] = getd("Mission" + .@i);
+		.@j[.Quests] = .@j[.Quests] + strmobinfo(3,.@j[.@i]);
+		.@j[.Quests+1] = .@j[.Quests+1] + (strmobinfo(6,.@j[.@i]) / (getbattleflag("base_exp_rate") / 100) * .Modifier[0]);
+		.@j[.Quests+2] = .@j[.Quests+2] + (strmobinfo(7,.@j[.@i]) / (getbattleflag("job_exp_rate") / 100) * .Modifier[1]);
+		mes " > "+Chk(getd("Mission"+.@i+"_"),#Mission_Count) + strmobinfo(1,.@j[.@i]) + " (" + getd("Mission"+.@i+"_") + "/" + #Mission_Count + ")^000000";
+	}
+
+	// Reward formulas:
+	.@Mission_Points = 3 + (.@j[.Quests] / .Quests / 6);
+	.@Base_Exp = #Mission_Count * .@j[.Quests+1] / 5;
+	.@Job_Exp = #Mission_Count * .@j[.Quests+2] / 5;
+	.@Zeny = #Mission_Count * .Quests * .@j[.@i] * .Modifier[2];
+
+	next;
+	mes "[Hunting Missions]";
+	mes "รางวัลภารกิจ :";
+	mes " > Mission Points : ^0055FF" + .@Mission_Points + "^000000";
+	mes " > ค่าประสบการณ์ เลเวล : ^0055FF" + callfunc("F_InsertComma",.@Base_Exp) + "^000000";
+	mes " > ค่าประสบการณ์ จ็อบ : ^0055FF" + callfunc("F_InsertComma",.@Job_Exp) + "^000000";
+	mes " > เงินที่ได้รับ : ^0055FF" + callfunc("F_InsertComma",.@Zeny) + "^000000";
+	if (@f) {
+		@f = 0;
+		return;
+	}
+	next;
+	mes "[Hunting Missions]";
+	mes "โอ้, คุณกลับมาแล้ว !";
+	mes "ทำได้เยี่ยมมาก.";
+	mes "นี่คือผลรางวัลของการพยายาม.";
+	emotion ET_BEST;
+	specialeffect2 EF_ANGEL;
+	specialeffect2 EF_TRUESIGHT;
+	#Mission_Points += .@Mission_Points;
+	BaseExp += .@Base_Exp;
+	JobExp += .@Job_Exp;
+	Zeny += .@Zeny;
+	for (.@i = 0; .@i < .Quests; .@i++) {
+		setd "Mission" + .@i, 0;
+		setd "Mission" + .@i+"_", 0;
+	}
+	#Mission_Count = 0;
+	if (.Delay)
+		#Mission_Delay = gettimetick(2) + (.Delay * 3600);
+	Mission_Total++;
+	if (Mission_Total == 1)
+		query_sql("INSERT INTO `char_reg_num` (`char_id`,`key`,`index`,`value`) VALUES (" + getcharid(0) + ",'Mission_Total','0',1)");
+	else
+		query_sql("UPDATE `char_reg_num` SET `value` = " + Mission_Total + " WHERE `char_id` = " + getcharid(0) + " AND `key` = 'Mission_Total'");
+	close;
+
+Mission_Info:
+	mes "[Hunting Missions]";
+	mes "ถ้าหากคุณเลือก, เลือกที่จะยอมรับถารกิจ";
+	mes "คุณจะได้รับภารกิจในการล่าแบบสุ่ม.";
+	mes "บางครั้งฉันก็บอกไม่ได้ว่ามันคืออะไร, แต่";
+	mes "ผลของรางวัลนั้นจะขึ้นอยู่กับความยาก หรือ ง่าย ในแต่ละภารกิจที่ได้รับ.";
+	next;
+	mes "[Hunting Missions]";
+	mes "Missions points จะสามารถ";
+	mes "ใช้ได้กับทุกตัวละครในบัญชีของคุณ.";
+	if (.Delay)
+		mes "หลังจากเสร็จภารกิจ, จะมีระยะเวลาในการรับภารกิจใหม่.";
+	mes "คุณจะไม่สามารถรับภารกิจซ้ำได้";
+	mes "หากตัวละครใดตัวละครหนึ่งในบัญชีของคุณรับภารกิจไปแล้ว.";
+	next;
+	mes "[Hunting Missions]";
+	mes "คุณสามารถรับภารกิจได้";
+	mes (.Delay ? "ทุก " + ((.Delay == 1) ? "ชั่วโมง." : .Delay + " ชั่วโมง.") : "ทุกเมื่อตามที่คุณต้องการ.");
+	mes "นี่คือรายละเอียดคร่าวๆทั้งหมด~";
+	return;
+
+function Chk {
+	if (getarg(0) < getarg(1)) {
+		@f = 1;
+		return "^FF0000";
+	} else
+		return "^00FF00";
+}
+
+OnBuyItem:
+	@cost = 0;
+	for (.@i = 0; .@i < getarraysize(@bought_nameid); .@i++)
+		for (.@j = 0; .@j < getarraysize(.Shop); .@j += 2)
+			if (@bought_nameid[.@i] == .Shop[.@j]) {
+				set @cost, @cost + (.Shop[.@j+1] * @bought_quantity[.@i]);
+				break;
+			}
+	mes "[Hunting Missions]";
+	if (@cost > #Mission_Points)
+		mes "คุณมีจำนวน Mission Points ไม่เพียงพอ.";
+	else {
+		for (.@i = 0; .@i < getarraysize(@bought_nameid); .@i++) {
+			getitem @bought_nameid[.@i], @bought_quantity[.@i];
+			dispbottom "คุณได้ทำการซื้อ " + getitemname(@bought_nameid[.@i]) + " จำนวน " + @bought_quantity[.@i] + ".";
+		}
+		#Mission_Points -= @cost;
+		mes "การแลกเปลี่ยนเสร็จสมบูรณ์.";
+		emotion ET_MONEY;
+	}
+	@cost = 0;
+	deletearray @bought_nameid[0], getarraysize(@bought_nameid);
+	deletearray @bought_quantity[0], getarraysize(@bought_quantity);
+	close;
+
+OnNPCKillEvent:
+	if (!getcharid(1) || !.Party) {
+		if (!#Mission_Count || !Mission0) end;
+		for (.@i = 0; .@i < .Quests; .@i++) {
+			if (strmobinfo(1,killedrid) == strmobinfo(1,getd("Mission" + .@i))) {
+				if (getd("Mission" + .@i + "_") < #Mission_Count) {
+					dispbottom "[Hunting Mission] คุณได้ฆ่าไปแล้ว " + (set(getd("Mission" + .@i + "_"),getd("Mission" + .@i + "_") + 1)) +
+					           " จากทั้งหมด " + #Mission_Count + " " + strmobinfo(1,killedrid) + ".";
+					end;
+				}
+			}
+		}
+	} else if (.Party) {
+		.@mob = killedrid;
+		getmapxy(.@map1$,.@x1,.@y1,UNITTYPE_PC);
+		getpartymember getcharid(1),1;
+		getpartymember getcharid(1),2;
+		for (.@i = 0; .@i < $@partymembercount; .@i++) {
+			if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i])) {
+				set .@Mission_Count, getvar(#Mission_Count, $@partymembercid[.@i]);
+				set .@Mission0, getvar(Mission0, $@partymembercid[.@i]);
+				set .@HP, readparam(HP, $@partymembercid[.@i]);
+
+				if (.@Mission_Count && .@Mission0 && .@HP > 0) {
+					getmapxy(.@map2$,.@x2,.@y2,UNITTYPE_PC);
+					if ((.@map1$ == .@map2$ || .Party == 1) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30 || .Party < 3)) {
+						for (.@j = 0; .@j < .Quests; .@j++) {
+							.@my_mob_id = getvar( getd("Mission"+.@j),$@partymembercid[.@i] );
+							.@my_count = getvar( getd("Mission"+.@j+"_"), $@partymembercid[.@i] );
+							if (strmobinfo(1,.@mob) == strmobinfo(1,.@my_mob_id)) {
+								if (.@my_count < .@Mission_Count) {
+									setd "Mission"+.@j+"_", (.@my_count+1), $@partymembercid[.@i];
+									dispbottom "[Hunting Mission] จำนวนการฆ่าไปแล้ว " + (.@my_count+1) + " จากทั้งหมด " + .@Mission_Count + " " + strmobinfo(1,.@mob) + ".", 0x777777, $@partymembercid[.@i];
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	end;
+
+OnInit:
+
+	waitingroom "- Hunting Mission",0;
+	.Delay = 24;            // ระยะเวลาการรับภารกิจ, ต่อชั่วโมง (0 ยกเลิก).
+	.Quests = 4;            // จำนวนภารกิจย่อยในการล่ามอนสเตอร์ (มีผลต่อของรางวัล).
+	.Party = 3;             // การตั้งค่าปาร์ตี้: 0 (สมาชิกปาร์ตี้ไม่สามารถช่วยเหลือภารกิจได้), 1 (สมาชิกปาร์ตี้สามารถช่วยเหลือภารกิจได้), 2 (เฉพาะแมพเดียวกันเท่านั้น), 3 (เฉพาะในระยะหน้าจอเท่านั้น)
+	.Reset = -1;            // ตั้งค่าการรีเซ็ท: -1 (ยกเลิกภารกิจโดยติดระยะเวลารับภารกิจ), 0 (ยกเลิกภารกิจโดยไม่มีผลใดๆ), [Zeny] (ยกเลิกภารกิจโดยเสียเงินเซนี, และ ไม่มีผลระยะเวลาใดๆ)
+	setarray .Count[0],     // จำนวน น้อยสุด และ มากสุด ต่อภารกิจย่อย (มีผลต่อของรางวัล).
+		40,70;
+	setarray .Modifier[0],  // ตัวคูณสำหรับค่าประสบการณ์ เบสเลเวล, จ็อบเลเวล, และ เงิน รางวัล.
+		getbattleflag("base_exp_rate")/100,getbattleflag("job_exp_rate")/100,60;
+	.mob_db$ =
+		(checkre(0))?"mob_db_re":"mob_db";
+	setarray .Shop[0],      // ร้านค้าภารกิจ : <รหัสไอเท็ม>,<จำนวนพอยท์> (จะได้รับ 10~20 Mission Point ต่อภารกิจ).
+		1187,500,1281,500,1282,500,1310,500,1382,500,1426,500,1486,500,1546,500,1576,500,1577,500,1640,500,1641,500,1743,500,1826,500,1827,500,1927,500,1981,500,2002,500,13042,500,13110,500,13176,500,13177,500,13178,500,13179,500,13307,500,13416,500,13417,500,13418,500;
+	.Blacklist$ =           // แบล็คริส มอนสเตอร์ ต้องห้าม.
+		"1062,1088,1183,1186,1200,1212,1220,1221,1234,1235,"+
+		"1244,1245,1250,1268,1290,1293,1294,1296,1298,1299,"+
+		"1300,1301,1303,1304,1305,1306,1308,1309,1311,1313,"+
+		"1515,1588,1618,1676,1677,1678,1679,1796,1797,1974,"+
+		"1975,1976,1977,1978,1979";
+
+	npcshopdelitem "mission_shop",512;
+	for (.@i = 0; .@i < getarraysize(.Shop); .@i += 2)
+		npcshopadditem "mission_shop", .Shop[.@i], .Shop[.@i+1];
+	end;
+}
+-	shop	mission_shop	-1,512:-1

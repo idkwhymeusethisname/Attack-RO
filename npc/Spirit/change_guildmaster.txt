@@ -1,0 +1,75 @@
+/*
+=================== TERMS OF SERVICES. ===================
+1. ALL RIGHT RESERVED RE-SELLER OR SHARE SCRIPT TO PUBLISH.
+2. BUT YOU RE-SELLER OR SHARE SCRIPT WITH OUT UNAUTHORIZRD
+   I WILL ALL CANCEL MY SUPPORT FOR YOU.
+3. MAINTENANCE SCRIPTS WILL BE FREE SERVICES.
+4. I WILL NOT KEEP ANY INFORMATIONS FROMS YOU SERVER THAT
+   YOU SEND FOR ME.
+5. I HOPE YOU WILL ALL ACCEPT TERMS OF SERVICES.
+==========================================================
+Script. Change Guild Master								 
+Create By. [Eddga-Studio]
+Translator By. Eddga Studio
+Bug Report. Dollaporn Naraphan [ FB ]																					 
+Contact Us. Dollaporn Naraphan [ FB ]																					 
+==========================================================
+*/
+
+mooc,187,104,4	script	Changer	416,{
+
+	mes "[ Change Guild Master ]";
+	mes "คุณต้องการที่จะเปลี่ยนผู้นำกิลด์คนใหม่อย่างนั้นหรือ ?";
+	mes "คุณจะถูกริดรอนสิทธิ์อำนาจทั้งหมดจากที่คุณมีในตอนนี้";
+	mes "มั่นใจแล้วหรือว่าต้องการที่จะเปลี่ยนผู้นำ";
+	next;
+	switch(select("~ ยืนยันการเปลี่ยนหัวหน้ากิลด์:~ ยกเลิกการสนทนา"))
+	{
+		case 1:
+			.@GID = getcharid(2);
+			if ( !.@GID )
+			{
+				mes "[ Change Guild Master ]";
+				mes "ดูเหมือนคุณจะลืมสิ่งสำคัญที่สุดสำหรับการเปลี่ยนหัวกิลด์ใหม่นะ.";
+				close;
+			}
+			else if ( getguildmaster(.@GID) != strcharinfo(0) )
+			{
+				mes "[ Change Guild Master ]";
+				mes "คุณเป็นหัวกิลดิ์นี้หรือยังไง.";
+				close;
+			}
+			else if ( agitcheck() )
+			{
+				mes "[ Change Guild Master ]";
+				mes "ในช่วงเวลาสงครามกิลด์วอร์ไม่สามารถที่จะใช้บริการนี้ได้.";
+				close;
+			}
+			else if ( Zeny < .zeny_req )
+			{
+				mes "[ Change Guild Master ]";
+				mes "ไม่ได้ฟังที่ข้าอธิบายอย่างนั้นหรือว่า ต้องใช้เงินจำนวนเท่าไหร่.";
+				close;
+			}
+			mes "[ Change Guild Master ]";
+			mes "กรุณากรอกชื่อผู้นำคนใหม่ที่คุณต้องการมอบตำแหน่งให้.";
+			next;
+			input @name$;
+			set @result, guildchangegm(.@GID,@name$);
+			if ( !@result )
+			{
+				mes "[ Change Guild Master ]";
+				mes "ชื่อตัวละครนี้ไม่ได้สังกัดภายใต้กิลด์ของคุณ หรือ ไม่ได้ออนไลน์อยู่.";
+				close;
+			}
+			mes "[ Change Guild Master ]";
+			mes "มอบอำนาจทั้งหมดให้กับหัวหน้ากิลด์คนใหม่เรียบร้อยแล้ว.";
+			close;
+			
+		default:
+			close;
+	}
+OnInit:
+waitingroom "- โอนหัวกิล - -",0;
+end;
+}

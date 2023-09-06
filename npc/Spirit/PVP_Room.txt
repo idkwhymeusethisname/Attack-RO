@@ -1,0 +1,144 @@
+//=-=-=-=-=-=-=-= Script by ColoExpress =-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-= 2010 - 2011 Develop present =-=-=-=-=-=-=-=
+//=-=-=-=-=-=-=-= Powered By www.coloexpress.in.th =-=-=-=-=-=-=-=
+-	script	pvproom	-1,{
+	mes "ไป PVP";
+	mes "เลือกห้องที่เจ้าต้องการไป";
+	mes "หากเจ้าคิดว่าไม่แข็งแกร่งพอ";
+	mes "กดยกเลิกซะ";
+	next;
+	switch (select(
+		"PVP ^ff0000Death Match^000000 [ "+getmapusers("pvp_y_1-2")+" ]",
+		"PVP ^00c000Normal Room^000000 [ "+getmapusers("pvp_y_3-1")+" ]"))
+	{
+	case 1:
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_POEMBRAGI;
+		sc_end SC_APPLEIDUN;
+		sc_end SC_ASSNCROS;
+		sc_end SC_SKE;
+		sc_end SC_KAITE;
+		sc_end SC_SWOO;
+		sc_end SC_SKA;
+		sc_end SC_BATTLEORDERS;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+			warp "pvp_y_8-2",0,0;
+			announce ""+strcharinfo(0)+" ได้เข้าสู่ลานประลองห้อง Deathmatch",bc_red|bc_all;
+			break;
+		
+	case 2:
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_POEMBRAGI;
+		sc_end SC_APPLEIDUN;
+		sc_end SC_ASSNCROS;
+		sc_end SC_SKE;
+		sc_end SC_KAITE;
+		sc_end SC_SWOO;
+		sc_end SC_SKA;
+		sc_end SC_BATTLEORDERS;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+			warp "pvp_y_3-1",0,0; 
+			announce ""+strcharinfo(0)+" ได้เข้าสู่ลานประลองห้อง Normal Room",bc_red|bc_all;
+			break;
+		
+	case 3:
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_POEMBRAGI;
+		sc_end SC_APPLEIDUN;
+		sc_end SC_ASSNCROS;
+		sc_end SC_SKE;
+		sc_end SC_KAITE;
+		sc_end SC_SWOO;
+		sc_end SC_SKA;
+		sc_end SC_BATTLEORDERS;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+		warp "guild_vs3",0,0;
+			announce ""+strcharinfo(0)+" ได้เข้าสู่ลานประลองห้อง Normal Room",bc_red|bc_all;
+			break;
+		
+	case 4:
+		sc_end SC_ASSUMPTIO;
+		sc_end SC_POEMBRAGI;
+		sc_end SC_APPLEIDUN;
+		sc_end SC_ASSNCROS;
+		sc_end SC_SKE;
+		sc_end SC_KAITE;
+		sc_end SC_SWOO;
+		sc_end SC_SKA;
+		sc_end SC_BATTLEORDERS;
+		sc_start SC_MAGNIFICAT,1200000,5;
+		sc_start SC_GLORIA,1200000,5;
+		sc_start SC_BLESSING,1200000,10;
+		sc_start SC_INCREASEAGI,1200000,10;
+
+		// บัฟอาหาร all+3
+		sc_start SC_STRFood, 1200000, 5;
+		sc_start SC_AGIFood, 1200000, 5;
+		sc_start SC_VITFood, 1200000, 5;
+		sc_start SC_INTFood, 1200000, 5;
+		sc_start SC_DEXFood, 1200000, 5;
+		sc_start SC_LUKFood, 1200000, 5;
+		warp "guild_vs2",0,0;
+			announce ""+strcharinfo(0)+" ได้เข้าสู่ลานประลองห้อง Normal Status All",bc_red|bc_all;
+		break;
+	}
+	end;
+}
+
+mooc,164,97,4	duplicate(pvproom)	PVP#1	512
+mooc,41,76,6	duplicate(pvproom)	PVP#2	512
+mooc,41,137,3	duplicate(pvproom)	PVP#3	512
+mooc,79,277,4	duplicate(pvproom)	PVP#4	512
+mooc,249,277,4	duplicate(pvproom)	PVP#5	512
+mooc,292,220,4	duplicate(pvproom)	PVP#6	512
+mooc,246,141,4	duplicate(pvproom)	PVP#7	512
+mooc,252,40,3	duplicate(pvproom)	PVP#8	512
+mooc,175,178,3	duplicate(pvproom)	PVP#9	512
+//prontera,161,182,4	duplicate(pvproom)	PVP#2	10276
+//alberta,59,244,4	duplicate(pvproom)	PVP#3	10276
+//aldebaran,143,114,4	duplicate(pvproom)	PVP#4	10276
+//amatsu,208,103,4	duplicate(pvproom)	PVP#5	10276
+//comodo,213,143,4	duplicate(pvproom)	PVP#6	10276
+//geffen,125,59,4	duplicate(pvproom)	PVP#7	10276
+//izlude,134,127,4	duplicate(pvproom)	PVP#8	10276
+//xmas,153,133,4	duplicate(pvproom)	PVP#9	10276	
+//morocc,164,93,4	duplicate(pvproom)	PVP#10	10276	
+//payon,190,97,4	duplicate(pvproom)	PVP#11	10276	
+//yuno,162,83,4	duplicate(pvproom)	PVP#12	10276	
+//mooc,243,89,4	duplicate(pvproom)	PVP#13	10276	
+
+pvp_y_3-1	mapflag	nocommand
+pvp_y_1-2	mapflag	nocommand
