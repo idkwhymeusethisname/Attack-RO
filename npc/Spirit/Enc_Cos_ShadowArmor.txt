@@ -214,84 +214,182 @@ S_EnchantArmor2:
 			case 22: set .@addpartshadow1,40755;break; //FLEE+ 8
 			case 23: set .@addpartshadow1,40756;break; //FLEE+ 9
 			case 24: set .@addpartshadow1,40757;break; //FLEE+ 10
-			case 25: set .@addpartshadow1,40758;break; //DEF+ 5
-			case 26: set .@addpartshadow1,40759;break; //DEF+ 6
-			case 27: set .@addpartshadow1,40760;break; //DEF+ 7
-			case 28: set .@addpartshadow1,40761;break; //DEF+ 8
-			case 29: set .@addpartshadow1,40762;break; //DEF+ 9
-			case 30: set .@addpartshadow1,40763;break; //DEF+ 10
-			case 31: set .@addpartshadow1,40764;break; //MDEF+ 5
-			case 32: set .@addpartshadow1,40765;break; //MDEF+ 6
-			case 33: set .@addpartshadow1,40766;break; //MDEF+ 7
-			case 34: set .@addpartshadow1,40767;break; //MDEF+ 8
-			case 35: set .@addpartshadow1,40768;break; //MDEF+ 9
-			case 36: set .@addpartshadow1,40769;break; //MDEF+ 10
-			case 37: set .@addpartshadow1,4819;break; //ATK+ 1%
-			case 38: set .@addpartshadow1,4766;break; //ATK+ 2%
-			case 39: set .@addpartshadow1,4767;break; //ATK+ 3%
-			case 40: set .@addpartshadow1,4760;break; //MATK+ 1%
-			case 41: set .@addpartshadow1,4761;break; //MATK+ 2%
-			case 42: set .@addpartshadow1,4806;break; //MATK+ 3%
-			case 43: set .@addpartshadow1,4929;break; //MaxSP+ 1%
-			case 44: set .@addpartshadow1,40770;break; //MaxSP+ 2%
-			case 45: set .@addpartshadow1,40771;break; //MaxSP+ 3%
-			case 46: set .@addpartshadow1,40772;break; //Range+ 1%
-			case 47: set .@addpartshadow1,40773;break; //Range+ 2%
-			case 48: set .@addpartshadow1,40774;break; //Range+ 3%
-			case 49: set .@addpartshadow1,40710;break; //Boss 3%
-			case 50: set .@addpartshadow1,40711;break; //Boss 4%
-			case 51: set .@addpartshadow1,40712;break; //Boss 5%
-			case 52: set .@addpartshadow1,40775;break; //HIT+ 5
-			case 53: set .@addpartshadow1,40776;break; //HIT+ 6
-			case 54: set .@addpartshadow1,40777;break; //HIT+ 7
-			case 55: set .@addpartshadow1,40778;break; //HIT+ 8
-			case 56: set .@addpartshadow1,40779;break; //HIT+ 9
-			case 57: set .@addpartshadow1,40780;break; //HIT+ 10
-			case 58: set .@addpartshadow1,40713;break; //Delay 1%
-			case 59: set .@addpartshadow1,40781;break; //MATK+ 5
-			case 60: set .@addpartshadow1,40782;break; //MATK+ 6
-			case 61: set .@addpartshadow1,40783;break; //MATK+ 7
-			case 62: set .@addpartshadow1,40784;break; //MATK+ 8
-			case 63: set .@addpartshadow1,40785;break; //MATK+ 9
-			case 64: set .@addpartshadow1,40786;break; //MATK+ 10
-			case 65: set .@addpartshadow1,40787;break; //ATK+ 5
-			case 66: set .@addpartshadow1,40788;break; //ATK+ 6
-			case 67: set .@addpartshadow1,40789;break; //ATK+ 7
-			case 68: set .@addpartshadow1,40790;break; //ATK+ 8
-			case 69: set .@addpartshadow1,40791;break; //ATK+ 9
-			case 70: set .@addpartshadow1,40792;break; //ATK+ 10
-			case 71: set .@addpartshadow1,4807;break; //APSD+ 1%
-			case 72: set .@addpartshadow1,4842;break; //ASPD+ 2%
-			case 73: set .@addpartshadow1,40793;break; //ASPD+ 3%
-			case 74: set .@addpartshadow1,40794;break; //CRI+ 5
-			case 75: set .@addpartshadow1,40795;break; //CRI+ 6
-			case 76: set .@addpartshadow1,40796;break; //CRI+ 7
-			case 77: set .@addpartshadow1,40797;break; //CRI+ 8
-			case 78: set .@addpartshadow1,40798;break; //CRI+ 9
-			case 79: set .@addpartshadow1,40799;break; //CRI+ 10
-			case 80: set .@addpartshadow1,29235;break; //Perfect Dodge+ 1
-			case 82: set .@addpartshadow1,29236;break; //Perfect Dodge+ 2
-			case 83: set .@addpartshadow1,4932;break; //SP Recovery 1
-			case 84: set .@addpartshadow1,4932;break; //SP Recovery 1
-			case 85: set .@addpartshadow1,4932;break; //SP Recovery 1
-			case 86: set .@addpartshadow1,4936;break; //Large Attack 1
-			case 87: set .@addpartshadow1,4936;break; //Large Attack 1
-			case 88: set .@addpartshadow1,4936;break; //Large Attack 1
-			case 89: set .@addpartshadow1,4870;break; //SP+25
-			case 90: set .@addpartshadow1,4870;break; //SP+25
-			case 91: set .@addpartshadow1,4870;break; //SP+25
-			case 92: set .@addpartshadow1,4871;break; //SP+75
-			case 93: set .@addpartshadow1,4871;break; //SP+75
-			case 94: set .@addpartshadow1,4871;break; //SP+75
-			case 95: set .@addpartshadow1,4850;break; //Archbishop2Lv
-			case 96: set .@addpartshadow1,4851;break; //Archbishop3Lv
-			case 97: set .@addpartshadow1,4852;break; //Archbishop4Lv
-			case 98: set .@addpartshadow1,4815;break; //Spell1
-			case 99: set .@addpartshadow1,4814;break; //Spell2
-			case 100: set .@addpartshadow1,4813;break; //Spell3
-			case 101: set .@addpartshadow1,4812;break; //Spell4
+			case 25: set .@addpartshadow1,40758;break; //DEF+ 1
+			case 26: set .@addpartshadow1,40759;break; //DEF+ 2
+			case 27: set .@addpartshadow1,40760;break; //DEF+ 3
+			case 28: set .@addpartshadow1,40761;break; //DEF+ 4
+			case 29: set .@addpartshadow1,40762;break; //DEF+ 5
+			case 30: set .@addpartshadow1,40764;break; //MDEF+ 1
+			case 31: set .@addpartshadow1,40765;break; //MDEF+ 2
+			case 32: set .@addpartshadow1,40766;break; //MDEF+ 3
+			case 33: set .@addpartshadow1,40767;break; //MDEF+ 4
+			case 34: set .@addpartshadow1,40768;break; //MDEF+ 5
+			case 35: set .@addpartshadow1,4819;break; //ATK+ 1%
+			case 36: set .@addpartshadow1,4766;break; //ATK+ 2%
+			case 37: set .@addpartshadow1,4767;break; //ATK+ 3%
+			case 38: set .@addpartshadow1,4760;break; //MATK+ 1%
+			case 39: set .@addpartshadow1,4761;break; //MATK+ 2%
+			case 40: set .@addpartshadow1,4806;break; //MATK+ 3%
+			case 41: set .@addpartshadow1,4929;break; //MaxSP+ 1%
+			case 42: set .@addpartshadow1,40770;break; //MaxSP+ 2%
+			case 43: set .@addpartshadow1,40771;break; //MaxSP+ 3%
+			case 44: set .@addpartshadow1,40772;break; //Range+ 1%
+			case 45: set .@addpartshadow1,40773;break; //Range+ 2%
+			case 46: set .@addpartshadow1,40774;break; //Range+ 3%
+			case 47: set .@addpartshadow1,40710;break; //Boss 3%
+			case 48: set .@addpartshadow1,40711;break; //Boss 4%
+			case 49: set .@addpartshadow1,40712;break; //Boss 5%
+			case 50: set .@addpartshadow1,40775;break; //HIT+ 5
+			case 51: set .@addpartshadow1,40776;break; //HIT+ 6
+			case 52: set .@addpartshadow1,40777;break; //HIT+ 7
+			case 53: set .@addpartshadow1,40778;break; //HIT+ 8
+			case 54: set .@addpartshadow1,40779;break; //HIT+ 9
+			case 55: set .@addpartshadow1,40780;break; //HIT+ 10
+			case 56: set .@addpartshadow1,40713;break; //Delay 1%
+			case 57: set .@addpartshadow1,40781;break; //MATK+ 5
+			case 58: set .@addpartshadow1,40782;break; //MATK+ 6
+			case 59: set .@addpartshadow1,40783;break; //MATK+ 7
+			case 60: set .@addpartshadow1,40784;break; //MATK+ 8
+			case 61: set .@addpartshadow1,40785;break; //MATK+ 9
+			case 62: set .@addpartshadow1,40786;break; //MATK+ 10
+			case 63: set .@addpartshadow1,40787;break; //ATK+ 5
+			case 64: set .@addpartshadow1,40788;break; //ATK+ 6
+			case 65: set .@addpartshadow1,40789;break; //ATK+ 7
+			case 66: set .@addpartshadow1,40790;break; //ATK+ 8
+			case 67: set .@addpartshadow1,40791;break; //ATK+ 9
+			case 68: set .@addpartshadow1,40792;break; //ATK+ 10
+			case 69: set .@addpartshadow1,4807;break; //APSD+ 1%
+			case 70: set .@addpartshadow1,4842;break; //ASPD+ 2%
+			case 71: set .@addpartshadow1,40793;break; //ASPD+ 3%
+			case 72: set .@addpartshadow1,40794;break; //CRI+ 5
+			case 73: set .@addpartshadow1,40795;break; //CRI+ 6
+			case 74: set .@addpartshadow1,40796;break; //CRI+ 7
+			case 75: set .@addpartshadow1,40797;break; //CRI+ 8
+			case 76: set .@addpartshadow1,40798;break; //CRI+ 9
+			case 77: set .@addpartshadow1,40799;break; //CRI+ 10
+			case 78: set .@addpartshadow1,29235;break; //Perfect Dodge+ 1
+			case 79: set .@addpartshadow1,29236;break; //Perfect Dodge+ 2
+			case 80: set .@addpartshadow1,4932;break; //SP Recovery 1
+			case 81: set .@addpartshadow1,4932;break; //SP Recovery 1
+			case 82: set .@addpartshadow1,4932;break; //SP Recovery 1
+			case 83: set .@addpartshadow1,4936;break; //Large Attack 1
+			case 84: set .@addpartshadow1,4936;break; //Large Attack 1
+			case 85: set .@addpartshadow1,4936;break; //Large Attack 1
+			case 86: set .@addpartshadow1,4870;break; //SP+25
+			case 87: set .@addpartshadow1,4870;break; //SP+25
+			case 88: set .@addpartshadow1,4870;break; //SP+25
+			case 89: set .@addpartshadow1,4871;break; //SP+75
+			case 90: set .@addpartshadow1,4871;break; //SP+75
+			case 91: set .@addpartshadow1,4871;break; //SP+75
+			case 92: set .@addpartshadow1,4850;break; //Archbishop2Lv
+			case 93: set .@addpartshadow1,4851;break; //Archbishop3Lv
+			case 94: set .@addpartshadow1,4852;break; //Archbishop4Lv
+			case 95: set .@addpartshadow1,4815;break; //Spell1
+			case 96: set .@addpartshadow1,4814;break; //Spell2
+			case 97: set .@addpartshadow1,4813;break; //Spell3
+			case 98: set .@addpartshadow1,4812;break; //Spell4
+			case 99:
+			case 100:
+			case 101:
 			case 102:
-			case 103:			
+			case 103:
+			case 104:
+			case 105:
+			case 106:
+			case 107:
+			case 108:
+			case 109:
+			case 110:
+			case 111:
+			case 112:
+			case 113:			
+			case 114:			
+			case 115:			
+			case 116:			
+			case 117:			
+			case 118:			
+			case 119:			
+			case 120:			
+			case 121:			
+			case 122:			
+			case 123:			
+			case 124:			
+			case 125:			
+			case 126:			
+			case 127:			
+			case 128:			
+			case 129:			
+			case 130:			
+			case 131:			
+			case 132:			
+			case 133:			
+			case 134:			
+			case 135:			
+			case 136:			
+			case 137:			
+			case 138:			
+			case 139:			
+			case 140:			
+			case 141:			
+			case 142:			
+			case 143:			
+			case 144:			
+			case 145:			
+			case 146:			
+			case 147:			
+			case 148:			
+			case 149:			
+			case 150:			
+			case 151:			
+			case 152:			
+			case 153:			
+			case 154:			
+			case 155:			
+			case 156:			
+			case 157:			
+			case 158:			
+			case 159:			
+			case 160:			
+			case 161:			
+			case 162:			
+			case 163:			
+			case 164:			
+			case 165:			
+			case 166:			
+			case 167:			
+			case 168:			
+			case 169:			
+			case 170:			
+			case 171:			
+			case 172:			
+			case 173:			
+			case 174:			
+			case 175:			
+			case 176:			
+			case 177:			
+			case 178:			
+			case 179:			
+			case 180:			
+			case 181:			
+			case 182:			
+			case 183:			
+			case 184:			
+			case 185:			
+			case 186:			
+			case 187:			
+			case 188:			
+			case 189:			
+			case 190:			
+			case 191:			
+			case 192:			
+			case 193:			
+			case 194:			
+			case 195:			
+			case 196:			
+			case 197:			
+			case 198:			
+			case 199:			
+			case 200:			
 			default:
 			specialeffect2 718;
 				mes "[นักวิจัยแร่ขั้นสูง]";
