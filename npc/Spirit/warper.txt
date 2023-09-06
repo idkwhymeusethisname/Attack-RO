@@ -144,16 +144,10 @@ menu	"เมืองหลวง SPIRIT",mooc, "Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amat
 mooc: Go("mooc",159,93);
 BossWarper:
     menu
-    "Boss Room Status ไม่เกิน 400",boss1,
-    "Boss Room Status ALL",boss2;
+    "Boss Room Normal",boss2,
+    "Boss Room PvP",boss1;
 
     boss1:
-		if( (readparam(bStr)>400 || readparam(bAgi)>400 || readparam(bVit)>400 || readparam(bInt)>400 || readparam(bDex)>400 || readparam(bLuk)>400 )){
-		next;
-		mes "[MVP WARP STUFF]";
-		mes "คุณมี Stats มากกว่า 400";
-		close;
-		}
         menu
         "Boss Room Status 400 ห้อง 1",map1_400, 
         "Boss Room Status 400 ห้อง 2",map2_400,
