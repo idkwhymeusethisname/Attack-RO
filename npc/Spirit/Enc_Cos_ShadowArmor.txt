@@ -34,8 +34,8 @@ mooc,100,92,5	script	นักวิจัยแร่ขั้นสูง	923,{
 		mes "INT+ 1-3";
 		mes "LUK+ 1-3";
 		mes "FLEE+ 5-10";
-		mes "DEF+ 5-10";
-		mes "MDEF+ 5-10";
+		mes "DEF+ 1-5";
+		mes "MDEF+ 1-5";
 		mes "ATK+ 1-3%";
 		next;
 		mes "[ ^ffcb00มีโอกาสสุ่มได้^000000 ]";
@@ -85,8 +85,8 @@ mooc,100,92,5	script	นักวิจัยแร่ขั้นสูง	923,{
 		mes "INT+ 1-3";
 		mes "LUK+ 1-3";
 		mes "FLEE+ 5-10";
-		mes "DEF+ 5-10";
-		mes "MDEF+ 5-10";
+		mes "DEF+ 1-5";
+		mes "MDEF+ 1-5";
 		mes "ATK+ 1-3%";
 		next;
 		mes "[ ^ffcb00มีโอกาสสุ่มได้^000000 ]";
